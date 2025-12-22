@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GameHub{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styleIndex.css') }}">
+{% endblock %}
+
+{% block body %}
+    
+    <header>
+        <img src="{{ asset('assets/img/logoIcon.webp') }}" alt="Logo" class="logoIcon">
+        <div class="login-container">
+            <a href="login.html">
+                <img src="{{ asset('assets/img/loginIconGOLD.webp') }}" alt="Inicio de sesión">
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="{{ path('hsr_blog') }}" class="game-card">
+                <img src="{{ asset('assets/img/honkaiContainerBG.webp') }}" alt="Honkai Star Rail">
+                <div class="game-title">Honkai Star Rail</div>
+            </a>
+
+            <a href="{{ path('genshin_blog') }}" class="game-card">
+                <img src="{{ asset('assets/img/genshinContainerBG.webp') }}" alt="Genshin Impact">
+                <div class="game-title">Genshin Impact</div>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        Game Hub
+    </footer>
+
+{% endblock %}
