@@ -33,7 +33,6 @@ class Post
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $foto = null;
 
-    // Cambio aquí: Cambié 'userId' a 'user'
     #[ORM\ManyToOne(inversedBy: 'posts')]
     #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
     private ?User $user = null;
@@ -41,15 +40,13 @@ class Post
     /**
      * @var Collection<int, Comentario>
      */
-    #[ORM\OneToMany(targetEntity: Comentario::class, mappedBy: 'postId')]
+    #[ORM\OneToMany(targetEntity: Comentario::class, mappedBy: 'post')]
     private Collection $comentarios;
 
     public function __construct()
     {
         $this->comentarios = new ArrayCollection();
     }
-
-    // Métodos getter y setter
 
     public function getId(): ?int
     {
