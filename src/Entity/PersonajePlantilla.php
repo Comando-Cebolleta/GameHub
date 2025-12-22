@@ -42,10 +42,17 @@ class PersonajePlantilla
     #[ORM\OneToMany(targetEntity: Dupe::class, mappedBy: 'personajePlantilla')]
     private Collection $dupes;
 
+    /**
+     * @var Collection<int, Habilidad>
+     */
+    #[ORM\OneToMany(targetEntity: Habilidad::class, mappedBy: 'personajePlantilla')]
+    private Collection $habilidades;
+
     public function __construct()
     {
         $this->personajes = new ArrayCollection();
         $this->dupes = new ArrayCollection();
+        $this->habilidades = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,6 +174,36 @@ class PersonajePlantilla
             // set the owning side to null (unless already changed)
             if ($dupe->getPersonajePlantilla() === $this) {
                 $dupe->setPersonajePlantilla(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Habilidad>
+     */
+    public function getHabilidades(): Collection
+    {
+        return $this->habilidades;
+    }
+
+    public function addHabilidad(Habilidad $habilidad): static
+    {
+        if (!$this->habilidades->contains($habilidad)) {
+            $this->habilidades->add($habilidad);
+            $habilidad->setPersonajePlantilla($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHabilidad(Habilidad $habilidad): static
+    {
+        if ($this->habilidades->removeElement($habilidad)) {
+            // set the owning side to null (unless already changed)
+            if ($habilidad->getPersonajePlantilla() === $this) {
+                $habilidad->setPersonajePlantilla(null);
             }
         }
 
