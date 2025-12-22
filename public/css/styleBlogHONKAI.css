@@ -1,0 +1,240 @@
+/* ---------- FUENTES ---------- */
+@font-face {
+    font-family: 'titulos-encabezados';
+    src: url('../assets/fonts/CostalineThin-OGLRd.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'texto-parrafos';
+    src: url('../assets/fonts/Simvoni-d9vV6.otf') format('opentype');
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'titulos-encabezados', Arial, sans-serif;
+    margin: 0;
+}
+
+/* ---------- BODY ---------- */
+body {
+    margin: 0;
+    font-family: 'texto-parrafos', Arial, sans-serif;
+    background-image: url('../assets/img/honkaiBlogBG.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #d1d1d1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------- HEADER ---------- */
+header {
+    background-color: #1f1b2e;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    position: relative;
+}
+
+.logoIcon {
+    height: 100px;
+    max-height: 120px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* ---------- LOGIN ---------- */
+.login-container {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+}
+
+.login-container img {
+    width: 70px;
+    height: auto;
+    max-height: 70px;
+    cursor: pointer;
+}
+
+/* ---------- MAIN CONTENT ---------- */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    margin-top: 40px;
+    padding: 0 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    min-height: 500px;
+    background: rgb(31, 27, 46);
+    border: 2px solid #c0c0c0;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+    position: relative;
+    padding: 60px 40px 40px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* ---------- BOTONES SUPERIORES (POST & BUILD) ---------- */
+.top-actions {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 20;
+}
+
+.action-icon {
+    width: 70px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
+    display: block;
+}
+
+.action-icon:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+}
+
+/* ---------- ESTRUCTURA DEL POST ---------- */
+.post-card {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background 0.3s;
+}
+
+.post-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Texto del Post */
+.post-content {
+    flex: 3;
+}
+
+.post-content h2 {
+    color: #fff;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    text-shadow: 0 0 8px rgba(192, 192, 192, 0.6);
+}
+
+.post-content p {
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+/* Área de Iconos (Derecha) */
+.post-icons-area {
+    flex: 1;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.icon-label {
+    font-size: 0.9rem;
+    color: #fff;
+    margin-bottom: 10px;
+    display: block;
+    font-family: 'titulos-encabezados', Arial, sans-serif;
+}
+
+.icon-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.char-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid #3a2a4b;
+    background-color: #1f1b2e;
+    object-fit: cover;
+}
+
+/* Separador entre posts */
+.divider {
+    border: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c0c0c0, transparent);
+    width: 100%;
+    margin: 10px 0;
+    opacity: 0.5;
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+    background-color: #1f1b2e;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 0.9rem;
+    margin-top: auto;
+}
+
+/* ---------- MEDIA MOVIL (RESPONSIVE) ---------- */
+@media (max-width: 768px) {
+    header { height: 120px; }
+
+    .container {
+        padding: 50px 20px 20px 20px;
+    }
+
+    .login-container img { width: 55px; }
+
+    .post-card {
+        flex-direction: column;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 20px;
+    }
+
+    .post-card:last-child { border-bottom: none; }
+    .divider { display: none; }
+
+    .post-icons-area {
+        border-left: none;
+        padding-left: 0;
+        margin-top: 15px;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .icon-label { margin-bottom: 0; margin-right: 10px; }
+}
+
+/* ---------- MEDIA PC GRANDE ---------- */
+@media (min-width: 1200px) {
+    header { height: 140px; }
+    .logoIcon { height: 250px; }
+
+    .container {
+        max-width: 1000px;
+        padding: 70px 50px 50px 50px;
+    }
+}
