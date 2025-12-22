@@ -34,9 +34,20 @@ class Personaje
     #[ORM\OneToMany(mappedBy: 'personaje', targetEntity: EquipoPersonaje::class)]
     private Collection $equiposPersonaje;
 
+    #[ORM\OneToMany(mappedBy: 'personaje', targetEntity: PersonajeHabilidad::class)]
+    private Collection $personajeHabilidades;
+
+    /**
+     * @var Collection<int, Artefacto>
+     */
+    #[ORM\ManyToMany(targetEntity: Artefacto::class, inversedBy: 'personajes')]
+    private Collection $artefactos;
+
     public function __construct()
     {
         $this->equiposPersonaje = new ArrayCollection();
+        $this->personajeHabilidades = new ArrayCollection();
+        $this->artefactos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,6 +141,60 @@ class Personaje
                 $equipoPersonaje->setPersonaje(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PersonajeHabilidad>
+     */
+    public function getPersonajeHabilidades(): Collection
+    {
+        return $this->personajeHabilidades;
+    }
+
+    public function addPersonajeHabilidad(PersonajeHabilidad $personajeHabilidad): static
+    {
+        if (!$this->personajeHabilidades->contains($personajeHabilidad)) {
+            $this->personajeHabilidades->add($personajeHabilidad);
+            $personajeHabilidad->setPersonaje($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonajeHabilidad(PersonajeHabilidad $personajeHabilidad): static
+    {
+        if ($this->personajeHabilidades->removeElement($personajeHabilidad)) {
+            // Eliminar la relación en la entidad intermedia
+            if ($personajeHabilidad->getPersonaje() === $this) {
+                $personajeHabilidad->setPersonaje(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Artefacto>
+     */
+    public function getArtefactos(): Collection
+    {
+        return $this->artefactos;
+    }
+
+    public function addArtefacto(Artefacto $artefacto): static
+    {
+        if (!$this->artefactos->contains($artefacto)) {
+            $this->artefactos->add($artefacto);
+        }
+
+        return $this;
+    }
+
+    public function removeArtefacto(Artefacto $artefacto): static
+    {
+        $this->artefactos->removeElement($artefacto);
 
         return $this;
     }
