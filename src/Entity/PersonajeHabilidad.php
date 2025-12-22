@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 class PersonajeHabilidad
 {
     #[ORM\Id]
-    #[ORM\ManyToOne(targetEntity: Personaje::class)]
+    #[ORM\ManyToOne(targetEntity: Personaje::class, inversedBy:"personajeHabilidades")]
     #[ORM\JoinColumn(name: 'personaje_id', referencedColumnName: 'id')]
     private ?Personaje $personaje = null;
 

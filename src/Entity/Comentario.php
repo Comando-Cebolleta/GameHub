@@ -22,7 +22,6 @@ class Comentario
     #[ORM\Column]
     private ?\DateTime $fechaPublicacion = null;
 
-    // Cambié 'postId' a 'post' para seguir las convenciones de nomenclatura.
     #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'comentarios')]
     #[ORM\JoinColumn(name: 'post_id', referencedColumnName: 'id')]
     private ?Post $post = null;
