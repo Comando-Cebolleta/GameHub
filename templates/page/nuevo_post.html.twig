@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Post{% endblock %}
+{% block stylesheets %}
+    
+{% endblock %}
+
+{% block body %}
+    
+    {{ form_start(form) }}
+    {{ form_row(form.titulo) }}
+    {{ form_row(form.cuerpo) }}
+    {{ form_row(form.foto) }}
+    {{ form_row(form.send) }}
+    {{ form_end(form) }}
+
+{% endblock %}
