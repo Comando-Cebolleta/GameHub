@@ -33,6 +33,9 @@ class Post
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $foto = null;
 
+    #[ORM\Column(nullable: false)]
+    private ?string $juego = null;
+
     #[ORM\ManyToOne(inversedBy: 'posts')]
     #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
     private ?User $user = null;
@@ -46,6 +49,7 @@ class Post
     public function __construct()
     {
         $this->comentarios = new ArrayCollection();
+        $this->fechaPublicacion = new \DateTime();
     }
 
     public function getId(): ?int
@@ -121,6 +125,18 @@ class Post
     public function setFoto(?string $foto): static
     {
         $this->foto = $foto;
+
+        return $this;
+    }
+
+    public function getJuego(): ?string
+    {
+        return $this->juego;
+    }
+
+    public function setJuego(?string $juego): static
+    {
+        $this->juego = $juego;
 
         return $this;
     }
