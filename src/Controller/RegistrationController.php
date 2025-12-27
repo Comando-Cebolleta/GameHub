@@ -44,28 +44,31 @@ class RegistrationController extends AbstractController
             // Cifrar la contraseña
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
+            //Usuario no verificado al inicio (se hace ya en la entidad, pero por si acaso)
+            $user->setIsVerified(false);
+
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $firewallName = 'main';
+            //$firewallName = 'main';
 
             // Crear el token de seguridad
-            $token = new UsernamePasswordToken($user, $firewallName, $user->getRoles());
+            //$token = new UsernamePasswordToken($user, $firewallName, $user->getRoles());
 
             // Almacenamos el token en la sesión de seguridad
-            $tokenStorage->setToken($token);
+            //$tokenStorage->setToken($token);
 
             // Enviar correo de verificación
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('no-reply@gamehubsite.es', 'No Reply'))
                     ->to((string) $user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Confirmación de registro')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
-            // Redirigir al usuario a la página de inicio
-            return $this->redirectToRoute('home');
+            // Redirige a un flash de aviso del email de verificación
+            return $this->redirectToRoute('registration_flash_email_sent');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -94,11 +97,25 @@ class RegistrationController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $exception->getReason());
 
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('app_login');
         }
 
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_register');
+        // Redirige a la página flash de "email confirmado"
+        return $this->redirectToRoute('registration_flash_email_verified');
     }
+
+    #[Route('/flash/email-sent', name: 'registration_flash_email_sent')]
+    public function flashEmailSent(): Response
+    {
+        return $this->render('registration/flash_email_sent.html.twig');
+    }
+
+    #[Route('/flash/email-verified', name: 'registration_flash_email_verified')]
+    public function flashEmailVerified(): Response
+    {
+        return $this->render('registration/flash_email_verified.html.twig');
+    }
+
 }

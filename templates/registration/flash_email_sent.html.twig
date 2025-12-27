@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Email enviado{% endblock %}
+
+{% block body %}
+<div class="flash-container" style="text-align: center; margin-top: 50px;">
+    <h1>¡Registro completado!</h1>
+    <p>Se ha enviado un email de verificación a tu correo. Por favor revisa tu bandeja y haz clic en el enlace.</p>
+    <a href="{{ path('home') }}" class="btn btn-primary" style="padding: 10px 20px; margin-top: 20px;">
+        Volver al inicio
+    </a>
+</div>
+{% endblock %}
