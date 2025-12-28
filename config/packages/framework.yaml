@@ -11,6 +11,9 @@ framework:
         handler_id: null
         cookie_secure: auto
         cookie_samesite: lax
+        # esta línea dice no guardes las sesiones en la carpeta protegida de Linux. Guárdalas en mi carpeta de proyecto (var/sessions/dev), donde sí tengo permisos
+        # ya que por ejemplo al tratar de subir una build no nos dejaría porque diría que no tenemos permisos
+        save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
 
     #esi: true
     #fragments: true
