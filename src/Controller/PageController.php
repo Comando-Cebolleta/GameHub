@@ -5,6 +5,11 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\User;
+use App\Entity\Post;
+use App\Form\PostFormType;
 
 final class PageController extends AbstractController
 {
@@ -24,10 +29,72 @@ final class PageController extends AbstractController
         ]);
     }
 
+    #[Route('/genshin/blog/nuevo_post', name: 'genshin_nuevo_post')]
+    public function genshinNuevoPost(Request $request, EntityManagerInterface $em): Response
+    {
+        $post = new Post();
+        $post->setJuego($request->query->get('juego', 'genshin'));
+        $post->setUser($this->getUser());
+        $post->setLikes(0);
+        $post->setVisitas(0);
+
+        //Por seguridad
+        $juego = $post->getJuego();
+        if ($juego !== 'genshin') {
+            $post->setJuego('genshin');
+        }
+
+        $form = $this->createForm(PostFormType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($post);
+            $em->flush();
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('page/nuevo_post.html.twig', [
+            'form' => $form->createView(),
+            'controller_name' => 'PageController',
+        ]);
+    }
+
     #[Route('/hsr/blog', name: 'hsr_blog')]
     public function hsrBlog(): Response
     {
         return $this->render('page/hsr/blogHonkai.html.twig', [
+            'controller_name' => 'PageController',
+        ]);
+    }
+
+    #[Route('/hsr/blog/nuevo_post', name: 'hsr_nuevo_post')]
+    public function hsrNuevoPost(Request $request, EntityManagerInterface $em): Response
+    {
+        $post = new Post();
+        $post->setJuego($request->query->get('juego', 'hsr'));
+        $post->setUser($this->getUser());
+        $post->setLikes(0);
+        $post->setVisitas(0);
+
+        //Por seguridad
+        $juego = $post->getJuego();
+        if ($juego !== 'hsr') {
+            $post->setJuego('hsr');
+        }
+
+        $form = $this->createForm(PostFormType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($post);
+            $em->flush();
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('page/nuevo_post.html.twig', [
+            'form' => $form->createView(),
             'controller_name' => 'PageController',
         ]);
     }
