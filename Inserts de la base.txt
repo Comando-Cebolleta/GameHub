@@ -1,0 +1,270 @@
+INSERT INTO personaje_plantilla 
+(id, juego, nombre, stats_base, stats_por_nivel, imagen, elemento, senda)
+VALUES
+(
+  1,
+  'genshin',
+  'Diluc',
+  '{
+    "vida": 12981,
+    "danio": 335,
+    "defensa": 784,
+    "maestria_elemental": 0,
+    "danio_critico": 0.50,
+    "probabilidad_critica": 0.05,
+    "recarga_energia": 1.00
+  }',
+  '{
+    "vida": 210,
+    "danio": 8,
+    "defensa": 14,
+    "maestria_elemental": 0,
+    "danio_critico": 0.01,
+    "probabilidad_critica": 0.002,
+    "recarga_energia": 0.01
+  }',
+  NULL,
+  'pyro',
+  NULL
+),
+(
+  2,
+  'genshin',
+  'Tartaglia',
+  '{
+    "vida": 13103,
+    "danio": 301,
+    "defensa": 815,
+    "maestria_elemental": 0,
+    "danio_critico": 0.50,
+    "probabilidad_critica": 0.05,
+    "recarga_energia": 1.00
+  }',
+  '{
+    "vida": 215,
+    "danio": 7,
+    "defensa": 15,
+    "maestria_elemental": 0,
+    "danio_critico": 0.01,
+    "probabilidad_critica": 0.002,
+    "recarga_energia": 0.01
+  }',
+  NULL,
+  'hydro',
+  NULL
+),
+(
+  3,
+  'genshin',
+  'Raiden Shogun',
+  '{
+    "vida": 12907,
+    "danio": 337,
+    "defensa": 789,
+    "maestria_elemental": 0,
+    "danio_critico": 0.50,
+    "probabilidad_critica": 0.05,
+    "recarga_energia": 1.32
+  }',
+  '{
+    "vida": 205,
+    "danio": 8,
+    "defensa": 14,
+    "maestria_elemental": 0,
+    "danio_critico": 0.01,
+    "probabilidad_critica": 0.002,
+    "recarga_energia": 0.015
+  }',
+  NULL,
+  'electro',
+  NULL
+),
+(
+  4,
+  'genshin',
+  'Furina',
+  '{
+    "vida": 15307,
+    "danio": 243,
+    "defensa": 712,
+    "maestria_elemental": 0,
+    "danio_critico": 0.50,
+    "probabilidad_critica": 0.05,
+    "recarga_energia": 1.00
+  }',
+  '{
+    "vida": 260,
+    "danio": 6,
+    "defensa": 13,
+    "maestria_elemental": 0,
+    "danio_critico": 0.01,
+    "probabilidad_critica": 0.002,
+    "recarga_energia": 0.01
+  }',
+  NULL,
+  'hydro',
+  NULL
+),
+(
+  5,
+  'genshin',
+  'Columbina',
+  '{
+    "vida": 14000,
+    "danio": 320,
+    "defensa": 760,
+    "maestria_elemental": 80,
+    "danio_critico": 0.60,
+    "probabilidad_critica": 0.10,
+    "recarga_energia": 1.10
+  }',
+  '{
+    "vida": 230,
+    "danio": 9,
+    "defensa": 15,
+    "maestria_elemental": 5,
+    "danio_critico": 0.012,
+    "probabilidad_critica": 0.003,
+    "recarga_energia": 0.012
+  }',
+  NULL,
+  'hydro',
+  NULL
+);
+
+----------------------------------------------------------------------------
+
+INSERT INTO personaje_plantilla
+(juego, nombre, stats_base, stats_por_nivel, imagen, elemento, senda)
+VALUES
+(
+  6,
+  'hsr',
+  'Pela',
+  '{
+    "vida": 1047,
+    "danio": 476,
+    "defensa": 463,
+    "efecto_ruptura": 0.25,
+    "danio_critico": 0.50,
+    "probabilidad_critica": 0.05,
+    "recarga_energia": 1.00
+  }',
+  '{
+    "vida": 42,
+    "danio": 19,
+    "defensa": 18,
+    "efecto_ruptura": 0.01,
+    "danio_critico": 0.012,
+    "probabilidad_critica": 0.003,
+    "recarga_energia": 0.01
+  }',
+  NULL,
+  'hielo',
+  'nihilidad'
+),
+(
+  7,
+  'hsr',
+  'Firefly',
+  '{
+    "vida": 1378,
+    "danio": 523,
+    "defensa": 485,
+    "efecto_ruptura": 0.30,
+    "danio_critico": 0.50,
+    "probabilidad_critica": 0.05,
+    "recarga_energia": 1.00
+  }',
+  '{
+    "vida": 55,
+    "danio": 21,
+    "defensa": 19,
+    "efecto_ruptura": 0.012,
+    "danio_critico": 0.012,
+    "probabilidad_critica": 0.003,
+    "recarga_energia": 0.01
+  }',
+  NULL,
+  'fuego',
+  'destruccion'
+),
+(
+  8,
+  'hsr',
+  'Sunday',
+  '{
+    "vida": 1120,
+    "danio": 412,
+    "defensa": 502,
+    "efecto_ruptura": 0.20,
+    "danio_critico": 0.50,
+    "probabilidad_critica": 0.05,
+    "recarga_energia": 1.05
+  }',
+  '{
+    "vida": 45,
+    "danio": 16,
+    "defensa": 20,
+    "efecto_ruptura": 0.01,
+    "danio_critico": 0.01,
+    "probabilidad_critica": 0.002,
+    "recarga_energia": 0.012
+  }',
+  NULL,
+  'imaginario',
+  'armonia'
+),
+(
+  9,
+  'hsr',
+  'Jingliu',
+  '{
+    "vida": 1436,
+    "danio": 592,
+    "defensa": 436,
+    "efecto_ruptura": 0.22,
+    "danio_critico": 0.60,
+    "probabilidad_critica": 0.05,
+    "recarga_energia": 1.00
+  }',
+  '{
+    "vida": 58,
+    "danio": 24,
+    "defensa": 17,
+    "efecto_ruptura": 0.011,
+    "danio_critico": 0.015,
+    "probabilidad_critica": 0.003,
+    "recarga_energia": 0.01
+  }',
+  NULL,
+  'hielo',
+  'destruccion'
+),
+(
+  10,
+  'hsr',
+  'Phainon',
+  '{
+    "vida": 1500,
+    "danio": 560,
+    "defensa": 470,
+    "efecto_ruptura": 0.28,
+    "danio_critico": 0.55,
+    "probabilidad_critica": 0.08,
+    "recarga_energia": 1.00
+  }',
+  '{
+    "vida": 60,
+    "danio": 22,
+    "defensa": 18,
+    "efecto_ruptura": 0.013,
+    "danio_critico": 0.014,
+    "probabilidad_critica": 0.003,
+    "recarga_energia": 0.01
+  }',
+  NULL,
+  'fisico',
+  'destruccion'
+);
+
