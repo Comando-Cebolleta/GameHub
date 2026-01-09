@@ -125,7 +125,7 @@ class PersonajePlantilla
     
     public function getElemento(): ?string
     {
-        $this->elemento;
+        return $this->elemento;
     }
 
     public function setElemento(?string $elemento): static
