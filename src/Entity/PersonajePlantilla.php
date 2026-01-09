@@ -30,6 +30,9 @@ class PersonajePlantilla
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imagen = null;
 
+    #[ORM\Column(length:255, nullable: true)]
+    private ?string $elemento = null;
+
     /**
      * @var Collection<int, Personaje>
      */
@@ -116,6 +119,18 @@ class PersonajePlantilla
     public function setImagen(?string $imagen): static
     {
         $this->imagen = $imagen;
+
+        return $this;
+    }
+    
+    public function getElemento(): ?string
+    {
+        $this->elemento;
+    }
+
+    public function setElemento(?string $elemento): static
+    {
+        $this->elemento = $elemento;
 
         return $this;
     }
