@@ -268,3 +268,168 @@ VALUES
   'destruccion'
 );
 
+-------------------------------------------------------------------------------------
+
+INSERT INTO arma_plantilla
+(id, nombre, imagen, juego, stats_base, stats_por_nivel, pasiva, tipo)
+VALUES
+(
+  0,
+  'Lápida del Lobo',
+  NULL,
+  'genshin',
+  '{
+    "danio": 608,
+    "ataque_porcentaje": 0.49
+  }',
+  '{
+    "danio": 16,
+    "ataque_porcentaje": 0.012
+  }',
+  'Aumenta el ATQ del portador. Al golpear a enemigos con poca vida, incrementa aún más el daño durante un tiempo.',
+  'espadón'
+),
+(
+  1,
+  'Estrella Invernal',
+  NULL,
+  'genshin',
+  '{
+    "danio": 608,
+    "danio_critico": 0.33
+  }',
+  '{
+    "danio": 15,
+    "danio_critico": 0.009
+  }',
+  'Los ataques normales y cargados aumentan el daño del portador de forma acumulativa.',
+  'arco'
+),
+(
+  2,
+  'Luz del Segador',
+  NULL,
+  'genshin',
+  '{
+    "danio": 674,
+    "recarga_energia": 0.36
+  }',
+  '{
+    "danio": 18,
+    "recarga_energia": 0.01
+  }',
+  'Convierte la Recarga de Energía excedente en ATQ y aumenta el daño de la habilidad definitiva.',
+  'lanza'
+),
+(
+  3,
+  'Fulgor de las Aguas Calmas',
+  NULL,
+  'genshin',
+  '{
+    "danio": 542,
+    "danio_critico": 0.88
+  }',
+  '{
+    "danio": 14,
+    "danio_critico": 0.02
+  }',
+  'Aumenta la vida máxima y el daño elemental del portador cuando se consume vida.',
+  'espada'
+),
+(
+  4,
+  'Velo de la Nocturnidad',
+  NULL,
+  'genshin',
+  '{
+    "danio": 674,
+    "probabilidad_critica": 0.22
+  }',
+  '{
+    "danio": 18,
+    "probabilidad_critica": 0.006
+  }',
+  'Otorga bonificaciones de daño según el estado del portador dentro o fuera del campo.',
+  'catalizador'
+),
+(
+  5,
+  'Buenas noches que duermas bien',
+  NULL,
+  'hsr',
+  '{
+    "danio": 476,
+    "danio_porcentaje": 0.24
+  }',
+  '{
+    "danio": 12,
+    "danio_porcentaje": 0.008
+  }',
+  'Aumenta el daño infligido a enemigos afectados por estados negativos.',
+  'cono'
+),
+(
+  6,
+  'A donde regresan los sueños',
+  NULL,
+  'hsr',
+  '{
+    "vida": 1058,
+    "danio_porcentaje": 0.18
+  }',
+  '{
+    "vida": 38,
+    "danio_porcentaje": 0.006
+  }',
+  'Incrementa la vida máxima y potencia el daño de los aliados tras usar la habilidad definitiva.',
+  'cono'
+),
+(
+  7,
+  'De vuelta a la tierra',
+  NULL,
+  'hsr',
+  '{
+    "defensa": 529,
+    "recarga_energia": 0.20
+  }',
+  '{
+    "defensa": 20,
+    "recarga_energia": 0.007
+  }',
+  'Reduce el daño recibido y restaura energía al inicio del turno.',
+  'cono'
+),
+(
+  8,
+  'Yo seré mi propia espada',
+  NULL,
+  'hsr',
+  '{
+    "danio": 635,
+    "danio_critico": 0.36
+  }',
+  '{
+    "danio": 22,
+    "danio_critico": 0.01
+  }',
+  'Aumenta el daño crítico y mejora los ataques tras consumir vida.',
+  'cono'
+),
+(
+  9,
+  'Que arda el alba',
+  NULL,
+  'hsr',
+  '{
+    "danio": 582,
+    "probabilidad_critica": 0.24
+  }',
+  '{
+    "danio": 20,
+    "probabilidad_critica": 0.007
+  }',
+  'Incrementa la probabilidad crítica y el daño infligido al comienzo del combate.',
+  'cono'
+);
