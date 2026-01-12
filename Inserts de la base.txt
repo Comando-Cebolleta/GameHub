@@ -132,8 +132,6 @@ VALUES
   NULL
 );
 
-----------------------------------------------------------------------------
-
 INSERT INTO personaje_plantilla
 (juego, nombre, stats_base, stats_por_nivel, imagen, elemento, senda)
 VALUES
@@ -267,8 +265,6 @@ VALUES
   'fisico',
   'destruccion'
 );
-
--------------------------------------------------------------------------------------
 
 INSERT INTO arma_plantilla
 (id, nombre, imagen, juego, stats_base, stats_por_nivel, pasiva, tipo)
@@ -432,4 +428,33 @@ VALUES
   }',
   'Incrementa la probabilidad crítica y el daño infligido al comienzo del combate.',
   'cono'
+);
+
+INSERT INTO pieza_tipo
+(id, codigo, nombre)
+VALUES
+(
+  0,
+  'pluma',
+  'Pluma de la Muerte'
+),
+(
+  1,
+  'sombrero',
+  'Tiara de Logos'
+),
+(
+  2,
+  'flor',
+  'Flor de la Vida'
+),
+(
+  3,
+  'reloj',
+  'Arenas del Eon'
+),
+(
+  4,
+  'caliz',
+  'Cáliz de Eonothem'
 );
