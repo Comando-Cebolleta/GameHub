@@ -19,6 +19,42 @@ class ArtefactoType extends AbstractType
         // Obtenemos el nombre del tipo desde el formulario padre
         $tipoPieza = $options['tipo_pieza_nombre'];
 
+        // Definimos la lista completa de stats posibles
+        $statsGenerales = [
+            'Vida (HP)' => 'HP',
+            'Vida %' => 'HP%',
+
+            'Ataque (ATK)' => 'ATK',
+            'Ataque %' => 'ATK%',
+
+            'Defensa (DEF)' => 'DEF',
+            'Defensa %' => 'DEF%',
+
+            'Maestría Elemental' => 'EM',
+            'Recarga de Energía' => 'ER',
+
+            'Bono Daño Pyro' => 'PYRO_DMG_BONUS',
+            'Bono Daño Hydro' => 'HYDRO_DMG_BONUS',
+            'Bono Daño Geo' => 'GEO_DMG_BONUS',
+            'Bono Daño Dendro' => 'DENDRO_DMG_BONUS',
+            'Bono Daño Electro' => 'ELECTRO_DMG_BONUS',
+            'Bono Daño Anemo' => 'ANEMO_DMG_BONUS',
+            'Bono Daño Cryo' => 'CRYO_DMG_BONUS',
+
+            'Prob. Crítico' => 'CRIT_RATE',
+            'Daño Crítico' => 'CRIT_DMG',
+
+            'Bono Curación' => 'HEAL_BONUS',
+        ];
+
+        // Forzamos a que las flores y plumas tengan stats fijos
+        $choices = match ($tipoPieza) {
+            'Flor'  => ['Vida (HP)' => 'HP'],
+            'Pluma' => ['Ataque (ATK)' => 'ATK'],
+            default => $statsGenerales,
+        };
+        $isFixed = ($tipoPieza === 'Flor' || $tipoPieza === 'Pluma');
+
         $builder
             ->add('setSeleccionado', EntityType::class, [
                 'class' => SetArtefactos::class,
@@ -33,23 +69,22 @@ class ArtefactoType extends AbstractType
             ->add('statPrincipalNombre', ChoiceType::class, [
                 'mapped' => false,
                 'label' => 'Stat Principal',
-                'choices' => [
-                    'Vida %' => 'HP',
-                    'Ataque %' => 'ATK',
-                    'Defensa %' => 'DEF',
-                    'Maestría Elemental' => 'EM',
-                    'Recarga de Energía' => 'ER',
-                    'Bono Daño Elemental' => 'DMG_BONUS',
-                    'Prob. Crítico' => 'CRIT_RATE',
-                    'Daño Crítico' => 'CRIT_DMG',
-                    'Bono Curación' => 'HEAL_BONUS',
+                'choices' => $choices, // Lista fija
+
+                // Si la pieza es flor o pluma, le damos su único valor posible
+                'data' => $isFixed ? array_values($choices)[0] : null,
+
+                // Esto es para que el campo parezca bloqueado
+                'attr' => [
+                    'class' => $isFixed ? 'form-select bg-light' : 'form-select',
+                    'readonly' => $isFixed
                 ],
-                'placeholder' => 'Elige stat...',
+                'placeholder' => $isFixed ? false : 'Elige stat...',
                 'required' => true,
             ])
             ->add('statPrincipalValor', NumberType::class, [ 
                 'mapped' => false,
-             ])
+            ])
         ;
     }
 
