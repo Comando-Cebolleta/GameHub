@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 class SetArtefactos
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -23,6 +22,9 @@ class SetArtefactos
 
     #[ORM\Column(length: 255)]
     private ?string $imagen = null;
+
+    #[ORM\Column]
+    private ?string $juego = null;
 
     /**
      * @var Collection<int, ArtefactoPlantilla>
@@ -74,6 +76,11 @@ class SetArtefactos
         $this->imagen = $imagen;
 
         return $this;
+    }
+
+    public function getJuego(): ?string
+    {
+        return $this->juego;
     }
 
     /**

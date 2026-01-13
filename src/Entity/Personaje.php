@@ -40,7 +40,7 @@ class Personaje
     /**
      * @var Collection<int, Artefacto>
      */
-    #[ORM\ManyToMany(targetEntity: Artefacto::class, inversedBy: 'personajes')]
+    #[ORM\ManyToMany(targetEntity: Artefacto::class, inversedBy: 'personajes', cascade: ['persist'])]
     private Collection $artefactos;
 
     public function __construct()

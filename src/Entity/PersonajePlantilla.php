@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 class PersonajePlantilla
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -32,6 +31,9 @@ class PersonajePlantilla
 
     #[ORM\Column(length:255, nullable: true)]
     private ?string $elemento = null;
+
+    #[ORM\Column(length:255, nullable: true)]
+    private ?string $senda = null;
 
     /**
      * @var Collection<int, Personaje>
@@ -125,12 +127,24 @@ class PersonajePlantilla
     
     public function getElemento(): ?string
     {
-        $this->elemento;
+        return $this->elemento;
     }
 
     public function setElemento(?string $elemento): static
     {
         $this->elemento = $elemento;
+
+        return $this;
+    }
+
+    public function getSenda(): ?string
+    {
+        return $this->senda;
+    }
+
+    public function setSenda(?string $senda): static
+    {
+        $this->senda = $senda;
 
         return $this;
     }

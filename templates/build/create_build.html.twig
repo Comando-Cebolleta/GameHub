@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Crear Nueva Build{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styleIndex.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styleForm.css') }}">
+{% endblock %}
+
+{% block body %}
+{% include 'partials/header.html.twig' %} {# Asumiendo que crearás un header común #}
+
+<main>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4" style="color: #c2b46c; font-family: 'titulos-encabezados';">Crear Nueva Build</h1>
+
+        {{ form_start(form) }}
+        
+        <div class="row">
+            <div class="col-md-5">
+                <div class="form-section">
+                    <h3 style="color: #c2b46c;">1. Personaje</h3>
+                    {{ form_row(form.personajePlantilla) }}
+                    
+                    <div class="row">
+                        <div class="col-6">
+                            {{ form_row(form.nivel) }}
+                        </div>
+                        <div class="col-6">
+                            {{ form_row(form.dupeNum) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3 style="color: #c2b46c;">2. Arma</h3>
+                    {# Renderizamos el sub-formulario del arma #}
+                    {{ form_row(form.arma.armaPlantilla) }}
+                    {{ form_row(form.arma.nivel) }}
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="form-section">
+                    <h3 style="color: #c2b46c;">3. Artefactos</h3>
+                    <p class="small text-muted">Debes equipar los 5 artefactos obligatoriamente.</p>
+
+                    {# Definimos un array para crear los 5 campos más fácilmente #}
+                    {% set config_slots = [
+                        {'campo': 'artefacto_flor',  'titulo': 'Flor de la Vida'},
+                        {'campo': 'artefacto_pluma', 'titulo': 'Pluma de la Muerte'},
+                        {'campo': 'artefacto_reloj', 'titulo': 'Arenas del Eón'},
+                        {'campo': 'artefacto_copa',  'titulo': 'Cáliz de Eonothem'},
+                        {'campo': 'artefacto_casco', 'titulo': 'Tiara de Logos'}
+                    ] %}
+
+                    <div id="artefactos-wrapper">
+                        
+                        {# Recorremos el array #}
+                        {% for i, slot in config_slots %}
+                            
+                            {# Esto busca en el array "slots" de BuildController a que pieza le toca y crear el sub-formulario correspondiente #}
+                            {% set subForm = attribute(form, slot.campo) %}
+
+                            <div class="artefacto-card mb-3 p-3 border rounded">
+                                <div class="card-header bg-light text-dark fw-bold">
+                                    {{ slot.titulo }}
+                                </div>
+                                <div class="card-body">
+                                    {{ form_errors(subForm) }}
+
+                                    {{ form_row(subForm.setSeleccionado) }}
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {{ form_row(subForm.statPrincipalNombre) }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            {{ form_row(subForm.statPrincipalValor) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-12">
+                {{ form_row(form.guardar) }}
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+</main>
+
+<footer>Game Hub Blog &copy; 2025</footer>
+
+{# JAVASCRIPT PARA MANEJAR LA COLECCIÓN DINÁMICA #}
+{# <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const wrapper = document.getElementById('artefactos-wrapper');
+        const addBtn = document.getElementById('add-artefacto-btn');
+        
+        // Obtenemos el prototipo (el HTML plantilla que genera Symfony)
+        // y el índice actual (cuántos artefactos hay ya)
+        let prototype = wrapper.dataset.prototype;
+        let index = parseInt(wrapper.dataset.index);
+
+        addBtn.addEventListener('click', function() {
+            if (index >= 5) {
+                alert("Solo puedes equipar un máximo de 5 artefactos.");
+                return;
+            }
+
+            // Creamos un nuevo bloque de HTML reemplazando __name__ por el número índice (0, 1, 2...)
+            let newForm = prototype.replace(/__name__/g, index);
+            index++;
+            
+            // Actualizamos el índice en el dataset por si acaso
+            wrapper.dataset.index = index;
+
+            // Creamos el elemento DOM
+            const card = document.createElement('div');
+            card.classList.add('artefacto-card');
+            card.innerHTML = newForm;
+
+            // Botón de borrar para este artefacto específico
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.innerText = 'X';
+            removeBtn.classList.add('btn-remove-artefacto');
+            
+            removeBtn.addEventListener('click', function() {
+                card.remove();
+                index--; // (Opcional) Ajustar índice aunque no es estrictamente necesario para Symfony
+            });
+
+            card.appendChild(removeBtn);
+            wrapper.appendChild(card);
+        });
+    });
+</script> #}
+
+{% endblock %}

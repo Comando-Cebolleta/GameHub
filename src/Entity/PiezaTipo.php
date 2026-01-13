@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 class PiezaTipo
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -19,7 +18,7 @@ class PiezaTipo
     private ?string $codigo = null;
 
     #[ORM\Column(length: 20)]
-    private ?string $nombre = null;
+    private ?string $nombre = null; // Nombre para mostrar en front
 
     /**
      * @var Collection<int, ArtefactoPlantilla>
