@@ -17,7 +17,7 @@ class PersonajeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // 1. Selección del Personaje Base (Raiden, Zhongli, etc.)
+            // 1. Selección del Personaje Base
             ->add('personajePlantilla', EntityType::class, [
                 'class' => PersonajePlantilla::class,
                 'choice_label' => 'nombre',
@@ -36,14 +36,13 @@ class PersonajeType extends AbstractType
                 'attr' => ['min' => 0, 'max' => 6, 'class' => 'form-control'],
             ])
 
-            // 3. El Arma (Formulario embebido/anidado 1 a 1)
-            // Esto renderizará el ArmaType dentro de este formulario
+            // 3. El Arma
             ->add('arma', ArmaType::class, [
                 'label' => 'Arma equipada',
                 'required' => true,
             ])
 
-            // 4. Los Artefactos (Colección 1 a N)
+            // 4. Los Artefactos
             ->add('artefacto_flor', ArtefactoType::class, [
                 'mapped' => false,
                 'label' => false,
