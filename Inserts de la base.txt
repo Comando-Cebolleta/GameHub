@@ -132,8 +132,6 @@ VALUES
   NULL
 );
 
-----------------------------------------------------------------------------
-
 INSERT INTO personaje_plantilla
 (juego, nombre, stats_base, stats_por_nivel, imagen, elemento, senda)
 VALUES
@@ -267,8 +265,6 @@ VALUES
   'fisico',
   'destruccion'
 );
-
--------------------------------------------------------------------------------------
 
 INSERT INTO arma_plantilla
 (id, nombre, imagen, juego, stats_base, stats_por_nivel, pasiva, tipo)
@@ -433,3 +429,44 @@ VALUES
   'Incrementa la probabilidad crítica y el daño infligido al comienzo del combate.',
   'cono'
 );
+
+INSERT INTO pieza_tipo
+(id, codigo, nombre)
+VALUES
+(
+  0,
+  'pluma',
+  'Pluma de la Muerte'
+),
+(
+  1,
+  'sombrero',
+  'Tiara de Logos'
+),
+(
+  2,
+  'flor',
+  'Flor de la Vida'
+),
+(
+  3,
+  'reloj',
+  'Arenas del Eon'
+),
+(
+  4,
+  'caliz',
+  'Cáliz de Eonothem'
+);
+
+INSERT INTO `artefacto_plantilla` (`id`, `pieza_tipo_id`, `set_artefactos_id`, `imagen`, `juego`) VALUES ('0', '0', '0', NULL, 'genshin'), ('1', '1', '0', NULL, 'genshin'), ('2', '2', '0', NULL, 'genshin'), ('3', '3', '0', NULL, 'genshin'), ('4', '4', '0', NULL, 'genshin');
+
+INSERT INTO `juego_pieza_tipo` (`juego`, `pieza_tipo_id`) VALUES
+('genshin', 0),
+('genshin', 1),
+('genshin', 2),
+('genshin', 3),
+('genshin', 4);
+
+INSERT INTO `set_artefactos` (`id`, `nombre`, `efectos`, `imagen`, `juego`) VALUES
+(0, 'Emblema del Destino', 'Cosas raras de recarga de energía', '', 'genshin');

@@ -44,15 +44,30 @@ class PersonajeType extends AbstractType
             ])
 
             // 4. Los Artefactos (Colección 1 a N)
-            // allow_add: permite añadir nuevos artefactos desde JS
-            // by_reference: false es OBLIGATORIO para que llame a addArtefacto() en la entidad
-            ->add('artefactos', CollectionType::class, [
-                'entry_type' => ArtefactoType::class,
-                'entry_options' => ['label' => false],
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false, 
-                'label' => 'Artefactos',
+            ->add('artefacto_flor', ArtefactoType::class, [
+                'mapped' => false,
+                'label' => false,
+                'tipo_pieza_nombre' => 'Flor',
+            ])
+            ->add('artefacto_pluma', ArtefactoType::class, [
+                'mapped' => false,
+                'label' => false,
+                'tipo_pieza_nombre' => 'Pluma',
+            ])
+            ->add('artefacto_reloj', ArtefactoType::class, [
+                'mapped' => false,
+                'label' => false,
+                'tipo_pieza_nombre' => 'Reloj',
+            ])
+            ->add('artefacto_copa', ArtefactoType::class, [
+                'mapped' => false,
+                'label' => false,
+                'tipo_pieza_nombre' => 'Copa',
+            ])
+            ->add('artefacto_casco', ArtefactoType::class, [
+                'mapped' => false,
+                'label' => false,
+                'tipo_pieza_nombre' => 'Casco', 
             ])
 
             ->add('guardar', SubmitType::class, [
