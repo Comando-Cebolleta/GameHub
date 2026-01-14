@@ -28,6 +28,11 @@ class Comentario
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private ?User $user = null;
 
+    public function __construct()
+    {
+        $this->fechaPublicacion = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
