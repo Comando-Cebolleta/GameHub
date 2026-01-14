@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 14, 2026 at 11:57 AM
+-- Generation Time: Jan 14, 2026 at 12:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -112,7 +112,6 @@ INSERT INTO `artefacto_plantilla` (`id`, `pieza_tipo_id`, `set_artefactos_id`, `
 CREATE TABLE `comentario` (
   `id` int(11) NOT NULL,
   `cuerpo` varchar(4096) NOT NULL,
-  `likes` int(11) DEFAULT NULL,
   `fecha_publicacion` datetime NOT NULL,
   `post_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
@@ -149,7 +148,10 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 ('DoctrineMigrations\\Version20260109111950', '2026-01-09 12:19:56', 19),
 ('DoctrineMigrations\\Version20260111170514', '2026-01-11 18:05:31', 141),
 ('DoctrineMigrations\\Version20260111172126', '2026-01-11 18:21:32', 80),
-('DoctrineMigrations\\Version20260112083015', '2026-01-12 09:30:21', 103);
+('DoctrineMigrations\\Version20260112083015', '2026-01-12 09:30:21', 103),
+('DoctrineMigrations\\Version20260114110952', '2026-01-14 12:09:58', 1460),
+('DoctrineMigrations\\Version20260114111359', '2026-01-14 12:14:02', 653),
+('DoctrineMigrations\\Version20260114111608', '2026-01-14 12:16:13', 41);
 
 -- --------------------------------------------------------
 
@@ -224,6 +226,17 @@ INSERT INTO `juego_pieza_tipo` (`juego`, `pieza_tipo_id`) VALUES
 ('genshin', 2),
 ('genshin', 3),
 ('genshin', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `like`
+--
+
+CREATE TABLE `like` (
+  `user_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -332,7 +345,6 @@ CREATE TABLE `post` (
   `cuerpo` varchar(4096) NOT NULL,
   `fecha_publicacion` datetime NOT NULL,
   `visitas` int(11) DEFAULT NULL,
-  `likes` int(11) DEFAULT NULL,
   `foto` varchar(255) DEFAULT NULL,
   `juego` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -387,6 +399,9 @@ INSERT INTO `user` (`id`, `user_name`, `email`, `roles`, `password`, `foto_perfi
 (5, 'Jose', 'j2333@j.com', '[]', '$2y$13$/Bcy3SNPw94YCCukaAWujOMXJhUR9O7lmc.38DKalapprTZ6Llh1C', NULL, '2025-12-22', 0),
 (6, 'Jose', 'j23333@j.com', '[]', '$2y$13$9lPRZYhTpJ4DdoREywa.o.23UxjbRpf0i.p/2JWPf208Iulm/DhBG', NULL, '2025-12-22', 0),
 (7, 'dwafdwa', '32@drw.es', '[]', '$2y$13$m0W2PGaCmIJ8fpgU1BLLpOefQSxQRHBkquRk3LL8dFIBcA.KpW/Vq', NULL, '2025-12-22', 0),
+(11, 'dwadwae', 'no.reply.gamehubsite@gmail.com', '[]', '$2y$13$xHa2ZdM4WaLRRwyyrX3F7.ASDlI56pvMHS5VBOUVoSzsIQPK/36pe', NULL, '2025-12-28', 1),
+(15, 'fwafwaf', 'aluort8576@ieselcaminas.org', '[]', '$2y$13$joQkxN9xZhFwnYSWsbBw8eTC3liPdN/H1L0KZsUGBjSy5.wmJMA9O', NULL, '2026-01-08', 0),
+(16, 'Jose', 'aludua2859@ieselcaminas.org', '[]', '$2y$13$ttbvYh2HR2kJeDM5mrhAcuWVTTTyc9NiesA0gdBGjqyiPKbC42mhy', NULL, '2026-01-11', 1);
 
 --
 -- Indexes for dumped tables
@@ -469,6 +484,14 @@ ALTER TABLE `habilidad`
 ALTER TABLE `juego_pieza_tipo`
   ADD PRIMARY KEY (`juego`,`pieza_tipo_id`),
   ADD KEY `IDX_20F42A6333C6862B` (`pieza_tipo_id`);
+
+--
+-- Indexes for table `like`
+--
+ALTER TABLE `like`
+  ADD PRIMARY KEY (`user_id`,`post_id`),
+  ADD KEY `IDX_AC6340B3A76ED395` (`user_id`),
+  ADD KEY `IDX_AC6340B34B89032C` (`post_id`);
 
 --
 -- Indexes for table `personaje`
@@ -633,6 +656,13 @@ ALTER TABLE `habilidad`
 --
 ALTER TABLE `juego_pieza_tipo`
   ADD CONSTRAINT `FK_20F42A6333C6862B` FOREIGN KEY (`pieza_tipo_id`) REFERENCES `pieza_tipo` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `like`
+--
+ALTER TABLE `like`
+  ADD CONSTRAINT `FK_AC6340B34B89032C` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`),
+  ADD CONSTRAINT `FK_AC6340B3A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `personaje`
