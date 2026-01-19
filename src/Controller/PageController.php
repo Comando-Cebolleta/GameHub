@@ -35,7 +35,6 @@ final class PageController extends AbstractController
         $post = new Post();
         $post->setJuego($request->query->get('juego', 'genshin'));
         $post->setUser($this->getUser());
-        $post->setLikes(0);
         $post->setVisitas(0);
 
         //Por seguridad
@@ -60,6 +59,15 @@ final class PageController extends AbstractController
         ]);
     }
 
+    #[Route('/genshin/blog/post/{id}', name: 'genshin_post')]
+    public function genshinPost(Request $request, EntityManagerInterface $em): Response
+    {
+        return $this->render('page/nuevo_post.html.twig', [
+            'form' => $form->createView(),
+            'controller_name' => 'PageController',
+        ]);
+    }
+
     #[Route('/hsr/blog', name: 'hsr_blog')]
     public function hsrBlog(): Response
     {
@@ -74,7 +82,6 @@ final class PageController extends AbstractController
         $post = new Post();
         $post->setJuego($request->query->get('juego', 'hsr'));
         $post->setUser($this->getUser());
-        $post->setLikes(0);
         $post->setVisitas(0);
 
         //Por seguridad
