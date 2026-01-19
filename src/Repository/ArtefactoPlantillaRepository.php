@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\ArtefactoPlantilla;
+use App\Entity\SetArtefactos;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,28 +17,15 @@ class ArtefactoPlantillaRepository extends ServiceEntityRepository
         parent::__construct($registry, ArtefactoPlantilla::class);
     }
 
-    //    /**
-    //     * @return ArtefactoPlantilla[] Returns an array of ArtefactoPlantilla objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('a.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?ArtefactoPlantilla
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findOneBySetAndType(SetArtefactos $set, string $codigoTipo): ?ArtefactoPlantilla
+    {
+        return $this->createQueryBuilder('ap')
+            ->join('ap.piezaTipo', 'pt')       // join de tablas
+            ->where('ap.setArtefactos = :set') // Filtramos por el set de artefactos
+            ->andWhere('pt.codigo = :cod') // Filtramos por el nombre del tipo
+            ->setParameter('set', $set)
+            ->setParameter('cod', $codigoTipo)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

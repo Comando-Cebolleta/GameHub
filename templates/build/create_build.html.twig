@@ -43,31 +43,46 @@
             <div class="col-md-7">
                 <div class="form-section">
                     <h3 style="color: #c2b46c;">3. Artefactos</h3>
-                    <p class="small text-muted">Añade hasta 5 artefactos (Flor, Pluma, Reloj, Copa, Casco)</p>
-                    
-                    {# 
-                       IMPORTANTE: Aquí está la magia de Symfony Collections.
-                       'data-prototype' contiene la plantilla HTML de un nuevo artefacto.
-                    #}
-                    <div id="artefactos-wrapper"
-                         data-prototype="{{ form_widget(form.artefactos.vars.prototype)|e('html_attr') }}"
-                         data-index="{{ form.artefactos|length }}">
+                    <p class="small text-muted">Debes equipar los 5 artefactos obligatoriamente.</p>
+
+                    {# Definimos un array para crear los 5 campos más fácilmente #}
+                    {% set config_slots = [
+                        {'campo': 'artefacto_flor',  'titulo': 'Flor de la Vida'},
+                        {'campo': 'artefacto_pluma', 'titulo': 'Pluma de la Muerte'},
+                        {'campo': 'artefacto_reloj', 'titulo': 'Arenas del Eón'},
+                        {'campo': 'artefacto_copa',  'titulo': 'Cáliz de Eonothem'},
+                        {'campo': 'artefacto_casco', 'titulo': 'Tiara de Logos'}
+                    ] %}
+
+                    <div id="artefactos-wrapper">
                         
-                        {# Aquí se pintarán los artefactos si estuviéramos editando uno existente #}
-                        {% for artefactoForm in form.artefactos %}
-                            <div class="artefacto-card">
-                                {{ form_row(artefactoForm.artefactoPlantilla) }}
-                                <div class="row">
-                                    <div class="col-6">{{ form_row(artefactoForm.statPrincipalNombre) }}</div>
-                                    <div class="col-6">{{ form_row(artefactoForm.statPrincipalValor) }}</div>
+                        {# Recorremos el array #}
+                        {% for i, slot in config_slots %}
+                            
+                            {# Esto busca en el array "slots" de BuildController a que pieza le toca y crear el sub-formulario correspondiente #}
+                            {% set subForm = attribute(form, slot.campo) %}
+
+                            <div class="artefacto-card mb-3 p-3 border rounded">
+                                <div class="card-header bg-light text-dark fw-bold">
+                                    {{ slot.titulo }}
+                                </div>
+                                <div class="card-body">
+                                    {{ form_errors(subForm) }}
+
+                                    {{ form_row(subForm.setSeleccionado) }}
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            {{ form_row(subForm.statPrincipalNombre) }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            {{ form_row(subForm.statPrincipalValor) }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
                     </div>
-
-                    <button type="button" class="btn btn-outline-warning w-100 mt-3" id="add-artefacto-btn">
-                        + Añadir Artefacto
-                    </button>
                 </div>
             </div>
         </div>
@@ -85,7 +100,7 @@
 <footer>Game Hub Blog &copy; 2025</footer>
 
 {# JAVASCRIPT PARA MANEJAR LA COLECCIÓN DINÁMICA #}
-<script>
+{# <script>
     document.addEventListener('DOMContentLoaded', function() {
         const wrapper = document.getElementById('artefactos-wrapper');
         const addBtn = document.getElementById('add-artefacto-btn');
@@ -128,6 +143,6 @@
             wrapper.appendChild(card);
         });
     });
-</script>
+</script> #}
 
 {% endblock %}

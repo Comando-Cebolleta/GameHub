@@ -16,9 +16,6 @@ class Comentario
     #[ORM\Column(length: 4096)]
     private ?string $cuerpo = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $likes = null;
-
     #[ORM\Column]
     private ?\DateTime $fechaPublicacion = null;
 
@@ -30,6 +27,11 @@ class Comentario
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comentarios')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private ?User $user = null;
+
+    public function __construct()
+    {
+        $this->fechaPublicacion = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -44,18 +46,6 @@ class Comentario
     public function setCuerpo(string $cuerpo): static
     {
         $this->cuerpo = $cuerpo;
-
-        return $this;
-    }
-
-    public function getLikes(): ?int
-    {
-        return $this->likes;
-    }
-
-    public function setLikes(?int $likes): static
-    {
-        $this->likes = $likes;
 
         return $this;
     }

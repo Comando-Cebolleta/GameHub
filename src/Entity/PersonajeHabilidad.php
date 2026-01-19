@@ -13,7 +13,7 @@ class PersonajeHabilidad
     private ?Personaje $personaje = null;
 
     #[ORM\Id]
-    #[ORM\ManyToOne(targetEntity: Habilidad::class)]
+    #[ORM\ManyToOne(targetEntity: Habilidad::class, inversedBy:"personajeHabilidades")]
     #[ORM\JoinColumn(name: 'habilidad_id', referencedColumnName: 'id')]
     private ?Habilidad $habilidad = null;
 

@@ -6,6 +6,8 @@ use App\Entity\Personaje;
 use App\Entity\Artefacto;
 use App\Entity\Arma;
 use App\Form\PersonajeType;
+use App\Entity\SetArtefactos;
+use App\Repository\ArtefactoPlantillaRepository;
 use App\Repository\PersonajePlantillaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +22,10 @@ class BuildController extends AbstractController
 {
     #[Route('/crear', name: 'app_build_create')]
     #[IsGranted('ROLE_USER')] // Solo usuarios logueados pueden crear builds
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(
+        Request $request, 
+        EntityManagerInterface $em,
+        ArtefactoPlantillaRepository $repoPlantillas): Response
     {
         $personaje = new Personaje();
         
@@ -33,38 +38,55 @@ class BuildController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            // 1. Asignar el Usuario actual (Dueño de la build)
+            // Asignar el Usuario actual (Dueño de la build)
             $personaje->setUser($this->getUser());
 
-            // 2. PROCESAMIENTO MANUAL DEL JSON DE ARTEFACTOS
-            // Recorremos los sub-formularios de artefactos para sacar los datos "no mapeados"
-            foreach ($form->get('artefactos') as $artefactoForm) {
-                /** @var Artefacto $artefactoEntity */
-                $artefactoEntity = $artefactoForm->getData();
-                
-                // Obtenemos los valores de los campos que pusimos 'mapped' => false
-                $statNombre = $artefactoForm->get('statPrincipalNombre')->getData();
-                $statValor = $artefactoForm->get('statPrincipalValor')->getData();
+            $slots = [
+            'artefacto_flor' => 'flor',
+            'artefacto_pluma' => 'pluma',
+            'artefacto_reloj' => 'reloj',
+            'artefacto_copa' => 'caliz',
+            'artefacto_casco' => 'sombrero'
+            ];
 
-                // Construimos el array (que Doctrine guardará como JSON)
+            foreach ($slots as $campoForm => $codigoTipoBD) {
+            
+                // 1. Sacamos el subformulario
+                $subForm = $form->get($campoForm);
+                
+                /** @var Artefacto $artefactoEntity */
+                $artefactoEntity = $subForm->getData(); // Aquí viene vacío de plantilla
+
+                // 2. Obtenemos el SET que seleccionó el usuario
+                /** @var SetArtefactos $setSeleccionado */
+                $setSeleccionado = $subForm->get('setSeleccionado')->getData();
+
+                // 3. BUSCAMOS LA PIEZA EXACTA EN LA BD
+                // "Búscame la pieza del set 'Gladiador' que sea tipo 'Flor'"
+                $plantillaExacta = $repoPlantillas->findOneBySetAndType($setSeleccionado, $codigoTipoBD);
+
+                if (!$plantillaExacta) {
+                    // Error de seguridad por si la BD está incompleta
+                    $this->addFlash('error', "No se encontró la pieza $codigoTipoBD del set " . $setSeleccionado->getNombre());
+                    return $this->redirectToRoute('app_build_create'); 
+                }
+
+                // 4. Asignamos la plantilla encontrada a la entidad
+                $artefactoEntity->setArtefactoPlantilla($plantillaExacta);
+
+                // 5. Procesamos Stats (JSON) y guardamos
                 $jsonStats = [
                     'main_stat' => [
-                        'name' => $statNombre,
-                        'value' => $statValor
+                        'name' => $subForm->get('statPrincipalNombre')->getData(),
+                        'value' => $subForm->get('statPrincipalValor')->getData()
                     ],
-                    // Aquí podrías añadir sub-stats si amplias el formulario en el futuro
                     'sub_stats' => [] 
                 ];
-
-                // Guardamos el JSON en la entidad
                 $artefactoEntity->setEstadisticas($jsonStats);
                 
-                // Vinculamos el artefacto al personaje (por si el cascade no lo pilla)
                 $personaje->addArtefacto($artefactoEntity);
             }
-
-            // 3. Persistir todo (Gracias al cascade=['persist'] en las entidades, 
-            // al guardar Personaje se guardan el Arma y los Artefactos solos)
+            
             $em->persist($personaje);
             $em->flush();
 
