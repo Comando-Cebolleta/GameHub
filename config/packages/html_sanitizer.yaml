@@ -1,0 +1,38 @@
+framework:
+    html_sanitizer:
+        sanitizers:
+            app.post_sanitizer:
+                allow_safe_elements: true
+                
+                # --- ESTA ES LA CLAVE QUE TE FALTA ---
+                # Permite enlaces tipo "/uploads/foto.jpg"
+                allow_relative_links: true
+                allow_relative_medias: true
+                
+                # Elementos permitidos
+                allow_elements:
+                    - 'figure'
+                    - 'figcaption'
+                    - 'img'
+                    - 'div'
+                    - 'p'
+                    - 'br'
+                    - 'a'
+                    - 'ul'
+                    - 'li'
+                    - 'h1'
+                    - 'h2'
+                    - 'h3'
+                    - 'strong'
+                    - 'em'
+
+                # Atributos permitidos
+                allow_attributes:
+                    'src': ['img']
+                    'alt': ['img']
+                    'title': ['img']
+                    'class': ['figure', 'div', 'p']
+                    'style': ['img', 'figure']
+                    'width': ['img']
+                    'height': ['img']
+                    'href': ['a']

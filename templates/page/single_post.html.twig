@@ -1,0 +1,13 @@
+{# templates/post/show.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ post.titulo }}</h1>
+
+    {# AQUÍ es donde se protege la salida #}
+    <div class="contenido-post">
+        {{ post.cuerpo | sanitize_html('app.post_sanitizer') }}
+    </div>
+
+    <a href="{{ path('genshin_blog') }}">Volver</a>
+{% endblock %}
