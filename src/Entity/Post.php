@@ -27,9 +27,6 @@ class Post
     #[ORM\Column(nullable: true)]
     private ?int $visitas = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $likes = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $foto = null;
 
@@ -46,10 +43,17 @@ class Post
     #[ORM\OneToMany(targetEntity: Comentario::class, mappedBy: 'post')]
     private Collection $comentarios;
 
+    /**
+     * @var Collection<int, Like>
+     */
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'post')]
+    private Collection $likes;
+
     public function __construct()
     {
         $this->comentarios = new ArrayCollection();
         $this->fechaPublicacion = new \DateTime();
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,18 +105,6 @@ class Post
     public function setVisitas(?int $visitas): static
     {
         $this->visitas = $visitas;
-
-        return $this;
-    }
-
-    public function getLikes(): ?int
-    {
-        return $this->likes;
-    }
-
-    public function setLikes(?int $likes): static
-    {
-        $this->likes = $likes;
 
         return $this;
     }
@@ -179,6 +171,36 @@ class Post
             // set the owning side to null (unless already changed)
             if ($comentario->getPostId() === $this) {
                 $comentario->setPostId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Like>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLikes(Like $likes): static
+    {
+        if (!$this->likes->contains($likes)) {
+            $this->likes->add($likes);
+            $likes->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikes(Like $likes): static
+    {
+        if ($this->likes->removeElement($likes)) {
+            // set the owning side to null (unless already changed)
+            if ($likes->getPost() === $this) {
+                $likes->setPost(null);
             }
         }
 
