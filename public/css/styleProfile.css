@@ -1,0 +1,206 @@
+/* public/css/styleProfile.css */
+
+/* ---------- FUENTES ESTRUCTURA BÁSICA (Heredado) ---------- */
+@font-face { font-family: 'titulos-encabezados'; src: url('../assets/fonts/CostalineThin-OGLRd.otf') format('opentype'); }
+@font-face { font-family: 'texto-parrafos'; src: url('../assets/fonts/Simvoni-d9vV6.otf') format('opentype'); }
+
+body {
+    margin: 0;
+    font-family: 'texto-parrafos', Arial, sans-serif;
+    background: linear-gradient(180deg, #3a2a4b, #9d835a);
+    color: #a68a54;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: 'titulos-encabezados', sans-serif; }
+a { text-decoration: none; color: inherit; }
+
+/* ---------- HEADER & FOOTER (Estándar) ---------- */
+header { background-color: #1f1b2e; height: 150px; display: flex; justify-content: center; align-items: center; padding: 10px; position: relative; }
+.logoIcon { height: 100px; max-height: 120px; width: auto; object-fit: contain; }
+footer { background-color: #1f1b2e; color: #ffffff; text-align: center; padding: 15px 0; font-size: 0.9rem; }
+.header-user-icon { position: absolute; right: 30px; top: 50%; transform: translateY(-50%); }
+.header-user-icon img { width: 70px; height: auto; max-height: 70px; cursor: pointer; }
+
+/* ---------- MAIN PROFILE ---------- */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+}
+
+/* Contenedor principal del perfil */
+.profile-container {
+    width: 100%;
+    max-width: 1000px;
+    background: rgb(31, 27, 46);
+    border: 2px solid #c2b46c;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 40px;
+}
+
+/* Banner superior morado */
+.profile-banner {
+    width: 100%;
+    height: 150px;
+    background-color: #5a4b6e;
+    position: relative;
+}
+
+/* ---------- ICONO DE AJUSTES (TAMAÑO AUMENTADO) ---------- */
+.settings-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    /* He subido esto a 75px. Cámbialo si quieres más o menos */
+    width: 75px;
+    height: 75px;
+
+    z-index: 10;
+}
+
+.settings-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.settings-icon:hover {
+    cursor: pointer;
+    opacity: 0.8; /* Efecto sutil al pasar el ratón */
+}
+/* ---------- FIN ICONO DE AJUSTES ---------- */
+
+
+/* Avatar circular del usuario */
+.profile-avatar {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-color: #ccc;
+    border: 5px solid #c2b46c;
+    margin-top: -80px;
+    z-index: 1;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+}
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Nombre del usuario */
+.profile-username {
+    margin-top: 20px;
+    font-size: 2rem;
+    color: #c2b46c;
+    text-align: center;
+}
+
+/* Contenedor de las tarjetas */
+.profile-cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    padding: 40px;
+    flex-wrap: wrap;
+}
+
+/* Estilo de cada tarjeta */
+.profile-card {
+    width: 100%;
+    max-width: 350px;
+    aspect-ratio: 1 / 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid #c2b46c;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'titulos-encabezados', sans-serif;
+    font-size: 1.6rem;
+    color: #fff;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Efecto hover en las tarjetas */
+.profile-card:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 12px 25px rgba(194, 180, 108, 0.4);
+    background: rgba(194, 180, 108, 0.15);
+    color: #c2b46c;
+    border-color: #fff;
+}
+
+/* ---------- MEDIA QUERIES (Adaptación a Móvil) ---------- */
+@media (max-width: 768px) {
+    header { height: 120px; }
+    .logoIcon { height: 80px; }
+    .header-user-icon img { width: 55px; max-height: 55px; }
+
+    .profile-container {
+        margin: 0 10px;
+        border-radius: 15px;
+    }
+    .profile-banner {
+        height: 120px;
+    }
+
+    .settings-icon {
+        width: 50px; /* Tamaño para móvil */
+        height: 50px;
+        top: 15px;
+        right: 15px;
+    }
+
+    .profile-avatar {
+        width: 130px;
+        height: 130px;
+        margin-top: -65px;
+        border-width: 4px;
+    }
+    .profile-username {
+        font-size: 1.6rem;
+        margin-top: 15px;
+    }
+
+    .profile-cards-container {
+        gap: 25px;
+        padding: 25px;
+        flex-direction: column;
+        align-items: center;
+    }
+    .profile-card {
+        max-width: 100%;
+        aspect-ratio: unset;
+        height: 180px;
+        font-size: 1.4rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    header { height: 140px; }
+    .logoIcon { height: 250px; }
+    footer { padding: 25px 0; font-size: 1.1rem; }
+    .header-user-icon img { width: 70px; max-height: 70px; }
+
+    .profile-container { max-width: 1100px; }
+    .profile-card { max-width: 400px; font-size: 1.8rem; }
+}

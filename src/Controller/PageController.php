@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\Post;
 use App\Form\PostFormType;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class PageController extends AbstractController
 {
@@ -129,5 +130,13 @@ final class PageController extends AbstractController
         return $this->render('page/single_post.html.twig', [
             "post" => $post
         ]);
+    }
+  
+    #[Route('/profile', name: 'app_profile')]
+    #[IsGranted('ROLE_USER')]
+    public function perfil(): Response
+    {
+        // Asegúrate de que tu archivo esté en: templates/profile/profile.html.twig
+        return $this->render('profile/profile.html.twig');
     }
 }
