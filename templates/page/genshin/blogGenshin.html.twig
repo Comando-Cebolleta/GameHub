@@ -8,8 +8,9 @@
 {% block body %}
 
     <header>
-        <img src="{{ asset('assets/img/logoIcon.webp') }}" alt="Logo" class="logoIcon">
-        <div class="login-container">
+        <a href="{{ path('home') }}">
+            <img src="{{ asset('assets/img/logoIcon.webp') }}" alt="Logo" class="logoIcon">
+        </a>        <div class="login-container">
             <a href="{{ path('app_login') }}">
                 <img src="{{ asset('assets/img/loginIconGOLD.webp') }}" alt="Inicio de sesión">
             </a>
@@ -66,7 +67,7 @@
     </main>
 
     <footer>
-        Game Hub Blog &copy; 2025
+        Game Hub &copy; 2025-2026
     </footer>
 
 {% endblock %}

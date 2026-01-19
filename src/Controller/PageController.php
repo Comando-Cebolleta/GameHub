@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\Post;
 use App\Form\PostFormType;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class PageController extends AbstractController
 {
@@ -59,14 +60,14 @@ final class PageController extends AbstractController
         ]);
     }
 
-    #[Route('/genshin/blog/post/{id}', name: 'genshin_post')]
-    public function genshinPost(Request $request, EntityManagerInterface $em): Response
-    {
-        return $this->render('page/nuevo_post.html.twig', [
-            'form' => $form->createView(),
-            'controller_name' => 'PageController',
-        ]);
-    }
+//    #[Route('/genshin/blog/post/{id}', name: 'genshin_post')]
+//    public function genshinPost(Request $request, EntityManagerInterface $em): Response
+//    {
+//        return $this->render('page/nuevo_post.html.twig', [
+//            'form' => $form->createView(),
+//            'controller_name' => 'PageController',
+//        ]);
+//    }
 
     #[Route('/hsr/blog', name: 'hsr_blog')]
     public function hsrBlog(): Response
@@ -104,5 +105,12 @@ final class PageController extends AbstractController
             'form' => $form->createView(),
             'controller_name' => 'PageController',
         ]);
+    }
+    #[Route('/profile', name: 'app_profile')]
+    #[IsGranted('ROLE_USER')]
+    public function perfil(): Response
+    {
+        // Asegúrate de que tu archivo esté en: templates/profile/profile.html.twig
+        return $this->render('profile/profile.html.twig');
     }
 }
