@@ -6,6 +6,7 @@ use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
@@ -18,17 +19,14 @@ class Post
     #[ORM\Column(length: 255)]
     private ?string $titulo = null;
 
-    #[ORM\Column(length: 4096)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $cuerpo = null;
 
     #[ORM\Column]
     private ?\DateTime $fechaPublicacion = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $visitas = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $foto = null;
+    private ?int $visitas = 0;
 
     #[ORM\Column(nullable: false)]
     private ?string $juego = null;
@@ -54,6 +52,7 @@ class Post
         $this->comentarios = new ArrayCollection();
         $this->fechaPublicacion = new \DateTime();
         $this->likes = new ArrayCollection();
+        $this->visitas = 0;
     }
 
     public function getId(): ?int
@@ -105,18 +104,6 @@ class Post
     public function setVisitas(?int $visitas): static
     {
         $this->visitas = $visitas;
-
-        return $this;
-    }
-
-    public function getFoto(): ?string
-    {
-        return $this->foto;
-    }
-
-    public function setFoto(?string $foto): static
-    {
-        $this->foto = $foto;
 
         return $this;
     }
@@ -185,22 +172,22 @@ class Post
         return $this->likes;
     }
 
-    public function addLikes(Like $likes): static
+    public function addLike(Like $like): static
     {
-        if (!$this->likes->contains($likes)) {
-            $this->likes->add($likes);
-            $likes->setPost($this);
+        if (!$this->likes->contains($like)) {
+            $this->likes->add($like);
+            $like->setPost($this);
         }
 
         return $this;
     }
 
-    public function removeLikes(Like $likes): static
+    public function removeLike(Like $like): static
     {
-        if ($this->likes->removeElement($likes)) {
+        if ($this->likes->removeElement($like)) {
             // set the owning side to null (unless already changed)
-            if ($likes->getPost() === $this) {
-                $likes->setPost(null);
+            if ($like->getPost() === $this) {
+                $like->setPost(null);
             }
         }
 
