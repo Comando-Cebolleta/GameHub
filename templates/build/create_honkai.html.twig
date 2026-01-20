@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block title %}Nueva Build Honkai{% endblock %}
+{% block body %}
+<div class="container mt-5">
+    <h2 class="mb-4">Nueva Build - Honkai Star Rail</h2>
+    {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card p-3 mb-3">
+                    {{ form_row(form.nombre) }}
+                    {{ form_row(form.personajePlantilla) }}
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="card p-3">
+                    <h4>Reliquias y Ornamentos</h4>
+                    <div class="row">
+                        <div class="col-6">{{ form_row(form.reliquia_cabeza) }}</div>
+                        <div class="col-6">{{ form_row(form.reliquia_manos) }}</div>
+                        <div class="col-6">{{ form_row(form.reliquia_torso) }}</div>
+                        <div class="col-6">{{ form_row(form.reliquia_pies) }}</div>
+                        <hr class="my-3">
+                        <div class="col-6">{{ form_row(form.ornamento_esfera) }}</div>
+                        <div class="col-6">{{ form_row(form.ornamento_cuerda) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-warning mt-3 w-100">Guardar Build</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
