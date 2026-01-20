@@ -24,6 +24,9 @@ class Personaje
     #[ORM\ManyToOne(inversedBy: 'personajes')]
     private ?User $user = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nombre = null;
+    
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Arma $arma = null;
 
@@ -88,6 +91,17 @@ class Personaje
     {
         $this->user = $user;
 
+        return $this;
+    }
+
+    public function getNombre(): ?string
+    {
+        return $this->nombre;
+    }
+
+    public function setNombre(?string $nombre): static
+    {
+        $this->nombre = $nombre;
         return $this;
     }
 

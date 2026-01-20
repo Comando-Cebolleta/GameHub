@@ -4,9 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Personaje;
 use App\Entity\Artefacto;
-use App\Entity\Arma;
-use App\Form\PersonajeType;
-use App\Entity\SetArtefactos;
+use App\Form\GenshinBuildType;
+use App\Form\HonkaiBuildType;
 use App\Repository\ArtefactoPlantillaRepository;
 use App\Repository\PersonajePlantillaRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,104 +19,87 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/build')]
 class BuildController extends AbstractController
 {
-    #[Route('/crear', name: 'app_build_create')]
-    #[IsGranted('ROLE_USER')] // Solo usuarios logueados pueden crear builds
-    public function create(
-        Request $request, 
-        EntityManagerInterface $em,
-        ArtefactoPlantillaRepository $repoPlantillas): Response
+    // --- RUTA GENSHIN ---
+    #[Route('/genshin/crear', name: 'app_build_genshin_create')]
+    #[IsGranted('ROLE_USER')]
+    public function createGenshin(Request $request, EntityManagerInterface $em, ArtefactoPlantillaRepository $repoPlantillas): Response
     {
         $personaje = new Personaje();
-        
-        // Inicializamos el Arma vacía para que el formulario no falle al intentar acceder a ella
-        $arma = new Arma();
-        $personaje->setArma($arma);
+        $personaje->setUser($this->getUser());
 
-        $form = $this->createForm(PersonajeType::class, $personaje);
+        $form = $this->createForm(GenshinBuildType::class, $personaje);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            // Asignar el Usuario actual (Dueño de la build)
-            $personaje->setUser($this->getUser());
-
-            $slots = [
-            'artefacto_flor' => 'flor',
-            'artefacto_pluma' => 'pluma',
-            'artefacto_reloj' => 'reloj',
-            'artefacto_copa' => 'caliz',
-            'artefacto_casco' => 'sombrero'
-            ];
-
-            foreach ($slots as $campoForm => $codigoTipoBD) {
-            
-                // 1. Sacamos el subformulario
-                $subForm = $form->get($campoForm);
-                
-                /** @var Artefacto $artefactoEntity */
-                $artefactoEntity = $subForm->getData(); // Aquí viene vacío de plantilla
-
-                // 2. Obtenemos el SET que seleccionó el usuario
-                /** @var SetArtefactos $setSeleccionado */
-                $setSeleccionado = $subForm->get('setSeleccionado')->getData();
-
-                // 3. BUSCAMOS LA PIEZA EXACTA EN LA BD
-                // "Búscame la pieza del set 'Gladiador' que sea tipo 'Flor'"
-                $plantillaExacta = $repoPlantillas->findOneBySetAndType($setSeleccionado, $codigoTipoBD);
-
-                if (!$plantillaExacta) {
-                    // Error de seguridad por si la BD está incompleta
-                    $this->addFlash('error', "No se encontró la pieza $codigoTipoBD del set " . $setSeleccionado->getNombre());
-                    return $this->redirectToRoute('app_build_create'); 
-                }
-
-                // 4. Asignamos la plantilla encontrada a la entidad
-                $artefactoEntity->setArtefactoPlantilla($plantillaExacta);
-
-                // 5. Procesamos Stats (JSON) y guardamos
-                $jsonStats = [
-                    'main_stat' => [
-                        'name' => $subForm->get('statPrincipalNombre')->getData(),
-                        'value' => $subForm->get('statPrincipalValor')->getData()
-                    ],
-                    'sub_stats' => [] 
-                ];
-                $artefactoEntity->setEstadisticas($jsonStats);
-                
-                $personaje->addArtefacto($artefactoEntity);
-            }
+            $slots = ['artefacto_flor' => 'flor', 'artefacto_pluma' => 'pluma', 'artefacto_reloj' => 'reloj', 'artefacto_copa' => 'caliz', 'artefacto_casco' => 'sombrero'];
+            $this->procesarArtefactos($form, $slots, $personaje, $repoPlantillas);
             
             $em->persist($personaje);
             $em->flush();
 
-            $this->addFlash('success', '¡Build creada con éxito!');
-
-            // Redirigir al perfil del usuario o a la lista de builds
-            return $this->redirectToRoute('home'); 
+            $this->addFlash('success', '¡Build de Genshin creada!');
+            return $this->redirectToRoute('app_index'); // OJO: Cambia 'app_index' por la ruta de tu home (ej: 'home')
         }
 
-        return $this->render('build/create_build.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render('build/create_genshin.html.twig', ['form' => $form->createView()]);
     }
 
-    // --- API PARA AJAX (Requisito de tu Memoria) ---
-    
+    // --- RUTA HONKAI ---
+    #[Route('/honkai/crear', name: 'app_build_honkai_create')]
+    #[IsGranted('ROLE_USER')]
+    public function createHonkai(Request $request, EntityManagerInterface $em, ArtefactoPlantillaRepository $repoPlantillas): Response
+    {
+        $personaje = new Personaje();
+        $personaje->setUser($this->getUser());
+
+        $form = $this->createForm(HonkaiBuildType::class, $personaje);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $slots = ['reliquia_cabeza' => 'cabeza', 'reliquia_manos' => 'manos', 'reliquia_torso' => 'torso', 'reliquia_pies' => 'pies', 'ornamento_esfera' => 'esfera', 'ornamento_cuerda' => 'cuerda'];
+            $this->procesarArtefactos($form, $slots, $personaje, $repoPlantillas);
+
+            $em->persist($personaje);
+            $em->flush();
+
+            $this->addFlash('success', '¡Build de Honkai creada!');
+            return $this->redirectToRoute('app_index');
+        }
+
+        return $this->render('build/create_honkai.html.twig', ['form' => $form->createView()]);
+    }
+
+    private function procesarArtefactos($form, $slots, $personaje, $repoPlantillas) {
+        foreach ($slots as $campoForm => $codigoTipoBD) {
+            if (!$form->has($campoForm)) continue;
+            $subForm = $form->get($campoForm);
+            /** @var Artefacto $artefactoEntity */
+            $artefactoEntity = $subForm->getData();
+            $setSeleccionado = $subForm->get('setSeleccionado')->getData();
+            
+            if (!$setSeleccionado) continue;
+
+            $plantillaExacta = $repoPlantillas->findOneBySetAndType($setSeleccionado, $codigoTipoBD);
+            if ($plantillaExacta) {
+                $artefactoEntity->setArtefactoPlantilla($plantillaExacta);
+                $jsonStats = [
+                    'main_stat' => ['name' => $subForm->get('statPrincipalNombre')->getData(), 'value' => $subForm->get('statPrincipalValor')->getData()],
+                    'sub_stats' => []
+                ];
+                $artefactoEntity->setEstadisticas($jsonStats);
+                $personaje->addArtefacto($artefactoEntity);
+            }
+        }
+    }
+
     #[Route('/api/personajes/{juego}', name: 'api_personajes_por_juego', methods: ['GET'])]
     public function getPersonajesApi(string $juego, PersonajePlantillaRepository $repo): JsonResponse
     {
-        // Busca las plantillas (Raiden, Kafka, etc.) que sean de ese juego
         $plantillas = $repo->findBy(['juego' => $juego]);
-
         $data = [];
         foreach ($plantillas as $p) {
-            $data[] = [
-                'id' => $p->getId(),
-                'nombre' => $p->getNombre(),
-                'imagen' => $p->getImagen() // Útil si quieres mostrar la cara del PJ en el select
-            ];
+            $data[] = ['id' => $p->getId(), 'nombre' => $p->getNombre()];
         }
-
         return new JsonResponse($data);
     }
 }
