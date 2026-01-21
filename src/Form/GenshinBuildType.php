@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Personaje;
 use App\Entity\Arma;
+use App\Form\ArmaType;
 use App\Form\GenshinArtefactoType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -27,12 +28,10 @@ class GenshinBuildType extends AbstractType
                     return $er->createQueryBuilder('p')->where('p.senda IS NULL')->orderBy('p.nombre', 'ASC');
                 },
             ])
-            ->add('arma', EntityType::class, [
-                'class' => Arma::class,
-                'choice_label' => 'nombre',
-                'label' => 'Arma',
-                'placeholder' => 'Selecciona arma...',
+            ->add('arma', ArmaType::class, [
+                'label' => false,
                 'required' => false,
+                'juego' => 'Genshin',
             ])
             ->add('artefacto_flor', GenshinArtefactoType::class, ['label' => 'Flor', 'mapped' => false])
             ->add('artefacto_pluma', GenshinArtefactoType::class, ['label' => 'Pluma', 'mapped' => false])
