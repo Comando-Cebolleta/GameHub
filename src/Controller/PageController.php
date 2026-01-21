@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\Post;
 use App\Form\PostFormType;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 final class PageController extends AbstractController
 {
@@ -50,7 +51,9 @@ final class PageController extends AbstractController
             $em->persist($post);
             $em->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('genshin_post', [
+                'id' => $post->getId()
+            ]);
         }
 
         return $this->render('page/nuevo_post.html.twig', [
@@ -60,11 +63,17 @@ final class PageController extends AbstractController
     }
 
     #[Route('/genshin/blog/post/{id}', name: 'genshin_post')]
-    public function genshinPost(Request $request, EntityManagerInterface $em): Response
+    public function genshinPost($id, Request $request, EntityManagerInterface $em): Response
     {
-        return $this->render('page/nuevo_post.html.twig', [
-            'form' => $form->createView(),
-            'controller_name' => 'PageController',
+        $repo = $em->getRepository(Post::class);
+        $post = $repo->findOneByIdAndGame($id, "genshin");
+
+        if (!$post) {
+            throw $this->createNotFoundException('Ningún post existente con ese ID');
+        }
+
+        return $this->render('page/single_post.html.twig', [
+            "post" => $post
         ]);
     }
 
@@ -97,12 +106,37 @@ final class PageController extends AbstractController
             $em->persist($post);
             $em->flush();
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('hsr_post', [
+                'id' => $post->getId()
+            ]);
         }
 
         return $this->render('page/nuevo_post.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'PageController',
         ]);
+    }
+
+    #[Route('/hsr/blog/post/{id}', name: 'hsr_post')]
+    public function hsrPost($id, Request $request, EntityManagerInterface $em): Response
+    {
+        $repo = $em->getRepository(Post::class);
+        $post = $repo->findOneByIdAndGame($id, "hsr");
+
+        if (!$post) {
+            throw $this->createNotFoundException('Ningún post existente con ese ID');
+        }
+
+        return $this->render('page/single_post.html.twig', [
+            "post" => $post
+        ]);
+    }
+  
+    #[Route('/profile', name: 'app_profile')]
+    #[IsGranted('ROLE_USER')]
+    public function perfil(): Response
+    {
+        // Asegúrate de que tu archivo esté en: templates/profile/profile.html.twig
+        return $this->render('profile/profile.html.twig');
     }
 }

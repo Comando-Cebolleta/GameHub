@@ -1,0 +1,187 @@
+/* ---------- FUENTES ---------- */
+@font-face {
+    font-family: 'titulos-encabezados';
+    src: url('../assets/fonts/CostalineThin-OGLRd.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'texto-parrafos';
+    src: url('../assets/fonts/Simvoni-d9vV6.otf') format('opentype');
+}
+
+/* ---------- GENERAL ---------- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'texto-parrafos', Arial, sans-serif;
+    background: linear-gradient(180deg, #3a2a4b, #9d835a);
+    color: #a68a54;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, h3 {
+    font-family: 'titulos-encabezados', Arial, sans-serif;
+    color: #c2b46c;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ---------- HEADER ---------- */
+header {
+    background-color: #1f1b2e;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    position: relative;
+}
+
+.logoIcon {
+    height: 100px;
+    max-height: 120px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* ---------- MAIN (LOGIN) ---------- */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Reutilizamos el estilo de tu .container original pero ajustado para un formulario */
+.login-container {
+    width: 100%;
+    max-width: 450px;
+    background: rgb(31, 27, 46);
+    border: 2px solid #c2b46c;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-title {
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+/* ---------- FORMULARIO ---------- */
+form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #fff; /* Blanco para que se lea bien sobre fondo oscuro */
+    font-size: 1.1rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid #5a4b6e;
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'texto-parrafos', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #c2b46c;
+    box-shadow: 0 0 10px rgba(194, 180, 108, 0.2);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Botón personalizado estilo dorado */
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: linear-gradient(45deg, #c2b46c, #a68a54);
+    border: none;
+    border-radius: 8px;
+    color: #1f1b2e; /* Texto oscuro para contraste con el dorado */
+    font-family: 'titulos-encabezados', sans-serif;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-login:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(194, 180, 108, 0.6);
+}
+
+/* ---------- ALERTAS (Reemplazo de Bootstrap alerts) ---------- */
+.alert {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.2);
+    border: 1px solid #dc3545;
+    color: #ffadad;
+}
+
+.alert-info {
+    background-color: rgba(13, 202, 240, 0.2);
+    border: 1px solid #0dcaf0;
+    color: #9eeaf9;
+}
+
+.alert a {
+    text-decoration: underline;
+    color: inherit;
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+    background-color: #1f1b2e;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 0.9rem;
+}
+
+/* ---------- MEDIA QUERIES ---------- */
+@media (max-width: 768px) {
+    header { height: 120px; }
+    .logoIcon { height: 80px; }
+    .login-container { padding: 25px; margin: 0 15px; }
+}
+
+@media (min-width: 1200px) {
+    header { height: 140px; }
+    .logoIcon { height: 250px; } /* Ajustado para pantallas grandes igual que tu index */
+    footer { padding: 25px 0; font-size: 1.1rem; }
+}
