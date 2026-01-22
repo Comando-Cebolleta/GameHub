@@ -28,6 +28,8 @@ class GenshinBuildType extends AbstractType
                 'placeholder' => 'Selecciona personaje...',
                 'attr' => ['class' => 'form-select arma-selector'],
                 'query_builder' => function (EntityRepository $er) {
+                    // Para mirar si el pj es de Genshin, miramos si el campo senda es null
+                    // porque los de Genshin no tienen
                     return $er->createQueryBuilder('p')->where('p.senda IS NULL')->orderBy('p.nombre', 'ASC');
                 },
             ])
