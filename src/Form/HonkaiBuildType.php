@@ -70,6 +70,7 @@ class HonkaiBuildType extends AbstractType
             ])
 
             // --- ORNAMENTOS (Sets Planares) ---
+            // Lo mismo que con las reliquias
             ->add('ornamento_esfera', HonkaiArtefactoType::class, [
                 'label' => 'Esfera', 'mapped' => false,
                 'pieza_testigo' => $filtroOrnamento

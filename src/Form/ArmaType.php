@@ -39,6 +39,7 @@ class ArmaType extends AbstractType
             ->add('nivel', IntegerType::class, [
                 'label' => 'Nivel',
                 'attr' => ['min' => 1,
+                // Esto mira si el arma es de Honkai o Genshin, porque tienen nivel máximo distinto
                 'max' => $juego == "genshin" ? 80 : 90, 'class' => 'form-control'],
             ])
         ;
