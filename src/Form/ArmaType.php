@@ -21,9 +21,9 @@ class ArmaType extends AbstractType
             ->add('armaPlantilla', EntityType::class, [
                 'class' => ArmaPlantilla::class,
                 'choice_label' => 'nombre',
-                'label' => 'Selecciona el Arma',
+                'label' => false,
                 'placeholder' => 'Elige un arma...',
-                'attr' => ['class' => 'form-select arma-selector'], // Clase para JS
+                'attr' => ['class' => 'form-select arma-selector'],
                 'query_builder' => function (EntityRepository $er) use ($juego) {
                     // Aquí usamos la variable $juego para filtrar
                     $qb = $er->createQueryBuilder('a');
@@ -37,8 +37,9 @@ class ArmaType extends AbstractType
                 },
             ])
             ->add('nivel', IntegerType::class, [
-                'label' => 'Nivel del arma',
-                'attr' => ['min' => 1, 'max' => 90, 'class' => 'form-control'],
+                'label' => 'Nivel',
+                'attr' => ['min' => 1,
+                'max' => $juego == "genshin" ? 80 : 90, 'class' => 'form-control'],
             ])
         ;
     }

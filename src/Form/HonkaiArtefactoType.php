@@ -27,19 +27,46 @@ class HonkaiArtefactoType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // El nombre del tipo de pieza que usaremos para filtrar (ej: "Cabeza" o "Esfera")
+        // Porque en honkai hay 2 tipos de sets
+        // Los de 4 piezas (cabeza, manos...) Y los de 2 que solo tienen esfera y cuerda
+        // Necesitamos hacer esto para filtrar en el select del html el tipo de set
+        $piezaTestigo = $options['pieza_testigo'];
+
         $builder
             ->add('setSeleccionado', EntityType::class, [
                 'class' => SetArtefactos::class,
                 'choice_label' => 'nombre',
                 'label' => 'Set',
                 'mapped' => false,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('s')->where('s.juego = :j')->setParameter('j', 'Honkai')->orderBy('s.nombre', 'ASC');
+                'query_builder' => function (EntityRepository $er) use ($piezaTestigo) {
+                    $qb = $er->createQueryBuilder('s')
+                        ->where('s.juego = :j')
+                        ->setParameter('j', 'hsr')
+                        ->orderBy('s.nombre', 'ASC');
+
+                    if ($piezaTestigo) {
+                        // Hacemos JOIN: SetArtefactos -> ArtefactoPlantilla -> PiezaTipo
+                        $qb->join('s.artefactoPlantillas', 'p') 
+                           ->join('p.piezaTipo', 'pt')
+                           ->andWhere('pt.codigo = :codigoPieza')
+                           ->setParameter('codigoPieza', $piezaTestigo);
+                    }
+
+                    return $qb;
                 },
             ])
             ->add('statPrincipalNombre', ChoiceType::class, ['choices' => self::STATS_HSR, 'label' => 'Stat Principal', 'mapped' => false])
             ->add('statPrincipalValor', NumberType::class, ['label' => 'Valor', 'mapped' => false, 'html5' => true, 'attr' => ['step' => '0.1']]);
     }
 
-    public function configureOptions(OptionsResolver $resolver): void { $resolver->setDefaults(['data_class' => Artefacto::class]); }
+    public function configureOptions(OptionsResolver $resolver): void 
+    { 
+        $resolver->setDefaults([
+            'data_class' => Artefacto::class,
+            'pieza_testigo' => null,
+        ]);
+
+        $resolver->setAllowedTypes('pieza_testigo', ['null', 'string']);
+    }
 }

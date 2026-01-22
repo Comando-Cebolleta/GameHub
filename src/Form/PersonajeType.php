@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+// IMPORTANTE: Clase en desuso, ahora usamos GenshinBuildType y HonkaiBuildType
+// que también crean objetos Personaje
 class PersonajeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -37,42 +39,42 @@ class PersonajeType extends AbstractType
             ])
 
             // 3. El Arma
-            ->add('arma', ArmaType::class, [
-                'label' => 'Arma equipada',
-                'required' => true,
-            ])
+            // ->add('arma', ArmaType::class, [
+            //     'label' => 'Arma equipada',
+            //     'required' => true,
+            // ])
 
             // 4. Los Artefactos
-            ->add('artefacto_flor', ArtefactoType::class, [
-                'mapped' => false,
-                'label' => false,
-                'tipo_pieza_nombre' => 'Flor',
-            ])
-            ->add('artefacto_pluma', ArtefactoType::class, [
-                'mapped' => false,
-                'label' => false,
-                'tipo_pieza_nombre' => 'Pluma',
-            ])
-            ->add('artefacto_reloj', ArtefactoType::class, [
-                'mapped' => false,
-                'label' => false,
-                'tipo_pieza_nombre' => 'Reloj',
-            ])
-            ->add('artefacto_copa', ArtefactoType::class, [
-                'mapped' => false,
-                'label' => false,
-                'tipo_pieza_nombre' => 'Copa',
-            ])
-            ->add('artefacto_casco', ArtefactoType::class, [
-                'mapped' => false,
-                'label' => false,
-                'tipo_pieza_nombre' => 'Casco', 
-            ])
+            // ->add('artefacto_flor', ArtefactoType::class, [
+            //     'mapped' => false,
+            //     'label' => false,
+            //     'tipo_pieza_nombre' => 'Flor',
+            // ])
+            // ->add('artefacto_pluma', ArtefactoType::class, [
+            //     'mapped' => false,
+            //     'label' => false,
+            //     'tipo_pieza_nombre' => 'Pluma',
+            // ])
+            // ->add('artefacto_reloj', ArtefactoType::class, [
+            //     'mapped' => false,
+            //     'label' => false,
+            //     'tipo_pieza_nombre' => 'Reloj',
+            // ])
+            // ->add('artefacto_copa', ArtefactoType::class, [
+            //     'mapped' => false,
+            //     'label' => false,
+            //     'tipo_pieza_nombre' => 'Copa',
+            // ])
+            // ->add('artefacto_casco', ArtefactoType::class, [
+            //     'mapped' => false,
+            //     'label' => false,
+            //     'tipo_pieza_nombre' => 'Casco', 
+            // ])
 
-            ->add('guardar', SubmitType::class, [
-                'label' => 'Guardar Build',
-                'attr' => ['class' => 'btn btn-primary mt-3']
-            ])
+            // ->add('guardar', SubmitType::class, [
+            //     'label' => 'Guardar Build',
+            //     'attr' => ['class' => 'btn btn-primary mt-3']
+            // ])
         ;
     }
 
