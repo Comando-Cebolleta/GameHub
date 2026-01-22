@@ -38,14 +38,14 @@ class BuildController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', '¡Build de Genshin creada!');
-            return $this->redirectToRoute('app_index'); // OJO: Cambia 'app_index' por la ruta de tu home (ej: 'home')
+            return $this->redirectToRoute('home'); // OJO: Cambia 'app_index' por la ruta de tu home (ej: 'home')
         }
 
         return $this->render('build/create_genshin.html.twig', ['form' => $form->createView()]);
     }
 
     // --- RUTA HONKAI ---
-    #[Route('/honkai/crear', name: 'app_build_honkai_create')]
+    #[Route('/hsr/crear', name: 'app_build_hsr_create')]
     #[IsGranted('ROLE_USER')]
     public function createHonkai(Request $request, EntityManagerInterface $em, ArtefactoPlantillaRepository $repoPlantillas): Response
     {
@@ -63,10 +63,10 @@ class BuildController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', '¡Build de Honkai creada!');
-            return $this->redirectToRoute('app_index');
+            return $this->redirectToRoute('home');
         }
 
-        return $this->render('build/create_honkai.html.twig', ['form' => $form->createView()]);
+        return $this->render('build/create_hsr.html.twig', ['form' => $form->createView()]);
     }
 
     private function procesarArtefactos($form, $slots, $personaje, $repoPlantillas) {

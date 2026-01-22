@@ -14,10 +14,9 @@ class SetArtefactos
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
-    #[ORM\Column(length: 1024)]
     private ?string $efectos = null;
 
     #[ORM\Column(length: 255)]
