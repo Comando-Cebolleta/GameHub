@@ -54,12 +54,15 @@ class HonkaiBuildType extends AbstractType
             // Usamos 'Cabeza' como filtro para todos, porque todos comparten los mismos sets
             ->add('reliquia_cabeza', HonkaiArtefactoType::class, [
                 'label' => 'Cabeza', 'mapped' => false,
-                'pieza_testigo' => $filtroReliquia
+                'pieza_testigo' => $filtroReliquia,
+                'stat_fijo' => 'HP'
             ])
             ->add('reliquia_manos', HonkaiArtefactoType::class, [
                 'label' => 'Manos', 'mapped' => false,
-                'pieza_testigo' => $filtroReliquia
+                'pieza_testigo' => $filtroReliquia,
+                'stat_fijo' => 'ATK'
             ])
+
             ->add('reliquia_torso', HonkaiArtefactoType::class, [
                 'label' => 'Torso', 'mapped' => false,
                 'pieza_testigo' => $filtroReliquia

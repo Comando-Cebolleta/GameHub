@@ -33,6 +33,16 @@ class HonkaiArtefactoType extends AbstractType
         // Necesitamos hacer esto para filtrar en el select del html el tipo de set
         $piezaTestigo = $options['pieza_testigo'];
 
+        // Esta parte antes de $build filtra para forzar que las flores tengan HP y las plumas ATK
+        $statFijo = $options['stat_fijo'];
+
+        $opcionesStats = self::STATS_HSR;
+
+        if ($statFijo) {
+            $key = array_search($statFijo, self::STATS_HSR);
+            $opcionesStats = [$key => $statFijo];
+        }
+
         $builder
             ->add('setSeleccionado', EntityType::class, [
                 'class' => SetArtefactos::class,
@@ -56,7 +66,12 @@ class HonkaiArtefactoType extends AbstractType
                     return $qb;
                 },
             ])
-            ->add('statPrincipalNombre', ChoiceType::class, ['choices' => self::STATS_HSR, 'label' => 'Stat Principal', 'mapped' => false])
+            ->add('statPrincipalNombre', ChoiceType::class, [
+                'choices' => $opcionesStats, 
+                'label' => 'Stat Principal', 
+                'mapped' => false,
+
+            ])
             ->add('statPrincipalValor', NumberType::class, ['label' => 'Valor', 'mapped' => false, 'html5' => true, 'attr' => ['step' => '0.1']]);
     }
 
@@ -65,8 +80,10 @@ class HonkaiArtefactoType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Artefacto::class,
             'pieza_testigo' => null,
+            'stat_fijo' => null
         ]);
 
         $resolver->setAllowedTypes('pieza_testigo', ['null', 'string']);
+        $resolver->setAllowedTypes('stat_fijo', ['null', 'string']);
     }
 }
