@@ -26,6 +26,16 @@ class GenshinArtefactoType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // Esta parte antes de $build filtra para forzar que las flores tengan HP y las plumas ATK
+        $statFijo = $options['stat_fijo'];
+
+        $opcionesStats = self::STATS_GENSHIN;
+
+        if ($statFijo) {
+            $key = array_search($statFijo, self::STATS_GENSHIN);
+            $opcionesStats = [$key => $statFijo];
+        }
+
         $builder
             ->add('setSeleccionado', EntityType::class, [
                 'class' => SetArtefactos::class,
@@ -36,9 +46,21 @@ class GenshinArtefactoType extends AbstractType
                     return $er->createQueryBuilder('s')->where('s.juego = :j')->setParameter('j', 'Genshin')->orderBy('s.nombre', 'ASC');
                 },
             ])
-            ->add('statPrincipalNombre', ChoiceType::class, ['choices' => self::STATS_GENSHIN, 'label' => 'Stat Principal', 'mapped' => false])
+            ->add('statPrincipalNombre', ChoiceType::class, [
+                'choices' => $opcionesStats, 
+                'label' => 'Stat Principal', 
+                'mapped' => false
+                ])
             ->add('statPrincipalValor', NumberType::class, ['label' => 'Valor', 'mapped' => false, 'html5' => true, 'attr' => ['step' => '0.1']]);
     }
 
-    public function configureOptions(OptionsResolver $resolver): void { $resolver->setDefaults(['data_class' => Artefacto::class]); }
+    public function configureOptions(OptionsResolver $resolver): void 
+    { 
+        $resolver->setDefaults([
+            'data_class' => Artefacto::class,
+            'stat_fijo' => null
+        ]); 
+
+        $resolver->setAllowedTypes('stat_fijo', ['null', 'string']);
+    }
 }
