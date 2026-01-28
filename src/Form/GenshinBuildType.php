@@ -48,8 +48,17 @@ class GenshinBuildType extends AbstractType
                 'juego' => 'Genshin',
             ])
 
-            ->add('artefacto_flor', GenshinArtefactoType::class, ['label' => 'Flor', 'mapped' => false])
-            ->add('artefacto_pluma', GenshinArtefactoType::class, ['label' => 'Pluma', 'mapped' => false])
+            ->add('artefacto_flor', GenshinArtefactoType::class, [
+                'label' => 'Flor', 
+                'mapped' => false,
+                'stat_fijo' => 'HP'
+            ])
+            ->add('artefacto_pluma', GenshinArtefactoType::class, [
+                'label' => 'Pluma', 
+                'mapped' => false,
+                'stat_fijo' => 'ATK'
+            ])
+
             ->add('artefacto_reloj', GenshinArtefactoType::class, ['label' => 'Reloj', 'mapped' => false])
             ->add('artefacto_copa', GenshinArtefactoType::class, ['label' => 'Cáliz', 'mapped' => false])
             ->add('artefacto_casco', GenshinArtefactoType::class, ['label' => 'Casco', 'mapped' => false])
