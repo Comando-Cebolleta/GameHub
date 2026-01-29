@@ -1,36 +1,78 @@
 {% extends 'base.html.twig' %}
-{% block title %}Nueva Build Honkai{% endblock %}
+
+{% block title %}Nueva Build Honkai - GameHub{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styleBlogHONKAI.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styleBuildHSR.css') }}">
+{% endblock %}
+
 {% block body %}
-<div class="container mt-5">
-    <h2 class="mb-4">Nueva Build - Honkai Star Rail</h2>
-    {{ form_start(form) }}
-        <div class="row">
-            <div class="col-md-5">
-                <div class="card p-3 mb-3">
-                    {{ form_row(form.nombre) }}
-                    {{ form_row(form.personajePlantilla) }}
-                    {{ form_row(form.nivel) }}
-                    {{ form_row(form.dupeNum) }}
-                    
-                    {{ form_row(form.arma) }}
-                </div>
-            </div>
-            <div class="col-md-7">
-                <div class="card p-3">
-                    <h4>Reliquias y Ornamentos</h4>
-                    <div class="row">
-                        <div class="col-6">{{ form_row(form.reliquia_cabeza) }}</div>
-                        <div class="col-6">{{ form_row(form.reliquia_manos) }}</div>
-                        <div class="col-6">{{ form_row(form.reliquia_torso) }}</div>
-                        <div class="col-6">{{ form_row(form.reliquia_pies) }}</div>
-                        <hr class="my-3">
-                        <div class="col-6">{{ form_row(form.ornamento_esfera) }}</div>
-                        <div class="col-6">{{ form_row(form.ornamento_cuerda) }}</div>
+    <header>
+        <a href="{{ path('home') }}">
+            <img src="{{ asset('assets/img/logoIcon.webp') }}" alt="Logo" class="logoIcon">
+        </a>
+        <div class="login-container">
+            <a href="{{ path('app_login') }}">
+                <img src="{{ asset('assets/img/loginIconSILVER.webp') }}" alt="Inicio de sesión">
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2 class="build-title">Configurar Nueva Build - HSR</h2>
+
+            {{ form_start(form) }}
+            <div class="build-grid">
+
+                {# COLUMNA IZQUIERDA: DATOS BÁSICOS #}
+                <div class="col-left">
+                    <div class="build-section-card">
+                        <h4 class="section-subtitle">Personaje y Arma</h4>
+                        {{ form_row(form.nombre) }}
+                        {{ form_row(form.personajePlantilla) }}
+                        <div class="subgrid">
+                            {{ form_row(form.nivel) }}
+                            {{ form_row(form.dupeNum) }}
+                        </div>
+                        <hr>
+                        {{ form_row(form.arma) }}
                     </div>
                 </div>
+
+                {# COLUMNA DERECHA: RELIQUIAS #}
+                <div class="col-right">
+                    <div class="build-section-card">
+                        <h4 class="section-subtitle">Reliquias y Ornamentos</h4>
+
+                        <div class="subgrid">
+                            {{ form_row(form.reliquia_cabeza) }}
+                            {{ form_row(form.reliquia_manos) }}
+                            {{ form_row(form.reliquia_torso) }}
+                            {{ form_row(form.reliquia_pies) }}
+                        </div>
+
+                        <hr>
+                        <h4 class="section-subtitle" style="font-size: 1.1rem; border-color: #888;">Ornamentos del Universo Simulado</h4>
+
+                        <div class="subgrid">
+                            {{ form_row(form.ornamento_esfera) }}
+                            {{ form_row(form.ornamento_cuerda) }}
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
+            <div style="margin-top: 30px;">
+                <button type="submit" class="btn-save-build w-100">Guardar Build del Trazacaminos</button>
+            </div>
+            {{ form_end(form) }}
         </div>
-        <button type="submit" class="btn btn-warning mt-3 w-100">Guardar Build</button>
-    {{ form_end(form) }}
-</div>
+    </main>
+
+    <footer>
+        Game Hub &copy; 2025-2026
+    </footer>
 {% endblock %}
