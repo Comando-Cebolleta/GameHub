@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class PostFormType extends AbstractType
 {
@@ -16,8 +17,12 @@ class PostFormType extends AbstractType
     {
         $builder
             ->add('titulo')
-            ->add('cuerpo')
-            ->add('foto')
+            ->add('cuerpo', TextareaType::class, [
+                'attr' => [
+                    'class' => 'editor-texto',
+                    'rows' => 10,
+                ],
+            ])
             ->add('send', SubmitType::class, ['label' => 'Publicar'])
         ;
     }

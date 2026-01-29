@@ -29,6 +29,9 @@ class PersonajePlantilla
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imagen = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $icono = null;
+
     #[ORM\Column(length:255, nullable: true)]
     private ?string $elemento = null;
 
@@ -121,6 +124,18 @@ class PersonajePlantilla
     public function setImagen(?string $imagen): static
     {
         $this->imagen = $imagen;
+
+        return $this;
+    }
+
+    public function getIcono(): ?string
+    {
+        return $this->icono;
+    }
+
+    public function setIcono(?string $icono): static
+    {
+        $this->icono = $icono;
 
         return $this;
     }

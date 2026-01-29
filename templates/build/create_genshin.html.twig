@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block title %}Nueva Build Genshin{% endblock %}
+{% block body %}
+<div class="container mt-5">
+    <h2 class="mb-4">Nueva Build - Genshin Impact</h2>
+    {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card p-3 mb-3">
+                    {{ form_row(form.nombre) }}
+                    {{ form_row(form.personajePlantilla) }}
+                    {{ form_row(form.nivel) }}
+                    {{ form_row(form.dupeNum) }}
+                    
+                    {{ form_row(form.arma) }}
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="card p-3">
+                    <h4>Artefactos</h4>
+                    <div class="row">
+                        <div class="col-12">{{ form_row(form.artefacto_flor) }}</div>
+                        <div class="col-12">{{ form_row(form.artefacto_pluma) }}</div>
+                        <div class="col-12">{{ form_row(form.artefacto_reloj) }}</div>
+                        <div class="col-12">{{ form_row(form.artefacto_copa) }}</div>
+                        <div class="col-12">{{ form_row(form.artefacto_casco) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3 w-100">Guardar Build</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

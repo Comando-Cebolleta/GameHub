@@ -6,12 +6,120 @@
 {% endblock %}
 
 {% block body %}
-    
-    {{ form_start(form) }}
+    {# novalidate aquí hace que el navegador no valide. Sin esto el textarea no va #}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     {{ form_row(form.titulo) }}
     {{ form_row(form.cuerpo) }}
-    {{ form_row(form.foto) }}
     {{ form_row(form.send) }}
     {{ form_end(form) }}
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+
+    <script>
+        // 1. Definimos un Adaptador de Subida personalizado
+        // Esto sustituye al plugin que falta en el CDN
+        class MyUploadAdapter {
+            constructor(loader) {
+                this.loader = loader;
+            }
+
+            upload() {
+                return this.loader.file
+                    .then(file => new Promise((resolve, reject) => {
+                        this._initRequest();
+                        this._initListeners(resolve, reject, file);
+                        this._sendRequest(file);
+                    }));
+            }
+
+            abort() {
+                if (this.xhr) {
+                    this.xhr.abort();
+                }
+            }
+
+            _initRequest() {
+                const xhr = this.xhr = new XMLHttpRequest();
+                // AQUÍ PONEMOS TU RUTA DE SYMFONY
+                xhr.open('POST', '{{ path('upload_post_image') }}', true);
+                xhr.responseType = 'json';
+            }
+
+            _initListeners(resolve, reject, file) {
+                const xhr = this.xhr;
+                const loader = this.loader;
+                const genericErrorText = `No se pudo subir el archivo: ${file.name}.`;
+
+                xhr.addEventListener('error', () => reject(genericErrorText));
+                xhr.addEventListener('abort', () => reject());
+                xhr.addEventListener('load', () => {
+                    const response = xhr.response;
+
+                    if (!response || response.error) {
+                        return reject(response && response.error ? response.error.message : genericErrorText);
+                    }
+
+                    // Si la subida es exitosa, resolvemos la promesa con la URL
+                    // Tu controlador devuelve { "url": "..." }
+                    resolve({
+                        default: response.url
+                    });
+                });
+            }
+
+            _sendRequest(file) {
+                const data = new FormData();
+                // 'upload' es el nombre que espera tu Controller ($request->files->get('upload'))
+                data.append('upload', file);
+                this.xhr.send(data);
+            }
+        }
+
+        // 2. Función para activar el adaptador en el editor
+        function MyCustomUploadAdapterPlugin(editor) {
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                return new MyUploadAdapter(loader);
+            };
+        }
+
+        // 3. Inicializamos CKEditor
+        document.addEventListener("DOMContentLoaded", function() {
+            const textarea = document.querySelector('.editor-texto');
+
+            if (textarea) {
+                ClassicEditor
+                    .create(textarea, {
+                        // Añadimos nuestro plugin manual a la configuración 'extraPlugins'
+                        extraPlugins: [ MyCustomUploadAdapterPlugin ],
+                        
+                        toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|', 'uploadImage' ],
+                        language: 'es'
+                    })
+                    .then(editor => {
+                        // Sincronizar datos con el textarea
+                        editor.model.document.on('change:data', () => {
+                            textarea.value = editor.getData();
+                        });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            }
+        });
+    </script>
+
+    <style>
+        /* Ajuste visual para que la imagen no se salga */
+        .ck-content img {
+            max-width: 100%;
+            height: auto;
+        }
+        /* Altura mínima del editor */
+        .ck-editor__editable_inline {
+            min-height: 300px;
+        }
+    </style>
 {% endblock %}
