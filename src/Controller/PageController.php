@@ -59,6 +59,7 @@ final class PageController extends AbstractController
         return $this->render('page/nuevo_post.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'PageController',
+            "juego" => $juego
         ]);
     }
 
@@ -67,13 +68,15 @@ final class PageController extends AbstractController
     {
         $repo = $em->getRepository(Post::class);
         $post = $repo->findOneByIdAndGame($id, "genshin");
+        $juego = $post->getJuego();
 
         if (!$post) {
             throw $this->createNotFoundException('Ningún post existente con ese ID');
         }
 
         return $this->render('page/single_post.html.twig', [
-            "post" => $post
+            "post" => $post,
+            "juego" => $juego
         ]);
     }
 
@@ -114,6 +117,7 @@ final class PageController extends AbstractController
         return $this->render('page/nuevo_post.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'PageController',
+            "juego" => $juego
         ]);
     }
 
@@ -122,13 +126,15 @@ final class PageController extends AbstractController
     {
         $repo = $em->getRepository(Post::class);
         $post = $repo->findOneByIdAndGame($id, "hsr");
+        $juego = $post->getJuego();
 
         if (!$post) {
             throw $this->createNotFoundException('Ningún post existente con ese ID');
         }
 
         return $this->render('page/single_post.html.twig', [
-            "post" => $post
+            "post" => $post,
+            "juego" => $juego
         ]);
     }
   

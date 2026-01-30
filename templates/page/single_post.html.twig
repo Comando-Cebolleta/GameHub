@@ -1,13 +1,60 @@
-{# templates/post/show.html.twig #}
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ post.titulo }}{% endblock %}
+
+{% block stylesheets %}
+    {# Cargamos el CSS base según el juego #}
+    {% if juego == 'hsr' %}
+        <link rel="stylesheet" href="{{ asset('css/styleBlogHONKAI.css') }}">
+    {% else %}
+        <link rel="stylesheet" href="{{ asset('css/styleBlogGENSHIN.css') }}">
+    {% endif %}
+
+    {# El estilo de lectura es común a ambos #}
+    <link rel="stylesheet" href="{{ asset('css/styleSinglePost.css') }}">
+
+    <style>
+        /* Ajuste dinámico del color del borde según el juego si quieres hilar fino */
+        .container {
+            border-color: {{ juego == 'hsr' ? '#c0c0c0' : '#e0c080' }}; /* Plata para HSR, Dorado para Genshin */
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
-    <h1>{{ post.titulo }}</h1>
+    <header>
+        <a href="{{ path('home') }}">
+            <img src="{{ asset('assets/img/logoIcon.webp') }}" alt="Logo" class="logoIcon">
+        </a>
+        <div class="login-container">
+            <a href="{{ path('app_login') }}">
+                <img src="{{ asset('assets/img/loginIconSILVER.webp') }}" alt="Inicio de sesión">
+            </a>
+        </div>
+    </header>
 
-    {# AQUÍ es donde se protege la salida #}
-    <div class="contenido-post">
-        {{ post.cuerpo | sanitize_html('app.post_sanitizer') }}
-    </div>
+    <main>
+        <div class="container">
+            <article class="post-reading">
+                <h1 class="post-header-title">{{ post.titulo }}</h1>
 
-    <a href="{{ path('genshin_blog') }}">Volver</a>
+                <div class="post-full-content">
+                    {{ post.cuerpo | sanitize_html('app.post_sanitizer') }}
+                </div>
+
+                <div class="back-container">
+                    {# El botón de volver también debería ser dinámico #}
+                    {% if juego == 'hsr' %}
+                        <a href="{{ path('hsr_blog') }}" class="back-link">&larr; VOLVER AL BLOG HSR</a>
+                    {% else %}
+                        <a href="{{ path('genshin_blog') }}" class="back-link">&larr; VOLVER AL BLOG GENSHIN</a>
+                    {% endif %}
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        Game Hub &copy; 2025-2026
+    </footer>
 {% endblock %}
