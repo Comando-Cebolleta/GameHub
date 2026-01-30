@@ -1,125 +1,133 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nuevo Post{% endblock %}
+{% block title %}Nuevo Post {{ juego == 'hsr' ? 'HSR' : 'Genshin' }} - GameHub{% endblock %}
+
 {% block stylesheets %}
-    
+    {# Cargamos el CSS base (fondos, fuentes de juego) dinámicamente #}
+    {% if juego == 'hsr' %}
+        <link rel="stylesheet" href="{{ asset('css/styleBlogHONKAI.css') }}">
+    {% else %}
+        <link rel="stylesheet" href="{{ asset('css/styleBlogGENSHIN.css') }}">
+    {% endif %}
+
+    {# El CSS del formulario se mantiene fijo #}
+    <link rel="stylesheet" href="{{ asset('css/styleFormPost.css') }}">
+
+    <style>
+        /* Ajuste de color del botón y bordes según el juego */
+        .btn-submit {
+            background: {{ juego == 'hsr' ? '#3a2a4b' : '#4a5d4e' }}; /* Morado HSR vs Verde/Dorado Genshin */
+            border-color: {{ juego == 'hsr' ? '#c0c0c0' : '#e0c080' }};
+        }
+        .container {
+            border-color: {{ juego == 'hsr' ? '#c0c0c0' : '#e0c080' }};
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-    {# novalidate aquí hace que el navegador no valide. Sin esto el textarea no va #}
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_row(form.titulo) }}
-    {{ form_row(form.cuerpo) }}
-    {{ form_row(form.send) }}
-    {{ form_end(form) }}
+    <header>
+        <a href="{{ path('home') }}">
+            <img src="{{ asset('assets/img/logoIcon.webp') }}" alt="Logo" class="logoIcon">
+        </a>
+        <div class="login-container">
+            <a href="{{ path('app_login') }}">
+                {# Aquí podrías cambiar el icono de login a uno dorado si es Genshin si lo tienes #}
+                <img src="{{ asset('assets/img/loginIconSILVER.webp') }}" alt="Inicio de sesión">
+            </a>
+        </div>
+    </header>
 
+    <main>
+        <div class="container">
+            <h1 class="form-title">Nueva Entrada: {{ juego == 'hsr' ? 'Honkai Star Rail' : 'Genshin Impact' }}</h1>
+
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+            <div class="form-group">
+                {{ form_label(form.titulo, 'Título del Post') }}
+                {{ form_widget(form.titulo, {'attr': {'placeholder': 'Escribe un título...'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.cuerpo, 'Contenido del Post') }}
+                {{ form_widget(form.cuerpo, {'attr': {'class': 'editor-texto'}}) }}
+            </div>
+
+            <div class="submit-container">
+                {{ form_widget(form.send, {
+                    'attr': {'class': 'btn-submit'},
+                    'label': 'Publicar en ' ~ (juego == 'hsr' ? 'HSR' : 'Genshin')
+                }) }}
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </main>
+
+    <footer>
+        Game Hub &copy; 2025-2026
+    </footer>
 {% endblock %}
 
 {% block javascripts %}
+    {# Tu script de CKEditor y MyUploadAdapter se mantiene igual... #}
     <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
-
     <script>
-        // 1. Definimos un Adaptador de Subida personalizado
-        // Esto sustituye al plugin que falta en el CDN
+        // ... (Copia aquí todo tu código de MyUploadAdapter y ClassicEditor.create) ...
         class MyUploadAdapter {
-            constructor(loader) {
-                this.loader = loader;
-            }
-
+            constructor(loader) { this.loader = loader; }
             upload() {
-                return this.loader.file
-                    .then(file => new Promise((resolve, reject) => {
-                        this._initRequest();
-                        this._initListeners(resolve, reject, file);
-                        this._sendRequest(file);
-                    }));
+                return this.loader.file.then(file => new Promise((resolve, reject) => {
+                    this._initRequest();
+                    this._initListeners(resolve, reject, file);
+                    this._sendRequest(file);
+                }));
             }
-
-            abort() {
-                if (this.xhr) {
-                    this.xhr.abort();
-                }
-            }
-
+            abort() { if (this.xhr) { this.xhr.abort(); } }
             _initRequest() {
                 const xhr = this.xhr = new XMLHttpRequest();
-                // AQUÍ PONEMOS TU RUTA DE SYMFONY
                 xhr.open('POST', '{{ path('upload_post_image') }}', true);
                 xhr.responseType = 'json';
             }
-
             _initListeners(resolve, reject, file) {
                 const xhr = this.xhr;
-                const loader = this.loader;
                 const genericErrorText = `No se pudo subir el archivo: ${file.name}.`;
-
                 xhr.addEventListener('error', () => reject(genericErrorText));
                 xhr.addEventListener('abort', () => reject());
                 xhr.addEventListener('load', () => {
                     const response = xhr.response;
-
-                    if (!response || response.error) {
-                        return reject(response && response.error ? response.error.message : genericErrorText);
-                    }
-
-                    // Si la subida es exitosa, resolvemos la promesa con la URL
-                    // Tu controlador devuelve { "url": "..." }
-                    resolve({
-                        default: response.url
-                    });
+                    if (!response || response.error) return reject(response && response.error ? response.error.message : genericErrorText);
+                    resolve({ default: response.url });
                 });
             }
-
             _sendRequest(file) {
                 const data = new FormData();
-                // 'upload' es el nombre que espera tu Controller ($request->files->get('upload'))
                 data.append('upload', file);
                 this.xhr.send(data);
             }
         }
 
-        // 2. Función para activar el adaptador en el editor
         function MyCustomUploadAdapterPlugin(editor) {
-            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-                return new MyUploadAdapter(loader);
-            };
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new MyUploadAdapter(loader);
         }
 
-        // 3. Inicializamos CKEditor
         document.addEventListener("DOMContentLoaded", function() {
             const textarea = document.querySelector('.editor-texto');
-
             if (textarea) {
                 ClassicEditor
                     .create(textarea, {
-                        // Añadimos nuestro plugin manual a la configuración 'extraPlugins'
                         extraPlugins: [ MyCustomUploadAdapterPlugin ],
-                        
                         toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|', 'uploadImage' ],
                         language: 'es'
                     })
                     .then(editor => {
-                        // Sincronizar datos con el textarea
                         editor.model.document.on('change:data', () => {
                             textarea.value = editor.getData();
                         });
                     })
-                    .catch(error => {
-                        console.error(error);
-                    });
+                    .catch(error => console.error(error));
             }
         });
     </script>
-
-    <style>
-        /* Ajuste visual para que la imagen no se salga */
-        .ck-content img {
-            max-width: 100%;
-            height: auto;
-        }
-        /* Altura mínima del editor */
-        .ck-editor__editable_inline {
-            min-height: 300px;
-        }
-    </style>
 {% endblock %}
