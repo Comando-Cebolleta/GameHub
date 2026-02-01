@@ -15,14 +15,15 @@
     {% include 'partials/header.html.twig' %}
 
     <main>
-        {# Mensajes de éxito/error al actualizar ajustes #}
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success" style="color: #c2b46c; text-align: center; margin-bottom: 20px;">
-                {{ message }}
-            </div>
-        {% endfor %}
-
         <div class="profile-container">
+            {# Mensajes de éxito/error al actualizar ajustes #}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success" style="color: #c2b46c; text-align: center; margin-bottom: 20px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+
             {# --- Banner Superior --- #}
             <div class="profile-banner">
                 {# --- Icono de Ajustes (Engranaje) --- #}
