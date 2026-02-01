@@ -129,6 +129,7 @@ class RegistrationController extends AbstractController
             }
 
             $entityManager->flush();
+            // Este flash se descuadra al volver al perfil
             $this->addFlash('success', '¡Perfil actualizado con éxito!');
             return $this->redirectToRoute('app_profile');
         }
