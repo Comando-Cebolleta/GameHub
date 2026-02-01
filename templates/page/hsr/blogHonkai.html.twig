@@ -1,21 +1,53 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}GameHub Blog Honkai: Star Rail{% endblock %}
+
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/styleBlogHONKAI.css') }}">
+
+    {# Estilos específicos para los elementos dinámicos del header en esta página #}
+    <style>
+        header .login-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .welcome-text {
+            color: #c0c0c0; /* Color plateado para HSR */
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .logout-link {
+            color: #ffffff;
+            font-size: 0.75rem;
+            text-decoration: underline !important;
+            opacity: 0.7;
+        }
+
+        .logout-link:hover {
+            opacity: 1;
+            color: #ffadad;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-    
-    <header>
-        <a href="{{ path('home') }}">
-            <img src="{{ asset('assets/img/logoIcon.webp') }}" alt="Logo" class="logoIcon">
-        </a>        <div class="login-container">
-            <a href="{{ path('app_login') }}">  
-                <img src="{{ asset('assets/img/loginIconSILVER.webp') }}" alt="Inicio de sesión">
-            </a>
-        </div>
-    </header>
+
+    {# Invocamos el header modular pidiendo el icono SILVER #}
+    {% include 'partials/header.html.twig' with {'iconColor': 'SILVER'} %}
 
     <main>
         <div class="container blog-wrapper">
@@ -38,10 +70,10 @@
                 <div class="post-icons-area">
                     <span class="icon-label">Personajes clave:</span>
                     <div class="icon-grid">
-                        <img src="assets/img/char1.png" alt="Icon" class="char-icon">
-                        <img src="assets/img/char2.png" alt="Icon" class="char-icon">
-                        <img src="assets/img/char3.png" alt="Icon" class="char-icon">
-                        <img src="assets/img/char4.png" alt="Icon" class="char-icon">
+                        <img src="{{ asset('assets/img/char1.png') }}" alt="Icon" class="char-icon">
+                        <img src="{{ asset('assets/img/char2.png') }}" alt="Icon" class="char-icon">
+                        <img src="{{ asset('assets/img/char3.png') }}" alt="Icon" class="char-icon">
+                        <img src="{{ asset('assets/img/char4.png') }}" alt="Icon" class="char-icon">
                     </div>
                 </div>
             </article>
@@ -57,8 +89,8 @@
                 <div class="post-icons-area">
                     <span class="icon-label">Recomendados:</span>
                     <div class="icon-grid">
-                        <img src="assets/img/char2.png" alt="Icon" class="char-icon">
-                        <img src="assets/img/char1.png" alt="Icon" class="char-icon">
+                        <img src="{{ asset('assets/img/char2.png') }}" alt="Icon" class="char-icon">
+                        <img src="{{ asset('assets/img/char1.png') }}" alt="Icon" class="char-icon">
                     </div>
                 </div>
             </article>

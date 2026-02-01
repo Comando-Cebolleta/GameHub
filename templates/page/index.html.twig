@@ -6,15 +6,9 @@
 {% endblock %}
 
 {% block body %}
-    
-    <header>
-        <img src="{{ asset('assets/img/logoIcon.webp') }}" alt="Logo" class="logoIcon">
-        <div class="login-container">
-            <a href="{{ path('app_login') }}">
-                <img src="{{ asset('assets/img/loginIconGOLD.webp') }}" alt="Inicio de sesión">
-            </a>
-        </div>
-    </header>
+
+    {# Inclusión del header común #}
+    {% include 'partials/header.html.twig' %}
 
     <main>
         <div class="container">

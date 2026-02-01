@@ -13,25 +13,59 @@
     {# El estilo de lectura es común a ambos #}
     <link rel="stylesheet" href="{{ asset('css/styleSinglePost.css') }}">
 
+    {# Cargamos el CSS de login para asegurar que los estilos del nuevo header se vean bien #}
+    <link rel="stylesheet" href="{{ asset('css/styleLogin.css') }}">
+
     <style>
-        /* Ajuste dinámico del color del borde según el juego si quieres hilar fino */
+        /* Ajuste dinámico del color del borde según el juego */
         .container {
-            border-color: {{ juego == 'hsr' ? '#c0c0c0' : '#e0c080' }}; /* Plata para HSR, Dorado para Genshin */
+            border-color: {{ juego == 'hsr' ? '#c0c0c0' : '#e0c080' }};
+        }
+
+        /* --- AJUSTES DINÁMICOS DEL HEADER PARA LECTURA --- */
+        header .login-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            width: auto !important;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .welcome-text {
+            /* Plata para HSR, Dorado para Genshin */
+            color: {{ juego == 'hsr' ? '#c0c0c0' : '#c2b46c' }};
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .logout-link {
+            color: #ffffff;
+            font-size: 0.75rem;
+            text-decoration: underline !important;
+            opacity: 0.7;
+        }
+
+        .logout-link:hover {
+            opacity: 1;
+            color: #ffadad;
         }
     </style>
 {% endblock %}
 
 {% block body %}
-    <header>
-        <a href="{{ path('home') }}">
-            <img src="{{ asset('assets/img/logoIcon.webp') }}" alt="Logo" class="logoIcon">
-        </a>
-        <div class="login-container">
-            <a href="{{ path('app_login') }}">
-                <img src="{{ asset('assets/img/loginIconSILVER.webp') }}" alt="Inicio de sesión">
-            </a>
-        </div>
-    </header>
+    {# INCLUSIÓN DEL HEADER MODULAR DINÁMICO #}
+    {# Enviamos SILVER si es HSR, de lo contrario GOLD #}
+    {% include 'partials/header.html.twig' with {'iconColor': juego == 'hsr' ? 'SILVER' : 'GOLD'} %}
 
     <main>
         <div class="container">
@@ -39,11 +73,12 @@
                 <h1 class="post-header-title">{{ post.titulo }}</h1>
 
                 <div class="post-full-content">
+                    {# Renderizado seguro del contenido de CKEditor #}
                     {{ post.cuerpo | sanitize_html('app.post_sanitizer') }}
                 </div>
 
                 <div class="back-container">
-                    {# El botón de volver también debería ser dinámico #}
+                    {# Botón de volver dinámico #}
                     {% if juego == 'hsr' %}
                         <a href="{{ path('hsr_blog') }}" class="back-link">&larr; VOLVER AL BLOG HSR</a>
                     {% else %}

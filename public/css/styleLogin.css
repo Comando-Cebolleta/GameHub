@@ -34,15 +34,17 @@ a {
     color: inherit;
 }
 
-/* ---------- HEADER ---------- */
+/* ---------- HEADER (Universal) ---------- */
 header {
     background-color: #1f1b2e;
     height: 150px;
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Logo al centro */
     align-items: center;
-    padding: 10px;
+    padding: 10px 30px;
     position: relative;
+    width: 100%;
+    z-index: 100;
 }
 
 .logoIcon {
@@ -52,7 +54,35 @@ header {
     object-fit: contain;
 }
 
-/* ---------- MAIN (LOGIN) ---------- */
+/* Contenedor de usuario dentro del Header */
+header .login-container {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    background: transparent !important; /* Forzamos transparencia para el header */
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: auto !important;
+    max-width: none !important;
+}
+
+header .login-container img {
+    width: 70px;
+    height: auto;
+    max-height: 70px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+header .login-container img:hover {
+    transform: scale(1.1);
+}
+
+/* ---------- MAIN (Contenido) ---------- */
 main {
     flex: 1;
     display: flex;
@@ -61,8 +91,8 @@ main {
     padding: 20px;
 }
 
-/* Reutilizamos el estilo de tu .container original pero ajustado para un formulario */
-.login-container {
+/* El contenedor del formulario de Login/Registro */
+main .login-container {
     width: 100%;
     max-width: 450px;
     background: rgb(31, 27, 46);
@@ -89,12 +119,13 @@ form {
 
 .form-group {
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .form-label {
     display: block;
     margin-bottom: 8px;
-    color: #fff; /* Blanco para que se lea bien sobre fondo oscuro */
+    color: #fff;
     font-size: 1.1rem;
 }
 
@@ -117,7 +148,6 @@ form {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Botón personalizado estilo dorado */
 .btn-login {
     width: 100%;
     padding: 12px;
@@ -125,7 +155,7 @@ form {
     background: linear-gradient(45deg, #c2b46c, #a68a54);
     border: none;
     border-radius: 8px;
-    color: #1f1b2e; /* Texto oscuro para contraste con el dorado */
+    color: #1f1b2e;
     font-family: 'titulos-encabezados', sans-serif;
     font-size: 1.3rem;
     font-weight: bold;
@@ -138,13 +168,14 @@ form {
     box-shadow: 0 0 15px rgba(194, 180, 108, 0.6);
 }
 
-/* ---------- ALERTAS (Reemplazo de Bootstrap alerts) ---------- */
+/* ---------- ALERTAS ---------- */
 .alert {
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
     text-align: center;
     font-size: 0.95rem;
+    width: 100%;
 }
 
 .alert-danger {
@@ -157,11 +188,6 @@ form {
     background-color: rgba(13, 202, 240, 0.2);
     border: 1px solid #0dcaf0;
     color: #9eeaf9;
-}
-
-.alert a {
-    text-decoration: underline;
-    color: inherit;
 }
 
 /* ---------- FOOTER ---------- */
@@ -177,11 +203,12 @@ footer {
 @media (max-width: 768px) {
     header { height: 120px; }
     .logoIcon { height: 80px; }
-    .login-container { padding: 25px; margin: 0 15px; }
+    header .login-container img { width: 50px; }
+    main .login-container { padding: 25px; margin: 0 15px; }
 }
 
 @media (min-width: 1200px) {
     header { height: 140px; }
-    .logoIcon { height: 250px; } /* Ajustado para pantallas grandes igual que tu index */
+    .logoIcon { height: 120px; } /* Evitamos que el logo crezca excesivamente y tape el login */
     footer { padding: 25px 0; font-size: 1.1rem; }
 }

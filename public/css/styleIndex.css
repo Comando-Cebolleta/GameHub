@@ -13,7 +13,11 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'titulos-encabezados', Arial, sans-serif;
 }
 
-/* ---------- BODY ---------- */
+/* ---------- GENERAL ---------- */
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: 'texto-parrafos', Arial, sans-serif;
@@ -25,18 +29,24 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-
 }
 
-/* ---------- HEADER ---------- */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ---------- HEADER (Unificado) ---------- */
 header {
     background-color: #1f1b2e;
     height: 150px;
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Mantiene el logo al centro */
     align-items: center;
-    padding: 10px;
+    padding: 10px 30px;
     position: relative;
+    width: 100%;
+    z-index: 100;
 }
 
 .logoIcon {
@@ -46,21 +56,38 @@ header {
     object-fit: contain;
 }
 
-/* ---------- LOGIN ---------- */
-
-.login-container {
+/* Contenedor de Login/Usuario en el Header */
+header .login-container {
     position: absolute;
     right: 30px;
     top: 50%;
     transform: translateY(-50%);
-    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: auto !important;
 }
 
-.login-container img {
+header .login-container span {
+    color: #c2b46c;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+header .login-container img {
     width: 70px;
     height: auto;
     max-height: 70px;
     cursor: pointer;
+    transition: transform 0.2s;
+}
+
+header .login-container img:hover {
+    transform: scale(1.1);
 }
 
 /* ---------- MAIN CONTENT ---------- */
@@ -99,6 +126,7 @@ main {
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .game-card img {
@@ -121,11 +149,7 @@ main {
     text-align: center;
     font-size: 1.5rem;
     padding: 10px 0;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
+    font-family: 'titulos-encabezados', sans-serif;
 }
 
 /* ---------- FOOTER ---------- */
@@ -135,44 +159,37 @@ footer {
     text-align: center;
     padding: 15px 0;
     font-size: 0.9rem;
+    margin-top: auto;
 }
 
-/* ---------- MEDIA MOVIL ---------- */
+/* ---------- RESPONSIVE MOVIL ---------- */
 @media (max-width: 768px) {
     header {
         height: 120px;
     }
+    header .login-container img {
+        width: 55px;
+    }
     .container {
         gap: 20px;
-    }
-    .login-container img {
-        width: 55px;
-        max-height: 55px;
     }
     .game-card {
         max-width: 100%;
     }
     .game-card:hover {
         transform: none;
-        box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-    }
-    footer {
-        font-size: 0.8rem;
-        padding: 12px 0;
     }
 }
 
-/* ---------- MEDIA PC / PANTALLAS GRANDES ---------- */
+/* ---------- RESPONSIVE PC / GRANDE ---------- */
 @media (min-width: 1200px) {
-    /* HEADER MÁS GRANDE */
     header {
         height: 140px;
     }
+    /* Logo ajustado para no colisionar con el login */
     .logoIcon {
-        height: 250px;
-        width: auto;
+        height: 180px;
     }
-    /* PARTE CENTRAL */
     .container {
         max-width: 1000px;
         min-height: 500px;
@@ -182,11 +199,6 @@ footer {
     .game-card {
         max-width: 350px;
     }
-    .game-title {
-        font-size: 1.3rem;
-    }
-
-    /* FOOTER */
     footer {
         padding: 25px 0;
         font-size: 1.1rem;
