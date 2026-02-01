@@ -1,63 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mi Perfil{% endblock %}
+{% block title %}Mi Perfil - GameHub{% endblock %}
 
 {% block stylesheets %}
     {# Cargamos el CSS específico para el diseño del perfil #}
     <link rel="stylesheet" href="{{ asset('css/styleProfile.css') }}">
+    {# Importante: Cargamos también styleLogin o styleIndex para heredar los estilos del Header #}
+    <link rel="stylesheet" href="{{ asset('css/styleLogin.css') }}">
 {% endblock %}
 
 {% block body %}
-    <header>
-        {# Enlace al inicio #}
-        <a href="{{ path('home') }}">
-            <img src="{{ asset('assets/img/logoIcon.webp') }}" alt="Logo" class="logoIcon">
-        </a>
 
-        {# Icono a la derecha. Como es el perfil propio, podría ser un botón de logout o el mismo avatar #}
-        <div class="header-user-icon">
-            {# Enlace para cerrar sesión, por ejemplo #}
-            <a href="{{ path('app_logout') }}" title="Cerrar Sesión">
-                <img src="{{ asset('assets/img/loginIconGOLD.webp') }}" alt="Cerrar Sesión">
-            </a>
-        </div>
-    </header>
+    {# INCLUSIÓN DEL HEADER MODULAR #}
+    {% include 'partials/header.html.twig' %}
 
     <main>
+        {# Mensajes de éxito/error al actualizar ajustes #}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" style="color: #c2b46c; text-align: center; margin-bottom: 20px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <div class="profile-container">
             {# --- Banner Superior --- #}
             <div class="profile-banner">
                 {# --- Icono de Ajustes (Engranaje) --- #}
-                {# Enlaza a la ruta de configuración de perfil cuando la tengas #}
-                <a href="#" class="settings-icon" title="Configuración del Perfil">
-                    {# Reemplaza con tu icono de engranaje dorado #}
+                <a href="{{ path('app_settings') }}" class="settings-icon" title="Configuración del Perfil">
                     <img src="{{ asset('assets/img/settingsIconGOLD.webp') }}" alt="Ajustes">
                 </a>
             </div>
 
             {# --- Avatar del Usuario --- #}
             <div class="profile-avatar">
-                {# Muestra el avatar del usuario si tuvieras un campo para ello, si no, usa un placeholder #}
-                {# <img src="{{ app.user.avatarUrl|default(asset('assets/img/default_avatar.webp')) }}" alt="Avatar"> #}
-                <img src="{{ asset('assets/img/default_avatar.webp') }}" alt="Avatar de usuario">
+                {# CORRECCIÓN: Usamos app.user.fotoPerfil en lugar de app.user.avatar #}
+                {% if app.user.fotoPerfil %}
+                    <img src="{{ asset('uploads/avatars/' ~ app.user.fotoPerfil) }}" alt="Avatar de {{ app.user.userName }}">
+                {% else %}
+                    {# Si no hay foto, usamos el placeholder #}
+                    <img src="{{ asset('assets/img/default_avatar.webp') }}" alt="Avatar por defecto">
+                {% endif %}
             </div>
 
             {# --- Nombre de Usuario --- #}
             <h2 class="profile-username">
-                {# Muestra el nombre de usuario (userName) o el identificador (email) si no existe #}
+                {# Mostramos el nombre de usuario o el email si no tiene #}
                 {{ app.user.userName|default(app.user.userIdentifier) }}
             </h2>
 
             {# --- Tarjetas de Contenido --- #}
             <div class="profile-cards-container">
-                {# Tarjeta 1: Mis builds #}
-                {# Actualiza el href con la ruta correcta (ej: path('user_builds')) #}
+                {# Próximos pasos: Enlazar a las listas reales #}
                 <a href="#" class="profile-card">
                     Mis builds
                 </a>
 
-                {# Tarjeta 2: Mis publicaciones #}
-                {# Actualiza el href con la ruta correcta (ej: path('user_posts')) #}
                 <a href="#" class="profile-card">
                     Mis publicaciones
                 </a>

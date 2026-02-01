@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajustes de Perfil - GameHub{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styleLogin.css') }}">
+    <style>
+        .settings-container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #1f1b2e;
+            border: 2px solid #c2b46c;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        .current-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #c2b46c;
+            display: block;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            background-color: #2a243d;
+        }
+        .form-input-file {
+            background: transparent;
+            color: #fff;
+            margin-top: 10px;
+        }
+        /* Estilo para los labels del formulario */
+        label {
+            color: #c2b46c;
+            margin-bottom: 5px;
+            display: block;
+            font-weight: bold;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+
+    <main>
+        <div class="settings-container">
+            <h2 class="login-title">Ajustes de Perfil</h2>
+
+            {# Avatar actual con ID para la previsualización JS #}
+            <img id="avatar-preview"
+                 src="{{ app.user.fotoPerfil ? asset('uploads/avatars/' ~ app.user.fotoPerfil) : asset('assets/img/default_avatar.webp') }}"
+                 alt="Avatar" class="current-avatar">
+
+            {{ form_start(settingsForm) }}
+            <div class="form-group">
+                {{ form_label(settingsForm.userName, 'Nombre de Trazacaminos / Viajero') }}
+                {{ form_widget(settingsForm.userName, {'attr': {'class': 'form-input'}}) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(settingsForm.fotoPerfil, 'Cambiar foto de perfil') }}
+                {{ form_widget(settingsForm.fotoPerfil, {'attr': {'class': 'form-input-file', 'onchange': 'previewImage(event)'}}) }}
+            </div>
+
+            <button type="submit" class="btn-login" style="margin-top: 20px;">Guardar Cambios</button>
+            {{ form_end(settingsForm) }}
+
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="{{ path('app_profile') }}" style="color: #888; font-size: 0.9rem; text-decoration: none;">
+                    &larr; Volver al perfil
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>Game Hub &copy; 2025-2026</footer>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('avatar-preview');
+                output.src = reader.result;
+            }
+            if(event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+    </script>
+{% endblock %}
