@@ -174,10 +174,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->fotoPerfil;
     }
 
-    public function setFotoPerfil(string $fotoPerfil): static
+    public function setFotoPerfil(?string $fotoPerfil): static // Añade el ? aquí
     {
         $this->fotoPerfil = $fotoPerfil;
-
         return $this;
     }
 

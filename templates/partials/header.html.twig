@@ -1,23 +1,27 @@
 <header>
-    {# LOGO #}
+    {# LOGO AL CENTRO #}
     <a href="{{ path('home') }}">
         <img src="{{ asset('assets/img/logoIcon.webp') }}" alt="Logo" class="logoIcon">
     </a>
 
-    {# ZONA DE USUARIO #}
+    {# ZONA DE USUARIO (DERECHA) #}
     <div class="login-container">
         {% if app.user %}
-            {# USUARIO CONECTADO #}
-            <span style="color: #c2b46c; margin-right: 10px;">
-                Hola, {{ app.user.userIdentifier }}
-            </span>
-            <a href="{{ path('app_logout') }}" style="color: white; text-decoration: none;">
-                Salir
+            {# USUARIO LOGUEADO: Texto + Icono que lleva al perfil #}
+            <div class="user-info">
+                {# Usamos userName si existe, si no, el identificador de seguridad #}
+                <span class="welcome-text">Hola, {{ app.user.userName|default(app.user.userIdentifier) }}</span>
+                <a href="{{ path('app_logout') }}" class="logout-link">Salir</a>
+            </div>
+
+            <a href="{{ path('app_profile') }}">
+                {# Construcción dinámica del nombre de la imagen #}
+                <img src="{{ asset('assets/img/loginIcon' ~ (iconColor|default('GOLD')) ~ '.webp') }}" alt="Mi Perfil" title="Ir a mi perfil">
             </a>
         {% else %}
-            {# USUARIO DESCONECTADO (Aquí estaba el error) #}
+            {# USUARIO NO LOGUEADO: Icono que lleva al login #}
             <a href="{{ path('app_login') }}">
-                <img src="{{ asset('assets/img/loginIconGOLD.webp') }}" alt="Inicio de sesión">
+                <img src="{{ asset('assets/img/loginIcon' ~ (iconColor|default('GOLD')) ~ '.webp') }}" alt="Iniciar sesión" title="Iniciar sesión">
             </a>
         {% endif %}
     </div>
