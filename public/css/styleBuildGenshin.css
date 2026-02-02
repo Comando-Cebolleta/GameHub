@@ -92,8 +92,13 @@ input:focus, select:focus {
     gap: 10px;
 }
 
+.subgrid-artefactos > div > label {
+    font-weight: bold;
+    font-size: 22px;
+}
+
 hr {
     border: 0;
-    border-top: 1px solid rgba(148, 132, 89, 0.3);
+    border-top: 1px solid rgba(255, 218, 139, 0.98);
     margin: 20px 0;
 }

@@ -26,12 +26,15 @@ class GenshinBuildType extends AbstractType
                 'choice_label' => 'nombre',
                 'label' => 'Personaje',
                 'placeholder' => 'Selecciona personaje...',
-                'attr' => ['class' => 'form-select arma-selector'],
+                'attr' => ['class' => 'form-select personaje-selector'],
                 'query_builder' => function (EntityRepository $er) {
                     // Para mirar si el pj es de Genshin, miramos si el campo senda es null
                     // porque los de Genshin no tienen
                     return $er->createQueryBuilder('p')->where('p.senda IS NULL')->orderBy('p.nombre', 'ASC');
                 },
+                'choice_attr' => function($personajePlantilla) {
+                    return ['data-tipo-arma' => $personajePlantilla->getTipoArma()];
+                }
             ])
             ->add('nivel', IntegerType::class, [
                 'label' => 'Nivel',

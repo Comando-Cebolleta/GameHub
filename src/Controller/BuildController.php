@@ -72,20 +72,45 @@ class BuildController extends AbstractController
     private function procesarArtefactos($form, $slots, $personaje, $repoPlantillas) {
         foreach ($slots as $campoForm => $codigoTipoBD) {
             if (!$form->has($campoForm)) continue;
+            
             $subForm = $form->get($campoForm);
-            /** @var Artefacto $artefactoEntity */
-            $artefactoEntity = $subForm->getData();
             $setSeleccionado = $subForm->get('setSeleccionado')->getData();
             
             if (!$setSeleccionado) continue;
 
+            /** @var Artefacto $artefactoEntity */
+            $artefactoEntity = $subForm->getData();
+
             $plantillaExacta = $repoPlantillas->findOneBySetAndType($setSeleccionado, $codigoTipoBD);
+            
             if ($plantillaExacta) {
                 $artefactoEntity->setArtefactoPlantilla($plantillaExacta);
-                $jsonStats = [
-                    'main_stat' => ['name' => $subForm->get('statPrincipalNombre')->getData(), 'value' => $subForm->get('statPrincipalValor')->getData()],
-                    'sub_stats' => []
+
+                $mainStat = [
+                    'name' => $subForm->get('statPrincipalNombre')->getData(),
+                    'value' => $subForm->get('statPrincipalValor')->getData()
                 ];
+
+                $subStatsArray = [];
+                for ($i = 1; $i <= 4; $i++) {
+                    $nombre = $subForm->get('subStatNombre' . $i)->getData();
+                    $valor = $subForm->get('subStatValor' . $i)->getData();
+
+                    // Solo guardamos si hay nombre y valor (evitamos guardar nulls)
+                    if ($nombre && $valor !== null) {
+                        $subStatsArray[] = [
+                            'name' => $nombre,
+                            'value' => $valor
+                        ];
+                    }
+                }
+
+                // Montar el JSON final
+                $jsonStats = [
+                    'main_stat' => $mainStat,
+                    'sub_stats' => $subStatsArray
+                ];
+
                 $artefactoEntity->setEstadisticas($jsonStats);
                 $personaje->addArtefacto($artefactoEntity);
             }

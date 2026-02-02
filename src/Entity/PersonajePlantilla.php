@@ -38,6 +38,9 @@ class PersonajePlantilla
     #[ORM\Column(length:255, nullable: true)]
     private ?string $senda = null;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $tipoArma = null;
+
     /**
      * @var Collection<int, Personaje>
      */
@@ -161,6 +164,17 @@ class PersonajePlantilla
     {
         $this->senda = $senda;
 
+        return $this;
+    }
+
+    public function getTipoArma(): ?string
+    {
+        return $this->tipoArma;
+    }
+
+    public function setTipoArma(?string $tipoArma): static
+    {
+        $this->tipoArma = $tipoArma;
         return $this;
     }
 
