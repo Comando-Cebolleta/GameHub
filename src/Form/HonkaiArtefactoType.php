@@ -73,6 +73,23 @@ class HonkaiArtefactoType extends AbstractType
 
             ])
             ->add('statPrincipalValor', NumberType::class, ['label' => 'Valor', 'mapped' => false, 'html5' => true, 'attr' => ['step' => '0.1']]);
+
+            for ($i = 1; $i <= 4; $i++) {
+            $builder->add('subStatNombre' . $i, ChoiceType::class, [
+                'choices' => self::STATS_HSR,
+                'label' => 'Substat ' . $i,
+                'placeholder' => 'Seleccionar...',
+                'mapped' => false
+            ]);
+            
+            $builder->add('subStatValor' . $i, NumberType::class, [
+                'label' => 'Valor', 
+                'required' => false,
+                'mapped' => false, 
+                'html5' => true, 
+                'attr' => ['step' => '0.1']
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void 

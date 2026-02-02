@@ -30,7 +30,7 @@ class HonkaiBuildType extends AbstractType
                 'choice_label' => 'nombre',
                 'label' => 'Personaje',
                 'placeholder' => 'Selecciona personaje...',
-                'attr' => ['class' => 'form-select arma-selector'],
+                'attr' => ['class' => 'form-select personaje-selector'],
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('p')->where('p.senda IS NOT NULL')->orderBy('p.nombre', 'ASC');
                 },
