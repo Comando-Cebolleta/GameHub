@@ -3,9 +3,7 @@
 {% block title %}Mi Perfil - GameHub{% endblock %}
 
 {% block stylesheets %}
-    {# Cargamos el CSS específico para el diseño del perfil #}
     <link rel="stylesheet" href="{{ asset('css/styleProfile.css') }}">
-    {# Importante: Cargamos también styleLogin o styleIndex para heredar los estilos del Header #}
     <link rel="stylesheet" href="{{ asset('css/styleLogin.css') }}">
 {% endblock %}
 
@@ -14,7 +12,30 @@
     {# INCLUSIÓN DEL HEADER MODULAR #}
     {% include 'partials/header.html.twig' %}
 
-    <main>
+    <main style="position: relative;"> {# Añadido relative aquí para que el mensaje flote respecto a este contenedor #}
+
+        {# --- MENSAJE FLOTANTE (No empuja el diseño) --- #}
+        {% for message in app.flashes('success') %}
+            <div style="
+                position: absolute;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 999;
+                background: #1f1b2e;
+                color: #c2b46c;
+                border: 2px solid #c2b46c;
+                padding: 10px 25px;
+                border-radius: 12px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+                font-weight: bold;
+                white-space: nowrap;
+                animation: fadeOut 4s forwards;
+            ">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <div class="profile-container">
             {# Mensajes de éxito/error al actualizar ajustes #}
             {% for message in app.flashes('success') %}
@@ -26,7 +47,6 @@
 
             {# --- Banner Superior --- #}
             <div class="profile-banner">
-                {# --- Icono de Ajustes (Engranaje) --- #}
                 <a href="{{ path('app_settings') }}" class="settings-icon" title="Configuración del Perfil">
                     <img src="{{ asset('assets/img/settingsIconGOLD.webp') }}" alt="Ajustes">
                 </a>
@@ -34,31 +54,22 @@
 
             {# --- Avatar del Usuario --- #}
             <div class="profile-avatar">
-                {# CORRECCIÓN: Usamos app.user.fotoPerfil en lugar de app.user.avatar #}
                 {% if app.user.fotoPerfil %}
                     <img src="{{ asset('uploads/avatars/' ~ app.user.fotoPerfil) }}" alt="Avatar de {{ app.user.userName }}">
                 {% else %}
-                    {# Si no hay foto, usamos el placeholder #}
                     <img src="{{ asset('assets/img/default_avatar.webp') }}" alt="Avatar por defecto">
                 {% endif %}
             </div>
 
             {# --- Nombre de Usuario --- #}
             <h2 class="profile-username">
-                {# Mostramos el nombre de usuario o el email si no tiene #}
                 {{ app.user.userName|default(app.user.userIdentifier) }}
             </h2>
 
             {# --- Tarjetas de Contenido --- #}
             <div class="profile-cards-container">
-                {# Próximos pasos: Enlazar a las listas reales #}
-                <a href="#" class="profile-card">
-                    Mis builds
-                </a>
-
-                <a href="#" class="profile-card">
-                    Mis publicaciones
-                </a>
+                <a href="#" class="profile-card">Mis builds</a>
+                <a href="#" class="profile-card">Mis publicaciones</a>
             </div>
         </div>
     </main>
@@ -66,4 +77,13 @@
     <footer>
         Game Hub &copy; 2025-2026
     </footer>
+
+    {# Pequeño estilo para que el mensaje desaparezca suavemente #}
+    <style>
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+    </style>
 {% endblock %}
