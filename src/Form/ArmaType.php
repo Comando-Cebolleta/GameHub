@@ -35,6 +35,9 @@ class ArmaType extends AbstractType
                     
                     return $qb->orderBy('a.nombre', 'ASC');
                 },
+                'choice_attr' => function($armaPlantilla) {
+                    return ['data-tipo' => $armaPlantilla->getTipo()]; 
+                }
             ])
             ->add('nivel', IntegerType::class, [
                 'label' => 'Nivel',

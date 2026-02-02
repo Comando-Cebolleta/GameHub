@@ -80,9 +80,13 @@
                         <h4 class="section-subtitle">Conjunto de Artefactos</h4>
                         <div class="subgrid-artefactos">
                             {{ form_row(form.artefacto_flor) }}
+                            <hr>
                             {{ form_row(form.artefacto_pluma) }}
+                            <hr>
                             {{ form_row(form.artefacto_reloj) }}
+                            <hr>
                             {{ form_row(form.artefacto_copa) }}
+                            <hr>
                             {{ form_row(form.artefacto_casco) }}
                         </div>
                     </div>
@@ -98,4 +102,9 @@
     <footer>
         Game Hub &copy; 2025-2026
     </footer>
+    {% block javascripts %}
+        {{ parent() }}
+        <script type="text/javascript" src="{{ asset('js/filtroArmaPersonaje.js') }}"></script>
+    {% endblock %}
+
 {% endblock %}

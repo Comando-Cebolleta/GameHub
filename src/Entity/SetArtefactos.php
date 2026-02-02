@@ -17,6 +17,7 @@ class SetArtefactos
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
+    #[ORM\Column]
     private ?string $efectos = null;
 
     #[ORM\Column(length: 255)]
