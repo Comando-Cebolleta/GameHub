@@ -33,7 +33,6 @@ class Personaje
     #[ORM\ManyToOne(inversedBy: 'personajes')]
     private ?PersonajePlantilla $personajePlantilla = null;
 
-    // Relación con la entidad intermedia EquipoPersonaje (M:N a través de la tabla intermedia)
     #[ORM\OneToMany(mappedBy: 'personaje', targetEntity: EquipoPersonaje::class)]
     private Collection $equiposPersonaje;
 
@@ -150,7 +149,7 @@ class Personaje
     public function removeEquipoPersonaje(EquipoPersonaje $equipoPersonaje): static
     {
         if ($this->equiposPersonaje->removeElement($equipoPersonaje)) {
-            // Eliminar la relación en la entidad intermedia
+
             if ($equipoPersonaje->getPersonaje() === $this) {
                 $equipoPersonaje->setPersonaje(null);
             }
@@ -180,7 +179,7 @@ class Personaje
     public function removePersonajeHabilidad(PersonajeHabilidad $personajeHabilidad): static
     {
         if ($this->personajeHabilidades->removeElement($personajeHabilidad)) {
-            // Eliminar la relación en la entidad intermedia
+            
             if ($personajeHabilidad->getPersonaje() === $this) {
                 $personajeHabilidad->setPersonaje(null);
             }

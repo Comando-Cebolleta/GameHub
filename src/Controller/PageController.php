@@ -142,7 +142,6 @@ final class PageController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function perfil(): Response
     {
-        // Asegúrate de que tu archivo esté en: templates/profile/profile.html.twig
         return $this->render('profile/profile.html.twig');
     }
 }

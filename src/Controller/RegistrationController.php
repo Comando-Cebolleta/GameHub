@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
-use App\Form\UserSettingsType; // IMPORTANTE: Faltaba esta línea
+use App\Form\UserSettingsType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
@@ -95,7 +95,6 @@ class RegistrationController extends AbstractController
         return $this->render('registration/flash_email_verified.html.twig');
     }
 
-    /* --- MÉTODO SETTINGS CORREGIDO --- */
     #[Route('/settings', name: 'app_settings')]
     public function settings(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -129,7 +128,6 @@ class RegistrationController extends AbstractController
             }
 
             $entityManager->flush();
-            // Este flash se descuadra al volver al perfil
             $this->addFlash('success', '¡Perfil actualizado con éxito!');
             return $this->redirectToRoute('app_profile');
         }
