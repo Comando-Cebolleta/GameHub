@@ -104,7 +104,7 @@ class SetArtefactos
     public function removeArtefactoPlantilla(ArtefactoPlantilla $artefactoPlantilla): static
     {
         if ($this->artefactoPlantillas->removeElement($artefactoPlantilla)) {
-            // set the owning side to null (unless already changed)
+            
             if ($artefactoPlantilla->getSetArtefactos() === $this) {
                 $artefactoPlantilla->setSetArtefactos(null);
             }

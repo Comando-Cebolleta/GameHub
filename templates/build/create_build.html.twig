@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block body %}
-{% include 'partials/header.html.twig' %} {# Asumiendo que crearás un header común #}
+{% include 'partials/header.html.twig' %}
 
 <main>
     <div class="container mt-5">
@@ -98,51 +98,5 @@
 </main>
 
 <footer>Game Hub Blog &copy; 2025</footer>
-
-{# JAVASCRIPT PARA MANEJAR LA COLECCIÓN DINÁMICA #}
-{# <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const wrapper = document.getElementById('artefactos-wrapper');
-        const addBtn = document.getElementById('add-artefacto-btn');
-        
-        // Obtenemos el prototipo (el HTML plantilla que genera Symfony)
-        // y el índice actual (cuántos artefactos hay ya)
-        let prototype = wrapper.dataset.prototype;
-        let index = parseInt(wrapper.dataset.index);
-
-        addBtn.addEventListener('click', function() {
-            if (index >= 5) {
-                alert("Solo puedes equipar un máximo de 5 artefactos.");
-                return;
-            }
-
-            // Creamos un nuevo bloque de HTML reemplazando __name__ por el número índice (0, 1, 2...)
-            let newForm = prototype.replace(/__name__/g, index);
-            index++;
-            
-            // Actualizamos el índice en el dataset por si acaso
-            wrapper.dataset.index = index;
-
-            // Creamos el elemento DOM
-            const card = document.createElement('div');
-            card.classList.add('artefacto-card');
-            card.innerHTML = newForm;
-
-            // Botón de borrar para este artefacto específico
-            const removeBtn = document.createElement('button');
-            removeBtn.type = 'button';
-            removeBtn.innerText = 'X';
-            removeBtn.classList.add('btn-remove-artefacto');
-            
-            removeBtn.addEventListener('click', function() {
-                card.remove();
-                index--; // (Opcional) Ajustar índice aunque no es estrictamente necesario para Symfony
-            });
-
-            card.appendChild(removeBtn);
-            wrapper.appendChild(card);
-        });
-    });
-</script> #}
 
 {% endblock %}

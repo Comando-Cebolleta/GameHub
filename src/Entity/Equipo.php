@@ -24,7 +24,6 @@ class Equipo
     #[ORM\ManyToOne(inversedBy: 'equipos')]
     private ?User $user = null;
 
-    // Relación con la entidad intermedia EquipoPersonaje (M:N a través de la tabla intermedia)
     #[ORM\OneToMany(mappedBy: 'equipo', targetEntity: EquipoPersonaje::class)]
     private Collection $equiposPersonaje;
 
@@ -95,7 +94,7 @@ class Equipo
     public function removeEquipoPersonaje(EquipoPersonaje $equipoPersonaje): static
     {
         if ($this->equiposPersonaje->removeElement($equipoPersonaje)) {
-            // Eliminar la relación en la entidad intermedia
+            
             if ($equipoPersonaje->getEquipo() === $this) {
                 $equipoPersonaje->setEquipo(null);
             }
