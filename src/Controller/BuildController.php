@@ -116,15 +116,4 @@ class BuildController extends AbstractController
             }
         }
     }
-
-    #[Route('/api/personajes/{juego}', name: 'api_personajes_por_juego', methods: ['GET'])]
-    public function getPersonajesApi(string $juego, PersonajePlantillaRepository $repo): JsonResponse
-    {
-        $plantillas = $repo->findBy(['juego' => $juego]);
-        $data = [];
-        foreach ($plantillas as $p) {
-            $data[] = ['id' => $p->getId(), 'nombre' => $p->getNombre()];
-        }
-        return new JsonResponse($data);
-    }
 }
