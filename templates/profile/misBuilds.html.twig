@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mis Builds{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div style="display: flex; flex-direction: column">
+        {% if builds is empty %}
+            <p>No tienes builds creados aún.</p>
+        {% else %}
+            {# Recordad que "builds" en realidad es personajes en la base de datos #}
+            {% for build in builds %}
+                <div class="build-card">
+                    <h3>{{ build.nombre }}</h3>
+                    <p>{{ build.personajePlantilla.nombre }}</p>
+                    <img src="{{ asset('assets/personajes/' ~ build.personajePlantilla.imagen) }}" alt="{{ build.personajePlantilla.nombre }}" style="width: 300px; height: auto;">
+                </div>
+                <hr>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

@@ -80,6 +80,14 @@ final class PageController extends AbstractController
         ]);
     }
 
+    #[Route('/genshin/builds', name: 'genshin_builds')]
+    public function genshinBuilds(): Response
+    {
+        return $this->render('page/genshin/buildsGenshin.html.twig', [
+            'controller_name' => 'PageController',
+        ]);
+    }
+
     #[Route('/hsr/blog', name: 'hsr_blog')]
     public function hsrBlog(): Response
     {
@@ -137,11 +145,12 @@ final class PageController extends AbstractController
             "juego" => $juego
         ]);
     }
-  
-    #[Route('/profile', name: 'app_profile')]
-    #[IsGranted('ROLE_USER')]
-    public function perfil(): Response
+
+    #[Route('/hsr/builds', name: 'hsr_builds')]
+    public function hsrBuilds(): Response
     {
-        return $this->render('profile/profile.html.twig');
+        return $this->render('page/hsr/buildsHonkai.html.twig', [
+            'controller_name' => 'PageController',
+        ]);
     }
 }
