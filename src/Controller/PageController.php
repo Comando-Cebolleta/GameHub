@@ -23,10 +23,15 @@ final class PageController extends AbstractController
     }
 
     #[Route('/genshin/blog', name: 'genshin_blog')]
-    public function genshinBlog(): Response
+    public function genshinBlog(EntityManagerInterface $em): Response
     {
+        $posts = $em->getRepository(Post::class)->findBy(
+            ['juego' => 'genshin'],
+            ['fechaPublicacion' => 'DESC']
+        );
+
         return $this->render('page/genshin/blogGenshin.html.twig', [
-            'controller_name' => 'PageController',
+            'posts' => $posts,
         ]);
     }
 
@@ -89,10 +94,15 @@ final class PageController extends AbstractController
     }
 
     #[Route('/hsr/blog', name: 'hsr_blog')]
-    public function hsrBlog(): Response
+    public function hsrBlog(EntityManagerInterface $em): Response
     {
+        $posts = $em->getRepository(Post::class)->findBy(
+            ['juego' => 'hsr'],
+            ['fechaPublicacion' => 'DESC']
+        );
+
         return $this->render('page/hsr/blogHonkai.html.twig', [
-            'controller_name' => 'PageController',
+            'posts' => $posts,
         ]);
     }
 
