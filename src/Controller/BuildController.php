@@ -69,6 +69,14 @@ class BuildController extends AbstractController
         return $this->render('build/create_hsr.html.twig', ['form' => $form->createView()]);
     }
 
+    #[Route('/{id}', name: 'app_build_view')]
+    public function viewBuild(Personaje $personaje): Response
+    {
+        $esMio = $this->getUser() && $personaje->getUser() && $this->getUser()->getId() === $personaje->getUser()->getId();
+
+        return $this->render('build/single_build.html.twig', ['build' => $personaje, 'esMio' => $esMio]);
+    }
+
     private function procesarArtefactos($form, $slots, $personaje, $repoPlantillas) {
         foreach ($slots as $campoForm => $codigoTipoBD) {
             if (!$form->has($campoForm)) continue;

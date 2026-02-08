@@ -15,13 +15,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/profile')]
 final class ProfileController extends AbstractController
 {
-    #[Route('/', name: 'app_profile')]
-    #[IsGranted('ROLE_USER')]
-    public function perfil(): Response
-    {
-        return $this->render('profile/profile.html.twig');
-    }
-
     #[Route('/builds', name: 'app_profile_builds')]
     #[IsGranted('ROLE_USER')]
     public function profileBuilds(): Response
@@ -45,6 +38,26 @@ final class ProfileController extends AbstractController
 
         return $this->render('profile/misPosts.html.twig', [
             'posts' => $posts
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_profile', defaults: ['id' => null])]
+    #[IsGranted('ROLE_USER')]
+    public function perfil(?User $user): Response
+    {
+        if ($user) {
+            // Si se ha proporcionado un ID de usuario, mostramos el perfil de ese usuario
+            $usuarioActual = $user;
+        } else {
+            // Si no se ha proporcionado un ID, mostramos el perfil del usuario actual
+            $usuarioActual = $this->getUser();
+        }
+
+        $miPerfil = $this->getUser() === $usuarioActual;
+
+        return $this->render('profile/profile.html.twig', [
+            'user' => $usuarioActual,
+            'miPerfil' => $miPerfil
         ]);
     }
 }
