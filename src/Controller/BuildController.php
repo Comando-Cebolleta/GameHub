@@ -33,7 +33,7 @@ class BuildController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $slots = ['artefacto_flor' => 'flor', 'artefacto_pluma' => 'pluma', 'artefacto_reloj' => 'reloj', 'artefacto_copa' => 'caliz', 'artefacto_casco' => 'sombrero'];
             $this->procesarArtefactos($form, $slots, $personaje, $repoPlantillas);
-            
+
             $em->persist($personaje);
             $em->flush();
 
@@ -77,20 +77,21 @@ class BuildController extends AbstractController
         return $this->render('build/single_build.html.twig', ['build' => $personaje, 'esMio' => $esMio]);
     }
 
-    private function procesarArtefactos($form, $slots, $personaje, $repoPlantillas) {
+    private function procesarArtefactos($form, $slots, $personaje, $repoPlantillas)
+    {
         foreach ($slots as $campoForm => $codigoTipoBD) {
             if (!$form->has($campoForm)) continue;
-            
+
             $subForm = $form->get($campoForm);
             $setSeleccionado = $subForm->get('setSeleccionado')->getData();
-            
+
             if (!$setSeleccionado) continue;
 
             /** @var Artefacto $artefactoEntity */
             $artefactoEntity = $subForm->getData();
 
             $plantillaExacta = $repoPlantillas->findOneBySetAndType($setSeleccionado, $codigoTipoBD);
-            
+
             if ($plantillaExacta) {
                 $artefactoEntity->setArtefactoPlantilla($plantillaExacta);
 
@@ -123,5 +124,68 @@ class BuildController extends AbstractController
                 $personaje->addArtefacto($artefactoEntity);
             }
         }
+    }
+
+    #[Route('/{id}/edit', name: 'app_build_edit')]
+    #[IsGranted('ROLE_USER')]
+    public function editBuild(Personaje $personaje, Request $request, EntityManagerInterface $em, ArtefactoPlantillaRepository $repoPlantillas): Response
+    {
+        if ($personaje->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $esGenshin = true;
+        $primerArtefacto = $personaje->getArtefactos()->first();
+
+        if ($primerArtefacto) {
+            $plantilla = $primerArtefacto->getArtefactoPlantilla();
+            // CORRECCIÓN: Usamos getPiezaTipo()
+            $tipo = $plantilla->getPiezaTipo();
+
+            // Si la pieza es de Honkai (cabeza, manos, etc.), esGenshin pasa a false
+            $piezasHonkai = ['cabeza', 'manos', 'torso', 'pies', 'esfera', 'cuerda'];
+            if (in_array($tipo, $piezasHonkai)) {
+                $esGenshin = false;
+            }
+        }
+
+        $formType = $esGenshin ? GenshinBuildType::class : HonkaiBuildType::class;
+        $form = $this->createForm($formType, $personaje);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $slots = $esGenshin
+                ? ['artefacto_flor' => 'flor', 'artefacto_pluma' => 'pluma', 'artefacto_reloj' => 'reloj', 'artefacto_copa' => 'caliz', 'artefacto_casco' => 'sombrero']
+                : ['reliquia_cabeza' => 'cabeza', 'reliquia_manos' => 'manos', 'reliquia_torso' => 'torso', 'reliquia_pies' => 'pies', 'ornamento_esfera' => 'esfera', 'ornamento_cuerda' => 'cuerda'];
+
+            $this->procesarArtefactos($form, $slots, $personaje, $repoPlantillas);
+
+            $em->flush();
+            $this->addFlash('success', '¡Build actualizada correctamente!');
+            return $this->redirectToRoute('app_profile_builds');
+        }
+
+        return $this->render($esGenshin ? 'build/create_genshin.html.twig' : 'build/create_hsr.html.twig', [
+            'form' => $form->createView(),
+            'edit_mode' => true,
+            'personaje' => $personaje
+        ]);
+    }
+
+    #[Route('/{id}/delete', name: 'app_build_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function deleteBuild(Request $request, Personaje $personaje, EntityManagerInterface $em): Response
+    {
+        if ($personaje->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        if ($this->isCsrfTokenValid('delete' . $personaje->getId(), $request->request->get('_token'))) {
+            $em->remove($personaje);
+            $em->flush();
+            $this->addFlash('success', 'Build eliminada.');
+        }
+
+        return $this->redirectToRoute('app_profile_builds');
     }
 }

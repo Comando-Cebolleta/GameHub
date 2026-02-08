@@ -1,24 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mis Builds{% endblock %}
+{% block title %}Mis Builds - GameHub{% endblock %}
 
 {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styleLogin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styleMisBuilds.css') }}">
 {% endblock %}
 
 {% block body %}
-    <div style="display: flex; flex-direction: column">
-        {% if builds is empty %}
-            <p>No tienes builds creados aún.</p>
-        {% else %}
-            {# Recordad que "builds" en realidad es personajes en la base de datos #}
-            {% for build in builds %}
-                <div class="build-card">
-                    <h3>{{ build.nombre }}</h3>
-                    <p>{{ build.personajePlantilla.nombre }}</p>
-                    <img src="{{ asset('assets/personajes/' ~ build.personajePlantilla.imagen) }}" alt="{{ build.personajePlantilla.nombre }}" style="width: 300px; height: auto;">
+    {% include 'partials/header.html.twig' with {'iconColor': 'GOLD'} %}
+
+    <main>
+        <div class="builds-wrapper">
+            <h1 class="title-gold">Mis Builds</h1>
+
+            {% if builds is empty %}
+                <div class="empty-state" style="text-align: center; padding: 40px;">
+                    <p>No tienes builds creados aún.</p>
                 </div>
-                <hr>
-            {% endfor %}
-        {% endif %}
-    </div>
+            {% else %}
+                <div class="builds-grid">
+                    {% for build in builds %}
+                        <article class="card-build">
+                            <div class="card-img-container">
+                                <a href="{{ path('app_build_view', {'id': build.id}) }}">
+                                    <img src="{{ asset('assets/personajes/' ~ build.personajePlantilla.imagen) }}"
+                                         alt="{{ build.personajePlantilla.nombre }}"
+                                         class="card-img">
+                                </a>
+                            </div>
+
+                            <div class="card-body">
+                                <a href="{{ path('app_build_view', {'id': build.id}) }}" style="text-decoration: none;">
+                                    <h3>{{ build.nombre }}</h3>
+                                </a>
+                                <p>{{ build.personajePlantilla.nombre }}</p>
+
+                                <div class="build-actions">
+                                    {# BOTÓN EDITAR #}
+                                    <a href="{{ path('app_build_edit', {'id': build.id}) }}" class="btn-gold">Editar</a>
+
+                                    {# BOTÓN BORRAR #}
+                                    <form method="post" action="{{ path('app_build_delete', {'id': build.id}) }}" onsubmit="return confirm('¿Borrar esta build?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ build.id) }}">
+                                        <button type="submit" class="btn-gold">Borrar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="navigation-footer">
+                <a href="{{ path('app_profile') }}" class="back-btn">
+                    <span>&larr;</span> Volver a Mi Perfil
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        Game Hub &copy; 2025-2026
+    </footer>
 {% endblock %}

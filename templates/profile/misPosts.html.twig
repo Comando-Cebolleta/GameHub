@@ -1,23 +1,68 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mis Posts{% endblock %}
+{% block title %}Mis Publicaciones - GameHub{% endblock %}
 
 {% block stylesheets %}
+    {# Cargamos styleLogin para el header y styleMisPosts para las cartas #}
+    <link rel="stylesheet" href="{{ asset('css/styleLogin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styleMisPosts.css') }}">
 {% endblock %}
 
 {% block body %}
-    <div style="display: flex; flex-direction: column">
-        {% if posts is empty %}
-            <p>No tienes posts creados aún.</p>
-        {% else %}
-            {% for post in posts %}
-                <div class="post-card">
-                    <h3>{{ post.titulo }}</h3>
-                    <p>{{ post.cuerpo|raw }}</p>
-                    <p><small>Publicado el {{ post.fechaPublicacion|date('d/m/Y') }}</small></p>
+    {# Incluimos el header modular #}
+    {% include 'partials/header.html.twig' with {'iconColor': 'GOLD'} %}
+
+    <main>
+        <div class="posts-wrapper">
+            <h1 class="title-gold">Mis Publicaciones</h1>
+
+            {% if posts is empty %}
+                <div class="empty-state">
+                    <p>Aún no has creado ningún post.</p>
                 </div>
-                <hr>
-            {% endfor %}
-        {% endif %}
-    </div>
+            {% else %}
+                <div class="posts-grid">
+                    {% for post in posts %}
+                        <article class="post-item">
+                            <div class="card-post-body">
+                                {# Determinamos la ruta según el juego del post #}
+                                {% set ruta_post = (post.juego == 'genshin') ? 'genshin_post' : 'hsr_post' %}
+
+                                <a href="{{ path(ruta_post, {'id': post.id}) }}" class="post-title-link">
+                                    <h3>{{ post.titulo }}</h3>
+                                </a>
+
+                                <div class="post-content">
+                                    {# Mostramos un extracto del texto sin etiquetas HTML #}
+                                    {{ post.cuerpo|striptags|slice(0, 150) ~ '...' }}
+                                </div>
+
+                                <div class="card-actions">
+                                    {# Fecha a la izquierda (según el CSS) #}
+                                    <span class="post-date">
+                                        {{ post.fechaPublicacion|date('d/m/Y') }}
+                                    </span>
+
+                                </div>
+                                <form method="post" action="{{ path('app_post_delete', {'id': post.id}) }}" onsubmit="return confirm('¿Seguro que quieres borrar este post?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ post.id) }}">
+                                    <button type="submit" class="btn-delete-gold">Borrar</button>
+                                </form>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="navigation-footer">
+                <a href="{{ path('app_profile') }}" class="back-link">
+                    <span>&larr;</span> Volver a Mi Perfil
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        Game Hub &copy; 2025-2026
+    </footer>
 {% endblock %}
