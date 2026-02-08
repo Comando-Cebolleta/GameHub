@@ -120,13 +120,11 @@ class Post
         return $this;
     }
 
-    // Método getter para la relación 'user'
     public function getUser(): ?User
     {
         return $this->user;
     }
 
-    // Método setter para la relación 'user'
     public function setUser(?User $user): static
     {
         $this->user = $user;
@@ -185,7 +183,7 @@ class Post
     public function removeLike(Like $like): static
     {
         if ($this->likes->removeElement($like)) {
-            // set the owning side to null (unless already changed)
+            
             if ($like->getPost() === $this) {
                 $like->setPost(null);
             }

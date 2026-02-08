@@ -106,4 +106,10 @@
     <footer>
         Game Hub &copy; 2025-2026
     </footer>
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script type="text/javascript" src="{{ asset('js/filtroArmaPersonaje.js') }}"></script>
+    {% endblock %}
+    
 {% endblock %}

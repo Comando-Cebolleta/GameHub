@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mis Posts{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div style="display: flex; flex-direction: column">
+        {% if posts is empty %}
+            <p>No tienes posts creados aún.</p>
+        {% else %}
+            {% for post in posts %}
+                <div class="post-card">
+                    <h3>{{ post.titulo }}</h3>
+                    <p>{{ post.cuerpo|raw }}</p>
+                    <p><small>Publicado el {{ post.fechaPublicacion|date('d/m/Y') }}</small></p>
+                </div>
+                <hr>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

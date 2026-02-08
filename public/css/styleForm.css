@@ -1,7 +1,7 @@
 /* public/css/styleForm.css */
 .form-section {
-    background: rgba(31, 27, 46, 0.9); /* Tu color de fondo con transparencia */
-    border: 2px solid #c2b46c; /* Tu dorado */
+    background: rgba(31, 27, 46, 0.9);
+    border: 2px solid #c2b46c;
     border-radius: 15px;
     padding: 30px;
     margin-bottom: 30px;
@@ -34,7 +34,7 @@
 }
 
 label {
-    color: #c2b46c; /* Tu dorado para las etiquetas */
+    color: #c2b46c;
     margin-bottom: 5px;
     display: block;
 }

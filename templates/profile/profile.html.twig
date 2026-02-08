@@ -47,15 +47,17 @@
 
             {# --- Banner Superior --- #}
             <div class="profile-banner">
+                {% if miPerfil %}
                 <a href="{{ path('app_settings') }}" class="settings-icon" title="Configuración del Perfil">
                     <img src="{{ asset('assets/img/settingsIconGOLD.webp') }}" alt="Ajustes">
                 </a>
+                {% endif %}
             </div>
 
             {# --- Avatar del Usuario --- #}
             <div class="profile-avatar">
-                {% if app.user.fotoPerfil %}
-                    <img src="{{ asset('uploads/avatars/' ~ app.user.fotoPerfil) }}" alt="Avatar de {{ app.user.userName }}">
+                {% if user.fotoPerfil %}
+                    <img src="{{ asset('uploads/avatars/' ~ user.fotoPerfil) }}" alt="Avatar de {{ user.userName }}">
                 {% else %}
                     <img src="{{ asset('assets/img/default_avatar.webp') }}" alt="Avatar por defecto">
                 {% endif %}
@@ -63,14 +65,16 @@
 
             {# --- Nombre de Usuario --- #}
             <h2 class="profile-username">
-                {{ app.user.userName|default(app.user.userIdentifier) }}
+                {{ user.userName|default(user.userIdentifier) }}
             </h2>
 
             {# --- Tarjetas de Contenido --- #}
+            {% if miPerfil %}
             <div class="profile-cards-container">
-                <a href="#" class="profile-card">Mis builds</a>
-                <a href="#" class="profile-card">Mis publicaciones</a>
+                <a href="{{ path('app_profile_builds') }}" class="profile-card">Mis builds</a>
+                <a href="{{ path('app_profile_posts') }}" class="profile-card">Mis publicaciones</a>
             </div>
+            {% endif %}
         </div>
     </main>
 

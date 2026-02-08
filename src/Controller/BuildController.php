@@ -69,37 +69,59 @@ class BuildController extends AbstractController
         return $this->render('build/create_hsr.html.twig', ['form' => $form->createView()]);
     }
 
+    #[Route('/{id}', name: 'app_build_view')]
+    public function viewBuild(Personaje $personaje): Response
+    {
+        $esMio = $this->getUser() && $personaje->getUser() && $this->getUser()->getId() === $personaje->getUser()->getId();
+
+        return $this->render('build/single_build.html.twig', ['build' => $personaje, 'esMio' => $esMio]);
+    }
+
     private function procesarArtefactos($form, $slots, $personaje, $repoPlantillas) {
         foreach ($slots as $campoForm => $codigoTipoBD) {
             if (!$form->has($campoForm)) continue;
+            
             $subForm = $form->get($campoForm);
-            /** @var Artefacto $artefactoEntity */
-            $artefactoEntity = $subForm->getData();
             $setSeleccionado = $subForm->get('setSeleccionado')->getData();
             
             if (!$setSeleccionado) continue;
 
+            /** @var Artefacto $artefactoEntity */
+            $artefactoEntity = $subForm->getData();
+
             $plantillaExacta = $repoPlantillas->findOneBySetAndType($setSeleccionado, $codigoTipoBD);
+            
             if ($plantillaExacta) {
                 $artefactoEntity->setArtefactoPlantilla($plantillaExacta);
-                $jsonStats = [
-                    'main_stat' => ['name' => $subForm->get('statPrincipalNombre')->getData(), 'value' => $subForm->get('statPrincipalValor')->getData()],
-                    'sub_stats' => []
+
+                $mainStat = [
+                    'name' => $subForm->get('statPrincipalNombre')->getData(),
+                    'value' => $subForm->get('statPrincipalValor')->getData()
                 ];
+
+                $subStatsArray = [];
+                for ($i = 1; $i <= 4; $i++) {
+                    $nombre = $subForm->get('subStatNombre' . $i)->getData();
+                    $valor = $subForm->get('subStatValor' . $i)->getData();
+
+                    // Solo guardamos si hay nombre y valor (evitamos guardar nulls)
+                    if ($nombre && $valor !== null) {
+                        $subStatsArray[] = [
+                            'name' => $nombre,
+                            'value' => $valor
+                        ];
+                    }
+                }
+
+                // Montar el JSON final
+                $jsonStats = [
+                    'main_stat' => $mainStat,
+                    'sub_stats' => $subStatsArray
+                ];
+
                 $artefactoEntity->setEstadisticas($jsonStats);
                 $personaje->addArtefacto($artefactoEntity);
             }
         }
-    }
-
-    #[Route('/api/personajes/{juego}', name: 'api_personajes_por_juego', methods: ['GET'])]
-    public function getPersonajesApi(string $juego, PersonajePlantillaRepository $repo): JsonResponse
-    {
-        $plantillas = $repo->findBy(['juego' => $juego]);
-        $data = [];
-        foreach ($plantillas as $p) {
-            $data[] = ['id' => $p->getId(), 'nombre' => $p->getNombre()];
-        }
-        return new JsonResponse($data);
     }
 }
