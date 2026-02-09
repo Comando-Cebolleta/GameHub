@@ -37,8 +37,14 @@
                                 <p>{{ build.personajePlantilla.nombre }}</p>
 
                                 <div class="build-actions">
-                                    {# BOTÓN EDITAR #}
-                                    <a href="{{ path('app_build_edit', {'id': build.id}) }}" class="btn-gold">Editar</a>
+                                    {# REDIRECCIÓN SEGÚN JUEGO #}
+                                    {% if build.personajePlantilla.juego == 'genshin' %}
+                                        {# Enlace para GENSHIN #}
+                                        <a href="{{ path('app_build_genshin_edit', {'id': build.id}) }}" class="btn-gold">Editar</a>
+                                    {% else %}
+                                        {# Enlace para HONKAI #}
+                                        <a href="{{ path('app_build_hsr_edit', {'id': build.id}) }}" class="btn-gold">Editar</a>
+                                    {% endif %}
 
                                     {# BOTÓN BORRAR #}
                                     <form method="post" action="{{ path('app_build_delete', {'id': build.id}) }}" onsubmit="return confirm('¿Borrar esta build?');">
