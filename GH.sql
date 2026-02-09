@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.1deb3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Feb 05, 2026 at 08:40 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Servidor: localhost:3306
+-- Temps de generació: 09-02-2026 a les 09:41:09
+-- Versió del servidor: 8.0.36-2ubuntu3
+-- Versió de PHP: 8.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,47 +18,49 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `GH`
+-- Base de dades: `GH`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `arma`
+-- Estructura de la taula `arma`
 --
 
 CREATE TABLE `arma` (
-  `id` int(11) NOT NULL,
-  `arma_plantilla_id` int(11) DEFAULT NULL,
-  `nivel` int(11) NOT NULL
+  `id` int NOT NULL,
+  `arma_plantilla_id` int DEFAULT NULL,
+  `nivel` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `arma`
+-- Bolcament de dades per a la taula `arma`
 --
 
 INSERT INTO `arma` (`id`, `arma_plantilla_id`, `nivel`) VALUES
-(16, 9, 32);
+(16, 9, 32),
+(17, 0, 65),
+(18, 9, 55);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `arma_plantilla`
+-- Estructura de la taula `arma_plantilla`
 --
 
 CREATE TABLE `arma_plantilla` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `imagen` varchar(255) DEFAULT NULL,
-  `juego` varchar(30) NOT NULL,
-  `stats_base` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`stats_base`)),
-  `stats_por_nivel` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`stats_por_nivel`)),
-  `pasiva` varchar(255) DEFAULT NULL,
-  `tipo` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id` int NOT NULL,
+  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `juego` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `stats_base` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `stats_por_nivel` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `pasiva` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ;
 
 --
--- Dumping data for table `arma_plantilla`
+-- Bolcament de dades per a la taula `arma_plantilla`
 --
 
 INSERT INTO `arma_plantilla` (`id`, `nombre`, `imagen`, `juego`, `stats_base`, `stats_por_nivel`, `pasiva`, `tipo`) VALUES
@@ -76,17 +78,17 @@ INSERT INTO `arma_plantilla` (`id`, `nombre`, `imagen`, `juego`, `stats_base`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `artefacto`
+-- Estructura de la taula `artefacto`
 --
 
 CREATE TABLE `artefacto` (
-  `id` int(11) NOT NULL,
-  `artefacto_plantilla_id` int(11) DEFAULT NULL,
-  `estadisticas` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`estadisticas`))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id` int NOT NULL,
+  `artefacto_plantilla_id` int DEFAULT NULL,
+  `estadisticas` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL
+) ;
 
 --
--- Dumping data for table `artefacto`
+-- Bolcament de dades per a la taula `artefacto`
 --
 
 INSERT INTO `artefacto` (`id`, `artefacto_plantilla_id`, `estadisticas`) VALUES
@@ -95,24 +97,35 @@ INSERT INTO `artefacto` (`id`, `artefacto_plantilla_id`, `estadisticas`) VALUES
 (73, 7, '{\"main_stat\":{\"name\":\"HP\",\"value\":32.0},\"sub_stats\":[{\"name\":\"ER\",\"value\":32.0},{\"name\":\"SPD\",\"value\":43.0},{\"name\":\"EFFECT_RES\",\"value\":54.0},{\"name\":\"EFFECT_RES\",\"value\":54.0}]}'),
 (74, 8, '{\"main_stat\":{\"name\":\"HP\",\"value\":32.0},\"sub_stats\":[{\"name\":\"BREAK_EFFECT\",\"value\":32.0},{\"name\":\"EFFECT_RES\",\"value\":5.0},{\"name\":\"BREAK_EFFECT\",\"value\":5.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":54.0}]}'),
 (75, 9, '{\"main_stat\":{\"name\":\"HP\",\"value\":54.0},\"sub_stats\":[{\"name\":\"HP%\",\"value\":54.0},{\"name\":\"DEF\",\"value\":54.0},{\"name\":\"HP%\",\"value\":54.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":54.0}]}'),
-(76, 10, '{\"main_stat\":{\"name\":\"HP\",\"value\":54.0},\"sub_stats\":[{\"name\":\"BREAK_EFFECT\",\"value\":54.0},{\"name\":\"ATK%\",\"value\":54.0},{\"name\":\"ATK\",\"value\":54.0},{\"name\":\"DEF%\",\"value\":54.0}]}');
+(76, 10, '{\"main_stat\":{\"name\":\"HP\",\"value\":54.0},\"sub_stats\":[{\"name\":\"BREAK_EFFECT\",\"value\":54.0},{\"name\":\"ATK%\",\"value\":54.0},{\"name\":\"ATK\",\"value\":54.0},{\"name\":\"DEF%\",\"value\":54.0}]}'),
+(77, 2, '{\"main_stat\":{\"name\":\"HP\",\"value\":7.4},\"sub_stats\":[{\"name\":\"PYRO_DMG_BONUS\",\"value\":55.0},{\"name\":\"ATK\",\"value\":55.0},{\"name\":\"PYRO_DMG_BONUS\",\"value\":11.0},{\"name\":\"PYRO_DMG_BONUS\",\"value\":22.0}]}'),
+(78, 0, '{\"main_stat\":{\"name\":\"ATK\",\"value\":55.0},\"sub_stats\":[{\"name\":\"ELECTRO_DMG_BONUS\",\"value\":55.0},{\"name\":\"DEF%\",\"value\":55.0},{\"name\":\"PYRO_DMG_BONUS\",\"value\":44.0},{\"name\":\"DENDRO_DMG_BONUS\",\"value\":44.0}]}'),
+(79, 3, '{\"main_stat\":{\"name\":\"HP\",\"value\":44.0},\"sub_stats\":[{\"name\":\"ATK%\",\"value\":44.0},{\"name\":\"PYRO_DMG_BONUS\",\"value\":44.0},{\"name\":\"DEF\",\"value\":44.0},{\"name\":\"ELECTRO_DMG_BONUS\",\"value\":44.0}]}'),
+(80, 4, '{\"main_stat\":{\"name\":\"ANEMO_DMG_BONUS\",\"value\":44.0},\"sub_stats\":[{\"name\":\"DEF%\",\"value\":44.0},{\"name\":\"DEF\",\"value\":44.0},{\"name\":\"DEF%\",\"value\":44.0},{\"name\":\"ER\",\"value\":44.0}]}'),
+(81, 1, '{\"main_stat\":{\"name\":\"ER\",\"value\":44.0},\"sub_stats\":[{\"name\":\"DEF%\",\"value\":44.0},{\"name\":\"GEO_DMG_BONUS\",\"value\":44.0},{\"name\":\"CRYO_DMG_BONUS\",\"value\":44.0},{\"name\":\"GEO_DMG_BONUS\",\"value\":44.0}]}'),
+(82, 5, '{\"main_stat\":{\"name\":\"HP\",\"value\":44.0},\"sub_stats\":[{\"name\":\"BREAK_EFFECT\",\"value\":44.0},{\"name\":\"ER\",\"value\":44.0},{\"name\":\"BREAK_EFFECT\",\"value\":44.0},{\"name\":\"ER\",\"value\":44.0}]}'),
+(83, 6, '{\"main_stat\":{\"name\":\"ATK\",\"value\":44.0},\"sub_stats\":[{\"name\":\"EFFECT_HIT_RATE\",\"value\":44.0},{\"name\":\"PHYSICAL_DMG_BONUS\",\"value\":44.0},{\"name\":\"EFFECT_RES\",\"value\":44.0},{\"name\":\"ER\",\"value\":44.0}]}'),
+(84, 7, '{\"main_stat\":{\"name\":\"HP\",\"value\":44.0},\"sub_stats\":[{\"name\":\"DEF%\",\"value\":44.0},{\"name\":\"FIRE_DMG_BONUS\",\"value\":44.0},{\"name\":\"EFFECT_RES\",\"value\":44.0},{\"name\":\"BREAK_EFFECT\",\"value\":44.0}]}'),
+(85, 8, '{\"main_stat\":{\"name\":\"HP\",\"value\":44.0},\"sub_stats\":[{\"name\":\"EFFECT_HIT_RATE\",\"value\":44.0},{\"name\":\"PHYSICAL_DMG_BONUS\",\"value\":44.0},{\"name\":\"SPD\",\"value\":44.0},{\"name\":\"SPD\",\"value\":44.0}]}'),
+(86, 9, '{\"main_stat\":{\"name\":\"BREAK_EFFECT\",\"value\":44.0},\"sub_stats\":[{\"name\":\"DEF%\",\"value\":44.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":44.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":44.0},{\"name\":\"LIGHTNING_DMG_BONUS\",\"value\":44.0}]}'),
+(87, 10, '{\"main_stat\":{\"name\":\"HP\",\"value\":44.0},\"sub_stats\":[{\"name\":\"SPD\",\"value\":44.0},{\"name\":\"HP%\",\"value\":44.0},{\"name\":\"ATK%\",\"value\":44.0},{\"name\":\"ICE_DMG_BONUS\",\"value\":44.0}]}');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `artefacto_plantilla`
+-- Estructura de la taula `artefacto_plantilla`
 --
 
 CREATE TABLE `artefacto_plantilla` (
-  `id` int(11) NOT NULL,
-  `pieza_tipo_id` int(11) DEFAULT NULL,
-  `set_artefactos_id` int(11) DEFAULT NULL,
-  `imagen` varchar(255) DEFAULT NULL,
-  `juego` varchar(30) NOT NULL
+  `id` int NOT NULL,
+  `pieza_tipo_id` int DEFAULT NULL,
+  `set_artefactos_id` int DEFAULT NULL,
+  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `juego` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `artefacto_plantilla`
+-- Bolcament de dades per a la taula `artefacto_plantilla`
 --
 
 INSERT INTO `artefacto_plantilla` (`id`, `pieza_tipo_id`, `set_artefactos_id`, `imagen`, `juego`) VALUES
@@ -131,31 +144,31 @@ INSERT INTO `artefacto_plantilla` (`id`, `pieza_tipo_id`, `set_artefactos_id`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comentario`
+-- Estructura de la taula `comentario`
 --
 
 CREATE TABLE `comentario` (
-  `id` int(11) NOT NULL,
-  `cuerpo` varchar(4096) NOT NULL,
+  `id` int NOT NULL,
+  `cuerpo` varchar(4096) COLLATE utf8mb4_unicode_ci NOT NULL,
   `fecha_publicacion` datetime NOT NULL,
-  `post_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `post_id` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `doctrine_migration_versions`
+-- Estructura de la taula `doctrine_migration_versions`
 --
 
 CREATE TABLE `doctrine_migration_versions` (
-  `version` varchar(191) NOT NULL,
+  `version` varchar(191) COLLATE utf8mb3_unicode_ci NOT NULL,
   `executed_at` datetime DEFAULT NULL,
-  `execution_time` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `execution_time` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
--- Dumping data for table `doctrine_migration_versions`
+-- Bolcament de dades per a la taula `doctrine_migration_versions`
 --
 
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
@@ -188,102 +201,140 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dupe`
+-- Estructura de la taula `dupe`
 --
 
 CREATE TABLE `dupe` (
-  `id` int(11) NOT NULL,
-  `personaje_plantilla_id` int(11) DEFAULT NULL,
-  `numero` int(11) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `efectos` varchar(255) NOT NULL
+  `id` int NOT NULL,
+  `personaje_plantilla_id` int DEFAULT NULL,
+  `numero` int NOT NULL,
+  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `efectos` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `equipo`
+-- Estructura de la taula `equipo`
 --
 
 CREATE TABLE `equipo` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `descripcion` varchar(255) DEFAULT NULL
+  `id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `equipo_personaje`
+-- Estructura de la taula `equipo_personaje`
 --
 
 CREATE TABLE `equipo_personaje` (
-  `personaje_id` int(11) NOT NULL,
-  `equipo_id` int(11) NOT NULL,
-  `posicion` int(11) NOT NULL
+  `personaje_id` int NOT NULL,
+  `equipo_id` int NOT NULL,
+  `posicion` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `habilidad`
+-- Estructura de la taula `habilidad`
 --
 
 CREATE TABLE `habilidad` (
-  `id` int(11) NOT NULL,
-  `personaje_plantilla_id` int(11) DEFAULT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `efectos` varchar(1024) NOT NULL
+  `id` int NOT NULL,
+  `personaje_plantilla_id` int DEFAULT NULL,
+  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `efectos` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Bolcament de dades per a la taula `habilidad`
+--
+
+INSERT INTO `habilidad` (`id`, `personaje_plantilla_id`, `nombre`, `efectos`) VALUES
+(1, 1, 'Espada templada', 'Realiza hasta 4 tajos de espada consecutivos. Ataque Cargado consume aguante para realizar golpes continuos.'),
+(2, 1, 'Filo ardiente', 'Da un tajo hacia delante que inflige Daño Pyro. Esta habilidad se puede utilizar 3 veces consecutivas.'),
+(3, 1, 'Amanecer', 'Lanza un fénix de fuego que inflige gran Daño Pyro y empuja a los enemigos, imbuyendo el arma en Pyro durante un tiempo.'),
+(4, 2, 'Corte de torrentes', 'Realiza hasta 6 disparos consecutivos con arco. El Ataque Cargado inflige Daño Hydro y aplica el estado de Obstrucción al flujo.'),
+(5, 2, 'Legado del mal: Olas furiosas', 'Cambia al modo cuerpo a cuerpo, infligiendo Daño Hydro con sus dagas. Los golpes aplican o detonan el efecto de Obstrucción al flujo.'),
+(6, 2, 'Caos: Obliteración', 'Desata un ataque devastador. A distancia: Lanza una flecha mágica Hydro. Cuerpo a cuerpo: Realiza un corte amplio que inflige gran Daño Hydro.'),
+(7, 3, 'Estilo Genryuu', 'Realiza hasta 5 ataques rápidos con la lanza. El ataque cargado consume aguante para realizar un golpe ascendente.'),
+(8, 3, 'Trascendencia: Presagio maligno', 'Libera un fragmento de su eutimia que inflige Daño Electro y otorga un ojo que realiza ataques coordinados junto al personaje activo.'),
+(9, 3, 'Técnica secreta: Verdad onírica', 'Desata el Musou no Hitotachi, infligiendo daño Electro masivo y cambiando a espada tachi durante un tiempo, regenerando energía para el equipo.'),
+(10, 4, 'Convite del solista', 'Realiza hasta 4 ataques consecutivos. El ataque cargado cambia su arché entre Ousía y Pneuma, cambiando el efecto de su habilidad elemental.'),
+(11, 4, 'Salón Solitaire', 'Invoca a los miembros del salón. Ousía: Infligen daño Hydro y consumen vida del equipo. Pneuma: Cura al personaje activo periódicamente.'),
+(12, 4, 'Colgorio de todo el pueblo', 'Despierta el impulso de que el mundo es un escenario, aumentando el daño de todo el equipo en función de los cambios de vida (curación o daño) de los aliados.'),
+(13, 5, 'Nana Letal', 'Envía plumas formadas por lágrimas que infligen Daño Hydro. Los enemigos golpeados ven reducida su velocidad de movimiento.'),
+(14, 5, 'Velo Seráfico', 'Crea un escudo de agua bendita que absorbe daño. Al romperse, cura a los aliados cercanos basándose en la vida máxima de Columbina.'),
+(15, 5, 'Réquiem del Anochecer', 'Canta una melodía que invoca una lluvia de proyectiles Hydro, durmiendo a los enemigos débiles e infligiendo daño masivo a los que despiertan.'),
+(16, 6, 'Tiro helado', 'Inflige un 50% del ATQ de Pela como Daño de Hielo a un enemigo.'),
+(17, 6, 'Congelación', 'Elimina un estado positivo de un enemigo e inflige Daño de Hielo. Si tiene éxito, recupera energía adicional.'),
+(18, 6, 'Supresión de zona', 'Inflige Daño de Hielo a todos los enemigos y tiene una probabilidad base del 100% de aplicar \"Análisis\", reduciendo su Defensa durante 2 turnos.'),
+(19, 7, 'Orden: Bombardeo aéreo', 'Inflige Daño de Fuego a un enemigo. Consume HP del usuario.'),
+(20, 7, 'Crisálida de fuego', 'Entra en el estado de Combustión completa. Aumenta la velocidad y mejora el Ataque Básico.'),
+(21, 7, 'Núcleo de la estrella', 'Aplica Debilidad de Fuego a los enemigos y aumenta el efecto de Ruptura.'),
+(22, 8, 'Sermón de la virtud', 'Inflige Daño Imaginario a un enemigo equivalente al 100% del ATQ. Genera un punto de habilidad si el enemigo tiene desventajas.'),
+(23, 8, 'Bendición del Orden', 'Otorga el estado \"Disciplina\" a un aliado, aumentando su Daño Crítico y haciendo que su próxima acción avance un 100%.'),
+(24, 8, 'Sinfonía del Gran Día', 'Recupera energía para todos los aliados (excepto él mismo) y aumenta el ATQ y la eficiencia de ruptura de todo el equipo durante 3 turnos.'),
+(25, 9, 'Brillo de la luna', 'Inflige Daño de Hielo a un enemigo y obtiene una acumulación de Sizigia para entrar en el estado de Transmigración.'),
+(26, 9, 'Destello trascendental', 'Inflige gran Daño de Hielo a un enemigo y daño adyacente a los cercanos. Consume vida de los aliados para potenciar su propio ATQ.'),
+(27, 9, 'Sueño de la flor efímera', 'Inflige Daño de Hielo masivo a un enemigo y a los adyacentes. Se considera daño de Habilidad Definitiva y otorga una acumulación de Sizigia.'),
+(28, 10, 'Golpe sísmico', 'Golpea el suelo infligiendo Daño Físico a un enemigo y tiene probabilidad de aplicar Sangrado.'),
+(29, 10, 'Fractura de realidad', 'Consume el 10% de sus PV para infligir Daño Físico a todos los enemigos. El daño aumenta cuanto menor sea la vida actual de Phainon.'),
+(30, 10, 'Colapso estelar', 'Entra en estado de \"Berserker\", aumentando su velocidad y ataque, pero recibiendo más daño. Sus ataques básicos se convierten en golpes de área.');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `like`
+-- Estructura de la taula `like`
 --
 
 CREATE TABLE `like` (
-  `user_id` int(11) NOT NULL,
-  `post_id` int(11) NOT NULL
+  `user_id` int NOT NULL,
+  `post_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `personaje`
+-- Estructura de la taula `personaje`
 --
 
 CREATE TABLE `personaje` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `arma_id` int(11) DEFAULT NULL,
-  `personaje_plantilla_id` int(11) DEFAULT NULL,
-  `nivel` int(11) NOT NULL,
-  `dupe_num` int(11) NOT NULL,
-  `nombre` varchar(255) DEFAULT NULL
+  `id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `arma_id` int DEFAULT NULL,
+  `personaje_plantilla_id` int DEFAULT NULL,
+  `nivel` int NOT NULL,
+  `dupe_num` int NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `personaje`
+-- Bolcament de dades per a la taula `personaje`
 --
 
 INSERT INTO `personaje` (`id`, `user_id`, `arma_id`, `personaje_plantilla_id`, `nivel`, `dupe_num`, `nombre`) VALUES
-(18, 17, 16, 7, 32, 3, 'dw');
+(18, 17, 16, 7, 32, 3, 'dw'),
+(19, 18, 17, 1, 70, 3, 'DILUC 1'),
+(20, 18, 18, 9, 55, 4, 'Jingliu 1');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `personaje_artefacto`
+-- Estructura de la taula `personaje_artefacto`
 --
 
 CREATE TABLE `personaje_artefacto` (
-  `personaje_id` int(11) NOT NULL,
-  `artefacto_id` int(11) NOT NULL
+  `personaje_id` int NOT NULL,
+  `artefacto_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `personaje_artefacto`
+-- Bolcament de dades per a la taula `personaje_artefacto`
 --
 
 INSERT INTO `personaje_artefacto` (`personaje_id`, `artefacto_id`) VALUES
@@ -292,41 +343,61 @@ INSERT INTO `personaje_artefacto` (`personaje_id`, `artefacto_id`) VALUES
 (18, 73),
 (18, 74),
 (18, 75),
-(18, 76);
+(18, 76),
+(19, 77),
+(19, 78),
+(19, 79),
+(19, 80),
+(19, 81),
+(20, 82),
+(20, 83),
+(20, 84),
+(20, 85),
+(20, 86),
+(20, 87);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `personaje_habilidad`
+-- Estructura de la taula `personaje_habilidad`
 --
 
 CREATE TABLE `personaje_habilidad` (
-  `personaje_id` int(11) NOT NULL,
-  `habilidad_id` int(11) NOT NULL,
-  `nivel` int(11) NOT NULL
+  `personaje_id` int NOT NULL,
+  `habilidad_id` int NOT NULL,
+  `nivel` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Bolcament de dades per a la taula `personaje_habilidad`
+--
+
+INSERT INTO `personaje_habilidad` (`personaje_id`, `habilidad_id`, `nivel`) VALUES
+(20, 25, 10),
+(20, 26, 10),
+(20, 27, 8);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `personaje_plantilla`
+-- Estructura de la taula `personaje_plantilla`
 --
 
 CREATE TABLE `personaje_plantilla` (
-  `id` int(11) NOT NULL,
-  `juego` varchar(30) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `stats_base` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`stats_base`)),
-  `stats_por_nivel` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`stats_por_nivel`)),
-  `imagen` varchar(255) DEFAULT NULL,
-  `elemento` varchar(255) DEFAULT NULL,
-  `senda` varchar(255) DEFAULT NULL,
-  `icono` varchar(255) DEFAULT NULL,
-  `tipo_arma` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id` int NOT NULL,
+  `juego` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `stats_base` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `stats_por_nivel` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `elemento` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `senda` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `icono` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tipo_arma` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ;
 
 --
--- Dumping data for table `personaje_plantilla`
+-- Bolcament de dades per a la taula `personaje_plantilla`
 --
 
 INSERT INTO `personaje_plantilla` (`id`, `juego`, `nombre`, `stats_base`, `stats_por_nivel`, `imagen`, `elemento`, `senda`, `icono`, `tipo_arma`) VALUES
@@ -344,17 +415,17 @@ INSERT INTO `personaje_plantilla` (`id`, `juego`, `nombre`, `stats_base`, `stats
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pieza_tipo`
+-- Estructura de la taula `pieza_tipo`
 --
 
 CREATE TABLE `pieza_tipo` (
-  `id` int(11) NOT NULL,
-  `codigo` varchar(20) NOT NULL,
-  `nombre` varchar(20) NOT NULL
+  `id` int NOT NULL,
+  `codigo` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `pieza_tipo`
+-- Bolcament de dades per a la taula `pieza_tipo`
 --
 
 INSERT INTO `pieza_tipo` (`id`, `codigo`, `nombre`) VALUES
@@ -373,21 +444,21 @@ INSERT INTO `pieza_tipo` (`id`, `codigo`, `nombre`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `post`
+-- Estructura de la taula `post`
 --
 
 CREATE TABLE `post` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `titulo` varchar(255) NOT NULL,
-  `cuerpo` longtext NOT NULL,
+  `id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `titulo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cuerpo` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `fecha_publicacion` datetime NOT NULL,
-  `visitas` int(11) DEFAULT NULL,
-  `juego` varchar(255) NOT NULL
+  `visitas` int DEFAULT NULL,
+  `juego` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `post`
+-- Bolcament de dades per a la taula `post`
 --
 
 INSERT INTO `post` (`id`, `user_id`, `titulo`, `cuerpo`, `fecha_publicacion`, `visitas`, `juego`) VALUES
@@ -399,19 +470,19 @@ INSERT INTO `post` (`id`, `user_id`, `titulo`, `cuerpo`, `fecha_publicacion`, `v
 -- --------------------------------------------------------
 
 --
--- Table structure for table `set_artefactos`
+-- Estructura de la taula `set_artefactos`
 --
 
 CREATE TABLE `set_artefactos` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) NOT NULL,
-  `imagen` varchar(255) NOT NULL,
-  `juego` varchar(255) NOT NULL,
-  `efectos` varchar(255) NOT NULL
+  `id` int NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `juego` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `efectos` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `set_artefactos`
+-- Bolcament de dades per a la taula `set_artefactos`
 --
 
 INSERT INTO `set_artefactos` (`id`, `nombre`, `imagen`, `juego`, `efectos`) VALUES
@@ -422,22 +493,22 @@ INSERT INTO `set_artefactos` (`id`, `nombre`, `imagen`, `juego`, `efectos`) VALU
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Estructura de la taula `user`
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
-  `user_name` varchar(20) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `roles` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`roles`)),
-  `password` varchar(255) NOT NULL,
-  `foto_perfil` varchar(255) DEFAULT NULL,
+  `id` int NOT NULL,
+  `user_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `roles` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foto_perfil` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fecha_registro` date NOT NULL,
   `is_verified` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ;
 
 --
--- Dumping data for table `user`
+-- Bolcament de dades per a la taula `user`
 --
 
 INSERT INTO `user` (`id`, `user_name`, `email`, `roles`, `password`, `foto_perfil`, `fecha_registro`, `is_verified`) VALUES
@@ -450,34 +521,35 @@ INSERT INTO `user` (`id`, `user_name`, `email`, `roles`, `password`, `foto_perfi
 (7, 'dwafdwa', '32@drw.es', '[]', '$2y$13$m0W2PGaCmIJ8fpgU1BLLpOefQSxQRHBkquRk3LL8dFIBcA.KpW/Vq', NULL, '2025-12-22', 0),
 (11, 'dwadwae', 'no.reply.gamehubsite@gmail.com', '[]', '$2y$13$xHa2ZdM4WaLRRwyyrX3F7.ASDlI56pvMHS5VBOUVoSzsIQPK/36pe', NULL, '2025-12-28', 1),
 (15, 'fwafwaf', 'aluort8576@ieselcaminas.org', '[]', '$2y$13$joQkxN9xZhFwnYSWsbBw8eTC3liPdN/H1L0KZsUGBjSy5.wmJMA9O', NULL, '2026-01-08', 0),
-(17, 'Jose', 'aludua2859@ieselcaminas.org', '[\"ROLE_ADMIN\"]', '$2y$13$opHNEpykEPBG.r17rL.ad.WzheOI4AJnPH/y7b7BHdOBKhu0h4b9m', '697fab8018075.jpg', '2026-01-29', 1);
+(17, 'Jose', 'aludua2859@ieselcaminas.org', '[\"ROLE_ADMIN\"]', '$2y$13$opHNEpykEPBG.r17rL.ad.WzheOI4AJnPH/y7b7BHdOBKhu0h4b9m', '697fab8018075.jpg', '2026-01-29', 1),
+(18, 'Eri', 'e@e.com', '[]', '$2y$13$zz4l2fiiFNO4pjRs2N/t7umi1ZMZt0yr5so.rMTl01EQHVRI21wQO', NULL, '2026-02-09', 1);
 
 --
--- Indexes for dumped tables
+-- Índexs per a les taules bolcades
 --
 
 --
--- Indexes for table `arma`
+-- Índexs per a la taula `arma`
 --
 ALTER TABLE `arma`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_1F4DB7603F28BF78` (`arma_plantilla_id`);
 
 --
--- Indexes for table `arma_plantilla`
+-- Índexs per a la taula `arma_plantilla`
 --
 ALTER TABLE `arma_plantilla`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `artefacto`
+-- Índexs per a la taula `artefacto`
 --
 ALTER TABLE `artefacto`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_4A5DDABC4B44F0C4` (`artefacto_plantilla_id`);
 
 --
--- Indexes for table `artefacto_plantilla`
+-- Índexs per a la taula `artefacto_plantilla`
 --
 ALTER TABLE `artefacto_plantilla`
   ADD PRIMARY KEY (`id`),
@@ -485,7 +557,7 @@ ALTER TABLE `artefacto_plantilla`
   ADD KEY `IDX_BA3F7EC07AB4E2` (`set_artefactos_id`);
 
 --
--- Indexes for table `comentario`
+-- Índexs per a la taula `comentario`
 --
 ALTER TABLE `comentario`
   ADD PRIMARY KEY (`id`),
@@ -493,27 +565,27 @@ ALTER TABLE `comentario`
   ADD KEY `IDX_4B91E702A76ED395` (`user_id`);
 
 --
--- Indexes for table `doctrine_migration_versions`
+-- Índexs per a la taula `doctrine_migration_versions`
 --
 ALTER TABLE `doctrine_migration_versions`
   ADD PRIMARY KEY (`version`);
 
 --
--- Indexes for table `dupe`
+-- Índexs per a la taula `dupe`
 --
 ALTER TABLE `dupe`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_D5DDF9D21F22B4C7` (`personaje_plantilla_id`);
 
 --
--- Indexes for table `equipo`
+-- Índexs per a la taula `equipo`
 --
 ALTER TABLE `equipo`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_C49C530BA76ED395` (`user_id`);
 
 --
--- Indexes for table `equipo_personaje`
+-- Índexs per a la taula `equipo_personaje`
 --
 ALTER TABLE `equipo_personaje`
   ADD PRIMARY KEY (`personaje_id`,`equipo_id`),
@@ -521,14 +593,14 @@ ALTER TABLE `equipo_personaje`
   ADD KEY `IDX_ED7A2DF723BFBED` (`equipo_id`);
 
 --
--- Indexes for table `habilidad`
+-- Índexs per a la taula `habilidad`
 --
 ALTER TABLE `habilidad`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_4D2A2AF71F22B4C7` (`personaje_plantilla_id`);
 
 --
--- Indexes for table `like`
+-- Índexs per a la taula `like`
 --
 ALTER TABLE `like`
   ADD PRIMARY KEY (`user_id`,`post_id`),
@@ -536,7 +608,7 @@ ALTER TABLE `like`
   ADD KEY `IDX_AC6340B34B89032C` (`post_id`);
 
 --
--- Indexes for table `personaje`
+-- Índexs per a la taula `personaje`
 --
 ALTER TABLE `personaje`
   ADD PRIMARY KEY (`id`),
@@ -545,7 +617,7 @@ ALTER TABLE `personaje`
   ADD KEY `IDX_53A410881F22B4C7` (`personaje_plantilla_id`);
 
 --
--- Indexes for table `personaje_artefacto`
+-- Índexs per a la taula `personaje_artefacto`
 --
 ALTER TABLE `personaje_artefacto`
   ADD PRIMARY KEY (`personaje_id`,`artefacto_id`),
@@ -553,7 +625,7 @@ ALTER TABLE `personaje_artefacto`
   ADD KEY `IDX_62E96A79C408C2D2` (`artefacto_id`);
 
 --
--- Indexes for table `personaje_habilidad`
+-- Índexs per a la taula `personaje_habilidad`
 --
 ALTER TABLE `personaje_habilidad`
   ADD PRIMARY KEY (`personaje_id`,`habilidad_id`),
@@ -561,147 +633,147 @@ ALTER TABLE `personaje_habilidad`
   ADD KEY `IDX_659E9A32621AA5D6` (`habilidad_id`);
 
 --
--- Indexes for table `personaje_plantilla`
+-- Índexs per a la taula `personaje_plantilla`
 --
 ALTER TABLE `personaje_plantilla`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pieza_tipo`
+-- Índexs per a la taula `pieza_tipo`
 --
 ALTER TABLE `pieza_tipo`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `post`
+-- Índexs per a la taula `post`
 --
 ALTER TABLE `post`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_5A8A6C8DA76ED395` (`user_id`);
 
 --
--- Indexes for table `set_artefactos`
+-- Índexs per a la taula `set_artefactos`
 --
 ALTER TABLE `set_artefactos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
+-- Índexs per a la taula `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `UNIQ_IDENTIFIER_EMAIL` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT per les taules bolcades
 --
 
 --
--- AUTO_INCREMENT for table `arma`
+-- AUTO_INCREMENT per la taula `arma`
 --
 ALTER TABLE `arma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- AUTO_INCREMENT for table `artefacto`
+-- AUTO_INCREMENT per la taula `artefacto`
 --
 ALTER TABLE `artefacto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `comentario`
+-- AUTO_INCREMENT per la taula `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `equipo`
+-- AUTO_INCREMENT per la taula `equipo`
 --
 ALTER TABLE `equipo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `personaje`
+-- AUTO_INCREMENT per la taula `personaje`
 --
 ALTER TABLE `personaje`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `post`
+-- AUTO_INCREMENT per la taula `post`
 --
 ALTER TABLE `post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT per la taula `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- Restriccions per a les taules bolcades
 --
 
 --
--- Constraints for table `arma`
+-- Restriccions per a la taula `arma`
 --
 ALTER TABLE `arma`
   ADD CONSTRAINT `FK_1F4DB7603F28BF78` FOREIGN KEY (`arma_plantilla_id`) REFERENCES `arma_plantilla` (`id`);
 
 --
--- Constraints for table `artefacto`
+-- Restriccions per a la taula `artefacto`
 --
 ALTER TABLE `artefacto`
   ADD CONSTRAINT `FK_4A5DDABC4B44F0C4` FOREIGN KEY (`artefacto_plantilla_id`) REFERENCES `artefacto_plantilla` (`id`);
 
 --
--- Constraints for table `artefacto_plantilla`
+-- Restriccions per a la taula `artefacto_plantilla`
 --
 ALTER TABLE `artefacto_plantilla`
   ADD CONSTRAINT `FK_BA3F7E33C6862B` FOREIGN KEY (`pieza_tipo_id`) REFERENCES `pieza_tipo` (`id`),
   ADD CONSTRAINT `FK_BA3F7EC07AB4E2` FOREIGN KEY (`set_artefactos_id`) REFERENCES `set_artefactos` (`id`);
 
 --
--- Constraints for table `comentario`
+-- Restriccions per a la taula `comentario`
 --
 ALTER TABLE `comentario`
   ADD CONSTRAINT `FK_4B91E7024B89032C` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`),
   ADD CONSTRAINT `FK_4B91E702A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Constraints for table `dupe`
+-- Restriccions per a la taula `dupe`
 --
 ALTER TABLE `dupe`
   ADD CONSTRAINT `FK_D5DDF9D21F22B4C7` FOREIGN KEY (`personaje_plantilla_id`) REFERENCES `personaje_plantilla` (`id`);
 
 --
--- Constraints for table `equipo`
+-- Restriccions per a la taula `equipo`
 --
 ALTER TABLE `equipo`
   ADD CONSTRAINT `FK_C49C530BA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Constraints for table `equipo_personaje`
+-- Restriccions per a la taula `equipo_personaje`
 --
 ALTER TABLE `equipo_personaje`
   ADD CONSTRAINT `FK_ED7A2DF7121EFAFB` FOREIGN KEY (`personaje_id`) REFERENCES `personaje` (`id`),
   ADD CONSTRAINT `FK_ED7A2DF723BFBED` FOREIGN KEY (`equipo_id`) REFERENCES `equipo` (`id`);
 
 --
--- Constraints for table `habilidad`
+-- Restriccions per a la taula `habilidad`
 --
 ALTER TABLE `habilidad`
   ADD CONSTRAINT `FK_4D2A2AF71F22B4C7` FOREIGN KEY (`personaje_plantilla_id`) REFERENCES `personaje_plantilla` (`id`);
 
 --
--- Constraints for table `like`
+-- Restriccions per a la taula `like`
 --
 ALTER TABLE `like`
   ADD CONSTRAINT `FK_AC6340B34B89032C` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`),
   ADD CONSTRAINT `FK_AC6340B3A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Constraints for table `personaje`
+-- Restriccions per a la taula `personaje`
 --
 ALTER TABLE `personaje`
   ADD CONSTRAINT `FK_53A410881F22B4C7` FOREIGN KEY (`personaje_plantilla_id`) REFERENCES `personaje_plantilla` (`id`),
@@ -709,21 +781,21 @@ ALTER TABLE `personaje`
   ADD CONSTRAINT `FK_53A41088A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Constraints for table `personaje_artefacto`
+-- Restriccions per a la taula `personaje_artefacto`
 --
 ALTER TABLE `personaje_artefacto`
   ADD CONSTRAINT `FK_62E96A79121EFAFB` FOREIGN KEY (`personaje_id`) REFERENCES `personaje` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_62E96A79C408C2D2` FOREIGN KEY (`artefacto_id`) REFERENCES `artefacto` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `personaje_habilidad`
+-- Restriccions per a la taula `personaje_habilidad`
 --
 ALTER TABLE `personaje_habilidad`
   ADD CONSTRAINT `FK_659E9A32121EFAFB` FOREIGN KEY (`personaje_id`) REFERENCES `personaje` (`id`),
   ADD CONSTRAINT `FK_659E9A32621AA5D6` FOREIGN KEY (`habilidad_id`) REFERENCES `habilidad` (`id`);
 
 --
--- Constraints for table `post`
+-- Restriccions per a la taula `post`
 --
 ALTER TABLE `post`
   ADD CONSTRAINT `FK_5A8A6C8DA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
