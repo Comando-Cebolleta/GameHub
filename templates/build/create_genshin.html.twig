@@ -71,6 +71,12 @@
                         <hr>
                         <h4 class="section-subtitle">Arma Equipada</h4>
                         {{ form_row(form.arma) }}
+
+                        <hr>
+                        <h4 class="section-subtitle">Habilidades</h4>
+                        <div id="habilidades-container" data-prototype="{{ form_widget(form.personajeHabilidades.vars.prototype)|e('html_attr') }}">
+                            {# Aquí se inyectarán las habilidades vía JS #}
+                        </div>
                     </div>
                 </div>
 
@@ -105,6 +111,7 @@
     {% block javascripts %}
         {{ parent() }}
         <script type="text/javascript" src="{{ asset('js/filtroArmaPersonaje.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/habilidadesPersonaje.js') }}"></script>
     {% endblock %}
 
 {% endblock %}

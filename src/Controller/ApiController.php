@@ -29,4 +29,27 @@ class ApiController extends AbstractController
         }
         return new JsonResponse($data);
     }
+
+    #[Route('/personaje/{id}/habilidades', name: 'api_personaje_habilidades', methods: ['GET'])]
+    public function getHabilidadesApi(int $id, PersonajePlantillaRepository $repo): JsonResponse
+    {
+        $plantilla = $repo->find($id);
+
+        if (!$plantilla) {
+            return new JsonResponse(['error' => 'Personaje no encontrado'], 404);
+        }
+
+        $habilidades = $plantilla->getHabilidades();
+        $data = [];
+
+        foreach ($habilidades as $habilidad) {
+            $data[] = [
+                'id' => $habilidad->getId(),
+                'nombre' => $habilidad->getNombre(),
+                'efectos' => $habilidad->getEfectos()
+            ];
+        }
+
+        return new JsonResponse($data);
+    }
 }
