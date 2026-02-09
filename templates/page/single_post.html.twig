@@ -85,6 +85,49 @@
                         <a href="{{ path('genshin_blog') }}" class="back-link">&larr; VOLVER AL BLOG GENSHIN</a>
                     {% endif %}
                 </div>
+
+                {# SECCIÓN DE COMENTARIOS #}
+                <hr style="border-color: inherit; margin: 40px 0; opacity: 0.5;">
+                
+                <section class="comments-section">
+                    <h2 style="color: inherit; margin-bottom: 20px;">Comentarios ({{ post.comentarios|length }})</h2>
+
+                    {# LISTA DE COMENTARIOS #}
+                    <div class="comments-list" style="margin-bottom: 40px;">
+                        {% for comentario in post.comentarios %}
+                            <div class="comment" style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid {{ juego == 'hsr' ? '#c0c0c0' : '#e0c080' }};">
+                                <div class="comment-header" style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9em; opacity: 0.8;">
+                                    <strong>{{ comentario.user ? comentario.user.email : 'Anónimo' }}</strong>
+                                    <span>{{ comentario.fechaPublicacion|date('d/m/Y H:i') }}</span>
+                                </div>
+                                <div class="comment-body">
+                                    {{ comentario.cuerpo|nl2br }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <p>No hay comentarios todavía. ¡Sé el primero en comentar!</p>
+                        {% endfor %}
+                    </div>
+
+                    {# FORMULARIO DE NUEVO COMENTARIO #}
+                    {% if app.user %}
+                        <div class="new-comment-form">
+                            <h3 style="margin-bottom: 15px;">Deja un comentario</h3>
+                            {{ form_start(commentForm) }}
+                                <div style="margin-bottom: 15px;">
+                                    {{ form_widget(commentForm.cuerpo) }}
+                                </div>
+                                <button type="submit" class="btn-submit" style="padding: 10px 20px; background: {{ juego == 'hsr' ? '#3a2a4b' : '#4a5d4e' }}; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                                    Comentar
+                                </button>
+                            {{ form_end(commentForm) }}
+                        </div>
+                    {% else %}
+                        <div class="login-prompt" style="text-align: center; padding: 20px; background: rgba(0,0,0,0.1); border-radius: 8px;">
+                            <p>Debes <a href="{{ path('app_login') }}" style="color: inherit; text-decoration: underline;">iniciar sesión</a> para dejar un comentario.</p>
+                        </div>
+                    {% endif %}
+                </section>
             </article>
         </div>
     </main>
