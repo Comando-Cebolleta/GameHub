@@ -26,7 +26,7 @@ class Personaje
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nombre = null;
-    
+
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Arma $arma = null;
 
@@ -36,7 +36,7 @@ class Personaje
     #[ORM\OneToMany(mappedBy: 'personaje', targetEntity: EquipoPersonaje::class)]
     private Collection $equiposPersonaje;
 
-    #[ORM\OneToMany(mappedBy: 'personaje', targetEntity: PersonajeHabilidad::class)]
+    #[ORM\OneToMany(mappedBy: 'personaje', targetEntity: PersonajeHabilidad::class, cascade: ['persist', 'remove'])]
     private Collection $personajeHabilidades;
 
     /**
@@ -179,7 +179,7 @@ class Personaje
     public function removePersonajeHabilidad(PersonajeHabilidad $personajeHabilidad): static
     {
         if ($this->personajeHabilidades->removeElement($personajeHabilidad)) {
-            
+
             if ($personajeHabilidad->getPersonaje() === $this) {
                 $personajeHabilidad->setPersonaje(null);
             }
@@ -229,7 +229,7 @@ class Personaje
         $statsFinales = [];
 
         // Recorremos las stats base
-        
+
         // Este for es un poco raro. $nombreStat => $valorBase es para que 
         // $nombreStat sea el nombre del stat (ejemplo: "Ataque") y $valorBase sea el valor base de ese stat (ejemplo: 100)
         // por cada stat que encuentre en $base.

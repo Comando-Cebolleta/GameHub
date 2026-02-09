@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Personaje;
 use App\Form\HonkaiArtefactoType;
+use App\Form\PersonajeHabilidadType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -19,7 +20,7 @@ class HonkaiBuildType extends AbstractType
         // Definimos los testigos. 
         // Cualquier set que tenga una "Cabeza" es un set de 4 piezas.
         // Cualquier set que tenga una "Esfera" es un set de 2 piezas.
-        $filtroReliquia = 'Cabeza'; 
+        $filtroReliquia = 'Cabeza';
         $filtroOrnamento = 'Esfera';
 
         $builder
@@ -54,34 +55,48 @@ class HonkaiBuildType extends AbstractType
             // --- RELIQUIAS (Sets de Caverna) ---
             // Usamos 'Cabeza' como filtro para todos, porque todos comparten los mismos sets
             ->add('reliquia_cabeza', HonkaiArtefactoType::class, [
-                'label' => 'Cabeza', 'mapped' => false,
+                'label' => 'Cabeza',
+                'mapped' => false,
                 'pieza_testigo' => $filtroReliquia,
                 'stat_fijo' => 'HP'
             ])
             ->add('reliquia_manos', HonkaiArtefactoType::class, [
-                'label' => 'Manos', 'mapped' => false,
+                'label' => 'Manos',
+                'mapped' => false,
                 'pieza_testigo' => $filtroReliquia,
                 'stat_fijo' => 'ATK'
             ])
 
             ->add('reliquia_torso', HonkaiArtefactoType::class, [
-                'label' => 'Torso', 'mapped' => false,
+                'label' => 'Torso',
+                'mapped' => false,
                 'pieza_testigo' => $filtroReliquia
             ])
             ->add('reliquia_pies', HonkaiArtefactoType::class, [
-                'label' => 'Pies', 'mapped' => false,
+                'label' => 'Pies',
+                'mapped' => false,
                 'pieza_testigo' => $filtroReliquia
             ])
 
             // --- ORNAMENTOS (Sets Planares) ---
             // Lo mismo que con las reliquias
             ->add('ornamento_esfera', HonkaiArtefactoType::class, [
-                'label' => 'Esfera', 'mapped' => false,
+                'label' => 'Esfera',
+                'mapped' => false,
                 'pieza_testigo' => $filtroOrnamento
             ])
             ->add('ornamento_cuerda', HonkaiArtefactoType::class, [
-                'label' => 'Cuerda', 'mapped' => false,
+                'label' => 'Cuerda',
+                'mapped' => false,
                 'pieza_testigo' => $filtroOrnamento
+            ])
+            ->add('personajeHabilidades', \Symfony\Component\Form\Extension\Core\Type\CollectionType::class, [
+                'entry_type' => PersonajeHabilidadType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label' => false,
             ])
         ;
     }
