@@ -54,6 +54,54 @@
                 {% endfor %}
             </ul>
 
+            <hr>
+
+            <p>Artefactos:</p>
+            <table border="1" style="border-collapse: collapse; width: 100%;">
+                <tr>
+                    <th style="border: 1px solid black;">Imagen</th>
+                    <th style="border: 1px solid black;">Pieza</th>
+                    <th style="border: 1px solid black;">Conjunto</th>
+                    <th style="border: 1px solid black;">Estadísticas</th>
+                    <th style="border: 1px solid black;">Bonificaciones de Conjunto</th>
+                </tr>
+                {% for artefacto in build.getArtefactos() %}
+                    <tr>
+                        <td style="border: 1px solid black;">
+                            {% if artefacto %}
+                                <img src="{{ asset('assets/artefactos/' ~ artefacto.getArtefactoPlantilla().getImagen()) }}" alt="Imagen del artefacto" style="width: 100px; height: auto;">
+                            {% else %}
+                                Sin artefacto
+                            {% endif %}
+                        </td>
+                        <td style="border: 1px solid black;">{{ artefacto.getArtefactoPlantilla().getPiezaTipo().getNombre() }}</td>
+                        <td style="border: 1px solid black;">{{ artefacto.getArtefactoPlantilla().getSetArtefactos().getNombre() }}</td>
+                        <td style="border: 1px solid black;">
+                            {% set stats = artefacto.getEstadisticas() %}
+                            
+                            <ul style="margin: 0; padding-left: 20px;">
+                                {# 1. Renderizar Main Stat (si existe) #}
+                                {% if stats.main_stat is defined %}
+                                    <li style="font-weight: bold; color: #d35400;">
+                                        {{ stats.main_stat.name }}: {{ stats.main_stat.value }}
+                                    </li>
+                                {% endif %}
+
+                                {# 2. Renderizar Sub Stats (si existen y es una lista) #}
+                                {% if stats.sub_stats is defined %}
+                                    {% for sub in stats.sub_stats %}
+                                        <li>
+                                            {{ sub.name }}: {{ sub.value }}
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                        </td>
+                        <td style="border: 1px solid black;">{{ artefacto.getArtefactoPlantilla().getSetArtefactos().getEfectos() }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
             <p><a href="{{ path('app_profile', {'id': build.getUser().getId()}) }}">Creador: {{ build.getUser().getUsername() }}</a></p>
         {% else %}
             <p>No se ha encontrado esa build.</p>
