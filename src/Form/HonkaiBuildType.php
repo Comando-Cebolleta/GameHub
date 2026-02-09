@@ -35,6 +35,7 @@ class HonkaiBuildType extends AbstractType
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('p')->where('p.senda IS NOT NULL')->orderBy('p.nombre', 'ASC');
                 },
+                'disabled' => $options['is_edit']
             ])
             ->add('nivel', IntegerType::class, [
                 'label' => 'Nivel',
@@ -100,8 +101,13 @@ class HonkaiBuildType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults(['data_class' => Personaje::class]);
+    public function configureOptions(OptionsResolver $resolver): void 
+    { 
+        $resolver->setDefaults([
+            'data_class' => Personaje::class, 
+            'is_edit' => false
+        ]); 
+
+        $resolver->setAllowedTypes('is_edit', 'bool');
     }
 }
