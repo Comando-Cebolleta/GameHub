@@ -74,9 +74,26 @@ final class PageController extends AbstractController
             throw $this->createNotFoundException('Ningún post existente con ese ID');
         }
 
+        // Sección de Comentarios
+        $comentario = new \App\Entity\Comentario();
+        $formComentario = $this->createForm(\App\Form\ComentarioType::class, $comentario);
+        $formComentario->handleRequest($request);
+
+        if ($formComentario->isSubmitted() && $formComentario->isValid() && $this->getUser()) {
+            $comentario->setUser($this->getUser());
+            $comentario->setPost($post);
+            $comentario->setFechaPublicacion(new \DateTime());
+
+            $em->persist($comentario);
+            $em->flush();
+
+            return $this->redirectToRoute('genshin_post', ['id' => $post->getId()]);
+        }
+
         return $this->render('page/single_post.html.twig', [
             "post" => $post,
-            "juego" => $juego
+            "juego" => $juego,
+            "commentForm" => $formComentario->createView()
         ]);
     }
 
@@ -140,9 +157,26 @@ final class PageController extends AbstractController
             throw $this->createNotFoundException('Ningún post existente con ese ID');
         }
 
+        // Sección de Comentarios
+        $comentario = new \App\Entity\Comentario();
+        $formComentario = $this->createForm(\App\Form\ComentarioType::class, $comentario);
+        $formComentario->handleRequest($request);
+
+        if ($formComentario->isSubmitted() && $formComentario->isValid() && $this->getUser()) {
+            $comentario->setUser($this->getUser());
+            $comentario->setPost($post);
+            $comentario->setFechaPublicacion(new \DateTime());
+
+            $em->persist($comentario);
+            $em->flush();
+
+            return $this->redirectToRoute('hsr_post', ['id' => $post->getId()]);
+        }
+
         return $this->render('page/single_post.html.twig', [
             "post" => $post,
-            "juego" => $juego
+            "juego" => $juego,
+            "commentForm" => $formComentario->createView()
         ]);
     }
 
