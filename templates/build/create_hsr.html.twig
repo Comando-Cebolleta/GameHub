@@ -47,6 +47,7 @@
 {% endblock %}
 
 {% block body %}
+    {% set is_edit = is_edit|default(false) %}
     {# INCLUSIÓN DEL HEADER MODULAR - Forzamos el icono SILVER #}
     {% include 'partials/header.html.twig' with {'iconColor': 'SILVER'} %}
 
