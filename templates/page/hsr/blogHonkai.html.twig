@@ -81,9 +81,7 @@
                         </div>
 
                         <div class="post-icons-area">
-                            <span class="icon-label">
-                                Autor: {{ post.user ? post.user.username : 'Anónimo' }}
-                            </span>
+                            <span class="icon-label"><a href="{{ path('app_profile', {'id': post.user.id}) }}">Autor: {{ post.user.username }}</a></span>
                             <span class="icon-label" style="font-size: 0.75rem; opacity: 0.6; margin-top: 5px;">
                                 {{ post.fechaPublicacion|date('d/m/Y') }}
                             </span>
