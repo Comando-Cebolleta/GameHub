@@ -36,7 +36,9 @@
                     <td style="border: 1px solid black;">
                         <ul>
                             {% for nombreStat, valor in build.getArma().getStatsCalculados() %}
-                                <li>{{ nombreStat }}: {{ valor }}</li>
+                                <li>
+                                    <strong>{{ diccionarioStats[nombreStat] ?? nombreStat }}:</strong> {{ valor }}
+                                </li>
                             {% endfor %}
                         </ul>
                     </td>
@@ -50,7 +52,9 @@
             <p>Estadísticas Totales de la Build:</p>
             <ul>
                 {% for nombreStat, valor in build.getStatsCalculados() %}
-                    <li>{{ nombreStat }}: {{ valor }}</li>
+                    <li>
+                        <strong>{{ diccionarioStats[nombreStat] ?? nombreStat }}:</strong> {{ valor }}
+                    </li>
                 {% endfor %}
             </ul>
 
@@ -83,7 +87,7 @@
                                 {# 1. Renderizar Main Stat (si existe) #}
                                 {% if stats.main_stat is defined %}
                                     <li style="font-weight: bold; color: #d35400;">
-                                        {{ stats.main_stat.name }}: {{ stats.main_stat.value }}
+                                        {{ diccionarioStats[stats.main_stat.name] ?? stats.main_stat.name }}: {{ stats.main_stat.value }}
                                     </li>
                                 {% endif %}
 
@@ -91,7 +95,7 @@
                                 {% if stats.sub_stats is defined %}
                                     {% for sub in stats.sub_stats %}
                                         <li>
-                                            {{ sub.name }}: {{ sub.value }}
+                                            {{ diccionarioStats[sub.name] ?? sub.name }}: +{{ sub.value }}
                                         </li>
                                     {% endfor %}
                                 {% endif %}

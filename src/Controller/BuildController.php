@@ -7,6 +7,8 @@ use App\Repository\PersonajeRepository;
 use App\Entity\Artefacto;
 use App\Form\GenshinBuildType;
 use App\Form\HonkaiBuildType;
+use App\Form\GenshinArtefactoType;
+use App\Form\HonkaiArtefactoType;
 use App\Repository\ArtefactoPlantillaRepository;
 use App\Repository\PersonajePlantillaRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -75,7 +77,21 @@ class BuildController extends AbstractController
     {
         $esMio = $this->getUser() && $personaje->getUser() && $this->getUser()->getId() === $personaje->getUser()->getId();
 
-        return $this->render('build/single_build.html.twig', ['build' => $personaje, 'esMio' => $esMio]);
+        // Sacamos los arrays de stats desde los formularios para usarlos en el twig y mostrar los nombres legibles de las stats
+        $statsGenshin = GenshinArtefactoType::STATS_GENSHIN;
+        $statsHsr = HonkaiArtefactoType::STATS_HSR;
+
+        // Los juntamos
+        $todasLasStats = array_merge($statsGenshin, $statsHsr);
+
+        // Pasamos de array de 'nombre legible' => 'clave_interna' a 'clave_interna' => 'nombre legible' para fácil acceso en twig
+        $diccionarioStats = array_flip($todasLasStats);
+
+        return $this->render('build/single_build.html.twig', [
+            'build' => $personaje, 
+            'esMio' => $esMio,
+            'diccionarioStats' => $diccionarioStats
+        ]);
     }
 
     private function procesarArtefactos($form, $slots, $personaje, $repoPlantillas, EntityManagerInterface $em)
