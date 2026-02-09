@@ -55,6 +55,26 @@
             </ul>
 
             <p><a href="{{ path('app_profile', {'id': build.getUser().getId()}) }}">Creador: {{ build.getUser().getUsername() }}</a></p>
+
+            <hr>
+
+            <h3>Habilidades</h3>
+            {% if build.getPersonajePlantilla().getHabilidades() is not empty %}
+                <table border="1" style="border-collapse: collapse; width: 100%; margin-top: 20px;">
+                    <tr>
+                        <th style="border: 1px solid black;">Nombre</th>
+                        <th style="border: 1px solid black;">Efectos</th>
+                    </tr>
+                    {% for habilidad in build.getPersonajePlantilla().getHabilidades() %}
+                        <tr>
+                            <td style="border: 1px solid black;">{{ habilidad.getNombre() }}</td>
+                            <td style="border: 1px solid black;">{{ habilidad.getEfectos() }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No hay habilidades registradas para este personaje.</p>
+            {% endif %}
         {% else %}
             <p>No se ha encontrado esa build.</p>
         {% endif %}

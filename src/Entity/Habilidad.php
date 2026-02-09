@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\HabilidadRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: HabilidadRepository::class)]
@@ -19,6 +21,7 @@ class Habilidad
     private ?string $efectos = null;
 
     #[ORM\ManyToOne(inversedBy: 'habilidades')]
+    #[ORM\JoinColumn(name: 'personaje_plantilla_id', nullable: true)]
     private ?PersonajePlantilla $personajePlantilla = null;
 
     #[ORM\OneToMany(mappedBy: 'habilidad', targetEntity: PersonajeHabilidad::class)]
@@ -91,7 +94,7 @@ class Habilidad
     public function removePersonajeHabilidad(PersonajeHabilidad $personajeHabilidad): static
     {
         if ($this->personajeHabilidades->removeElement($personajeHabilidad)) {
-            
+
             if ($personajeHabilidad->getHabilidad() === $this) {
                 $personajeHabilidad->setHabilidad(null);
             }
