@@ -224,6 +224,7 @@ class Personaje
         $base = $plantilla->getStatsBase() ?? [];
         $crecimiento = $plantilla->getStatsPorNivel() ?? [];
         $nivelActual = $this->getNivel();
+        $artefactos = $this->getArtefactos();
 
         $statsFinales = [];
 
@@ -246,6 +247,39 @@ class Personaje
 
             // Guardamos el resultado (redondeado a 2 decimales para que quede bonito)
             $statsFinales[$nombreStat] = round($valorTotal, 2);
+        }
+
+        // Ahora aplicamos los bonus de los artefactos
+        foreach ($artefactos as $artefacto) {
+            $stats = $artefacto->getEstadisticas() ?? [];
+
+            // Procesar Main Stat
+            if (isset($stats['main_stat'])) {
+                $nombre = $stats['main_stat']['name'];
+                $valor = $stats['main_stat']['value'];
+
+                // Sumamos al total
+                if (isset($statsFinales[$nombre])) {
+                    $statsFinales[$nombre] += $valor;
+                } else {
+                    $statsFinales[$nombre] = $valor;
+                }
+            }
+
+            // Procesar Sub Stats
+            if (isset($stats['sub_stats']) && is_array($stats['sub_stats'])) {
+                foreach ($stats['sub_stats'] as $subStat) {
+                    $nombre = $subStat['name'];
+                    $valor = $subStat['value'];
+
+                    // Sumamos al total
+                    if (isset($statsFinales[$nombre])) {
+                        $statsFinales[$nombre] += $valor;
+                    } else {
+                        $statsFinales[$nombre] = $valor;
+                    }
+                }
+            }
         }
 
         return $statsFinales;

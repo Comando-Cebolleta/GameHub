@@ -48,12 +48,19 @@
 {% endblock %}
 
 {% block body %}
+    {% set is_edit = is_edit|default(false) %}
     {# INCLUSIÓN DEL HEADER MODULAR - Usamos GOLD por defecto para Genshin #}
     {% include 'partials/header.html.twig' with {'iconColor': 'GOLD'} %}
 
     <main>
         <div class="container">
-            <h2 class="build-title-genshin">Nueva Build: Genshin Impact</h2>
+            <h2 class="build-title-genshin">
+                {% if is_edit %}
+                    Editar Build: {{ form.vars.value.nombre }}
+                {% else %}
+                    Nueva Build: Genshin Impact
+                {% endif %}
+            </h2>
 
             {{ form_start(form) }}
             <div class="build-grid">
@@ -100,7 +107,9 @@
 
             </div>
 
-            <button type="submit" class="btn-save-genshin">Forjar Nueva Build</button>
+            <button type="submit" class="btn-save-genshin">
+                {% if is_edit %}Guardar Cambios{% else %}Forjar Nueva Build{% endif %}
+            </button>
             {{ form_end(form) }}
         </div>
     </main>

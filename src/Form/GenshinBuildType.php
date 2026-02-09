@@ -35,7 +35,8 @@ class GenshinBuildType extends AbstractType
                 },
                 'choice_attr' => function ($personajePlantilla) {
                     return ['data-tipo-arma' => $personajePlantilla->getTipoArma()];
-                }
+                },
+                'disabled' => $options['is_edit']
             ])
             ->add('nivel', IntegerType::class, [
                 'label' => 'Nivel',
@@ -77,8 +78,13 @@ class GenshinBuildType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults(['data_class' => Personaje::class]);
+    public function configureOptions(OptionsResolver $resolver): void 
+    { 
+        $resolver->setDefaults([
+            'data_class' => Personaje::class, 
+            'is_edit' => false
+        ]); 
+
+        $resolver->setAllowedTypes('is_edit', 'bool');
     }
 }

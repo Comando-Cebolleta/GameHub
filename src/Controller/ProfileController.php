@@ -60,4 +60,22 @@ final class ProfileController extends AbstractController
             'miPerfil' => $miPerfil
         ]);
     }
+
+    #[Route('/post/delete/{id}', name: 'app_post_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function deletePost(Request $request, Post $post, EntityManagerInterface $em): Response
+    {
+        // Solo el dueño puede borrarlo
+        if ($post->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        if ($this->isCsrfTokenValid('delete'.$post->getId(), $request->request->get('_token'))) {
+            $em->remove($post);
+            $em->flush();
+            $this->addFlash('success', 'Post eliminado correctamente.');
+        }
+
+        return $this->redirectToRoute('app_profile_posts');
+    }
 }
