@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\PersonajePlantilla;
 use App\Entity\ArmaPlantilla;
+use App\Entity\ArtefactoPlantilla;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 #[IsGranted('ROLE_ADMIN')]
@@ -34,5 +35,6 @@ class DashboardController extends AbstractDashboardController
         
         yield MenuItem::linkToCrud('Plantillas de personaje', 'fas fa-list', PersonajePlantilla::class);
         yield MenuItem::linkToCrud('Plantillas de arma', 'fas fa-list', ArmaPlantilla::class);
+        yield MenuItem::linkToCrud('Plantillas de artefacto', 'fas fa-list', ArtefactoPlantilla::class);
     }
 }
