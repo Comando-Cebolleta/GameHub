@@ -91,7 +91,7 @@ class Habilidad
     public function removePersonajeHabilidad(PersonajeHabilidad $personajeHabilidad): static
     {
         if ($this->personajeHabilidades->removeElement($personajeHabilidad)) {
-            // Eliminar la relación en la entidad intermedia
+            
             if ($personajeHabilidad->getHabilidad() === $this) {
                 $personajeHabilidad->setHabilidad(null);
             }

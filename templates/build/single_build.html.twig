@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Build{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div style="display: flex; flex-direction: column">
+        {% if build is not null %}
+            <h1>{{ build.getNombre() }}</h1>
+            <img src="{{ asset('assets/personajes/' ~ build.getPersonajePlantilla().getImagen()) }}" alt="Imagen de la build" style="width: 300px; height: auto;">
+            <p>Personaje: {{ build.getPersonajePlantilla().getNombre() }}</p>
+            <p>Nivel: {{ build.getNivel() }}</p>
+            <p>Dupes: {{ build.getDupeNum() }}</p>
+
+            <table border="1" style="border-collapse: collapse; width: 100%; margin-top: 20px;">
+                <tr>
+                    <th style="border: 1px solid black;">Arma</th>
+                    <th style="border: 1px solid black;">Nivel</th>
+                    <th style="border: 1px solid black;">Imagen</th>
+                    <th style="border: 1px solid black;">Estadísticas</th>
+                    <th style="border: 1px solid black;">Pasiva</th>
+                    <th style="border: 1px solid black;">Tipo</th>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black;">{{ build.getArma().getArmaPlantilla().getNombre() }}</td>
+                    <td style="border: 1px solid black;">{{ build.getArma().getNivel() }}</td>
+                    <td style="border: 1px solid black;">
+                        {% if build.getArma() %}
+                            <img src="{{ asset('assets/armas/' ~ build.getArma().getArmaPlantilla().getImagen()) }}" alt="Imagen del arma" style="width: 100px; height: auto;">
+                        {% else %}
+                            Sin arma
+                        {% endif %}
+                    </td>
+                    <td style="border: 1px solid black;">
+                        <ul>
+                            {% for nombreStat, valor in build.getArma().getStatsCalculados() %}
+                                <li>{{ nombreStat }}: {{ valor }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td style="border: 1px solid black;">{{ build.getArma().getArmaPlantilla().getPasiva() }}</td>
+                    <td style="border: 1px solid black;">{{ build.getArma().getArmaPlantilla().getTipo() }}</td>
+                </tr>
+            </table>
+            
+            <hr>
+
+            <p>Estadísticas Totales de la Build:</p>
+            <ul>
+                {% for nombreStat, valor in build.getStatsCalculados() %}
+                    <li>{{ nombreStat }}: {{ valor }}</li>
+                {% endfor %}
+            </ul>
+
+            <p><a href="{{ path('app_profile', {'id': build.getUser().getId()}) }}">Creador: {{ build.getUser().getUsername() }}</a></p>
+        {% else %}
+            <p>No se ha encontrado esa build.</p>
+        {% endif %}
+    </div>
+{% endblock %}

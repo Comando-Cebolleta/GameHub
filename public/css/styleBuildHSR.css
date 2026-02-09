@@ -1,0 +1,105 @@
+/* ---------- FORMULARIO DE BUILDS HSR ---------- */
+
+.build-title {
+    color: #fff;
+    font-family: 'titulos-encabezados', Arial, sans-serif;
+    font-size: 2.2rem;
+    text-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+    border-bottom: 2px solid #c0c0c0;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+}
+
+/* Tarjetas internas del formulario */
+.build-section-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(192, 192, 192, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    height: 100%;
+}
+
+.section-subtitle {
+    color: #fff;
+    font-family: 'titulos-encabezados', Arial, sans-serif;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    border-left: 4px solid #c0c0c0;
+    padding-left: 15px;
+}
+
+/* Estilo de los inputs y selects */
+.build-section-card label {
+    color: #d1d1d1;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.col-right .build-section-card > div > div > label {
+    font-weight: bold;
+    font-size: 22px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid #3a2a4b !important;
+    border-radius: 5px !important;
+    color: #fff !important;
+    padding: 10px !important;
+    margin-bottom: 15px !important;
+    transition: all 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #c0c0c0 !important;
+    box-shadow: 0 0 8px rgba(192, 192, 192, 0.2);
+    outline: none;
+}
+
+/* Botón de Guardar Build */
+.btn-save-build {
+    background: #3a2a4b;
+    color: #ffffff;
+    font-family: 'titulos-encabezados', Arial, sans-serif;
+    font-size: 1.2rem;
+    padding: 15px;
+    border: 2px solid #c0c0c0;
+    border-radius: 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-save-build:hover {
+    background: #503b66;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(192, 192, 192, 0.2);
+}
+
+/* Separadores */
+hr {
+    border: 0;
+    border-top: 1px solid #c0c0c0;
+    margin: 20px 0;
+}
+
+/* Grid Layout manual (sin depender solo de Bootstrap) */
+.build-grid {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.col-left { flex: 1; min-width: 300px; }
+.col-right { flex: 1.5; min-width: 350px; }
+
+.subgrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}

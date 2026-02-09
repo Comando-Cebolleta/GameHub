@@ -1,71 +1,93 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mi Perfil{% endblock %}
+{% block title %}Mi Perfil - GameHub{% endblock %}
 
 {% block stylesheets %}
-    {# Cargamos el CSS específico para el diseño del perfil #}
     <link rel="stylesheet" href="{{ asset('css/styleProfile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styleLogin.css') }}">
 {% endblock %}
 
 {% block body %}
-    <header>
-        {# Enlace al inicio #}
-        <a href="{{ path('home') }}">
-            <img src="{{ asset('assets/img/logoIcon.webp') }}" alt="Logo" class="logoIcon">
-        </a>
 
-        {# Icono a la derecha. Como es el perfil propio, podría ser un botón de logout o el mismo avatar #}
-        <div class="header-user-icon">
-            {# Enlace para cerrar sesión, por ejemplo #}
-            <a href="{{ path('app_logout') }}" title="Cerrar Sesión">
-                <img src="{{ asset('assets/img/loginIconGOLD.webp') }}" alt="Cerrar Sesión">
-            </a>
-        </div>
-    </header>
+    {# INCLUSIÓN DEL HEADER MODULAR #}
+    {% include 'partials/header.html.twig' %}
 
-    <main>
+    <main style="position: relative;"> {# Añadido relative aquí para que el mensaje flote respecto a este contenedor #}
+
+        {# --- MENSAJE FLOTANTE (No empuja el diseño) --- #}
+        {% for message in app.flashes('success') %}
+            <div style="
+                position: absolute;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 999;
+                background: #1f1b2e;
+                color: #c2b46c;
+                border: 2px solid #c2b46c;
+                padding: 10px 25px;
+                border-radius: 12px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.6);
+                font-weight: bold;
+                white-space: nowrap;
+                animation: fadeOut 4s forwards;
+            ">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <div class="profile-container">
+            {# Mensajes de éxito/error al actualizar ajustes #}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success" style="color: #c2b46c; text-align: center; margin-bottom: 20px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+
             {# --- Banner Superior --- #}
             <div class="profile-banner">
-                {# --- Icono de Ajustes (Engranaje) --- #}
-                {# Enlaza a la ruta de configuración de perfil cuando la tengas #}
-                <a href="#" class="settings-icon" title="Configuración del Perfil">
-                    {# Reemplaza con tu icono de engranaje dorado #}
+                {% if miPerfil %}
+                <a href="{{ path('app_settings') }}" class="settings-icon" title="Configuración del Perfil">
                     <img src="{{ asset('assets/img/settingsIconGOLD.webp') }}" alt="Ajustes">
                 </a>
+                {% endif %}
             </div>
 
             {# --- Avatar del Usuario --- #}
             <div class="profile-avatar">
-                {# Muestra el avatar del usuario si tuvieras un campo para ello, si no, usa un placeholder #}
-                {# <img src="{{ app.user.avatarUrl|default(asset('assets/img/default_avatar.webp')) }}" alt="Avatar"> #}
-                <img src="{{ asset('assets/img/default_avatar.webp') }}" alt="Avatar de usuario">
+                {% if user.fotoPerfil %}
+                    <img src="{{ asset('uploads/avatars/' ~ user.fotoPerfil) }}" alt="Avatar de {{ user.userName }}">
+                {% else %}
+                    <img src="{{ asset('assets/img/default_avatar.webp') }}" alt="Avatar por defecto">
+                {% endif %}
             </div>
 
             {# --- Nombre de Usuario --- #}
             <h2 class="profile-username">
-                {# Muestra el nombre de usuario (userName) o el identificador (email) si no existe #}
-                {{ app.user.userName|default(app.user.userIdentifier) }}
+                {{ user.userName|default(user.userIdentifier) }}
             </h2>
 
             {# --- Tarjetas de Contenido --- #}
+            {% if miPerfil %}
             <div class="profile-cards-container">
-                {# Tarjeta 1: Mis builds #}
-                {# Actualiza el href con la ruta correcta (ej: path('user_builds')) #}
-                <a href="#" class="profile-card">
-                    Mis builds
-                </a>
-
-                {# Tarjeta 2: Mis publicaciones #}
-                {# Actualiza el href con la ruta correcta (ej: path('user_posts')) #}
-                <a href="#" class="profile-card">
-                    Mis publicaciones
-                </a>
+                <a href="{{ path('app_profile_builds') }}" class="profile-card">Mis builds</a>
+                <a href="{{ path('app_profile_posts') }}" class="profile-card">Mis publicaciones</a>
             </div>
+            {% endif %}
         </div>
     </main>
 
     <footer>
         Game Hub &copy; 2025-2026
     </footer>
+
+    {# Pequeño estilo para que el mensaje desaparezca suavemente #}
+    <style>
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+    </style>
 {% endblock %}

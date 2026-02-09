@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Registrarse{% endblock %}
+{% block title %}Registrarse - GameHub{% endblock %}
 
 {% block stylesheets %}
     {# Usamos el mismo estilo que el Login para mantener la coherencia #}
@@ -9,22 +9,19 @@
 
 {% block body %}
 
-    <header>
-        <a href="{{ path('home') }}">
-            <img src="{{ asset('assets/img/logoIcon.webp') }}" alt="Logo" class="logoIcon">
-        </a>
-    </header>
+    {# Inclusión del header común para manejar la sesión dinámicamente #}
+    {% include 'partials/header.html.twig' %}
 
     <main>
         <div class="login-container">
             <h2 class="login-title">Crear Cuenta</h2>
 
-            {# Mensajes de error de verificación de email (si los usas) #}
+            {# Mensajes de error de verificación de email (Flashes) #}
             {% for flash_error in app.flashes('verify_email_error') %}
                 <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
             {% endfor %}
 
-            {{ form_start(registrationForm) }}
+            {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
 
             {# Errores generales del formulario #}
             {% if form_errors(registrationForm) %}
@@ -74,11 +71,6 @@
                     {{ form_errors(registrationForm.plainPassword) }}
                 </div>
             </div>
-
-            {#
-            NOTA: Hemos omitido deliberadamente form_row(registrationForm.agreeTerms)
-            Asegúrate de haberlo quitado también en RegistrationFormType.php
-            #}
 
             <button type="submit" class="btn-login">
                 Registrarse

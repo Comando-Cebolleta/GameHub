@@ -1,36 +1,115 @@
 {% extends 'base.html.twig' %}
-{% block title %}Nueva Build Honkai{% endblock %}
+
+{% block title %}Nueva Build Honkai - GameHub{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styleBlogHONKAI.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styleBuildHSR.css') }}">
+
+    <style>
+        /* --- AJUSTES DINÁMICOS DEL HEADER (ESTILO HSR) --- */
+        header .login-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            width: auto !important;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .welcome-text {
+            color: #c0c0c0; /* Plateado HSR */
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .logout-link {
+            color: #ffffff;
+            font-size: 0.75rem;
+            text-decoration: underline !important;
+            opacity: 0.7;
+        }
+
+        .logout-link:hover {
+            opacity: 1;
+            color: #ffadad;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
-<div class="container mt-5">
-    <h2 class="mb-4">Nueva Build - Honkai Star Rail</h2>
-    {{ form_start(form) }}
-        <div class="row">
-            <div class="col-md-5">
-                <div class="card p-3 mb-3">
-                    {{ form_row(form.nombre) }}
-                    {{ form_row(form.personajePlantilla) }}
-                    {{ form_row(form.nivel) }}
-                    {{ form_row(form.dupeNum) }}
-                    
-                    {{ form_row(form.arma) }}
-                </div>
-            </div>
-            <div class="col-md-7">
-                <div class="card p-3">
-                    <h4>Reliquias y Ornamentos</h4>
-                    <div class="row">
-                        <div class="col-6">{{ form_row(form.reliquia_cabeza) }}</div>
-                        <div class="col-6">{{ form_row(form.reliquia_manos) }}</div>
-                        <div class="col-6">{{ form_row(form.reliquia_torso) }}</div>
-                        <div class="col-6">{{ form_row(form.reliquia_pies) }}</div>
-                        <hr class="my-3">
-                        <div class="col-6">{{ form_row(form.ornamento_esfera) }}</div>
-                        <div class="col-6">{{ form_row(form.ornamento_cuerda) }}</div>
+    {# INCLUSIÓN DEL HEADER MODULAR - Forzamos el icono SILVER #}
+    {% include 'partials/header.html.twig' with {'iconColor': 'SILVER'} %}
+
+    <main>
+        <div class="container">
+            <h2 class="build-title">Configurar Nueva Build - HSR</h2>
+
+            {{ form_start(form) }}
+            <div class="build-grid">
+
+                {# COLUMNA IZQUIERDA: DATOS BÁSICOS #}
+                <div class="col-left">
+                    <div class="build-section-card">
+                        <h4 class="section-subtitle">Personaje y Arma</h4>
+                        {{ form_row(form.nombre) }}
+                        {{ form_row(form.personajePlantilla) }}
+                        <div class="subgrid">
+                            {{ form_row(form.nivel) }}
+                            {{ form_row(form.dupeNum) }}
+                        </div>
+                        <hr>
+                        {{ form_row(form.arma) }}
                     </div>
                 </div>
+
+                {# COLUMNA DERECHA: RELIQUIAS #}
+                <div class="col-right">
+                    <div class="build-section-card">
+                        <h4 class="section-subtitle">Reliquias y Ornamentos</h4>
+
+                        <div class="subgrid">
+                            {{ form_row(form.reliquia_cabeza) }}
+                            {{ form_row(form.reliquia_manos) }}
+                            {{ form_row(form.reliquia_torso) }}
+                            {{ form_row(form.reliquia_pies) }}
+                        </div>
+
+                        <hr>
+                        <h4 class="section-subtitle" style="font-size: 1.1rem; border-color: #888;">Ornamentos del Universo Simulado</h4>
+
+                        <div class="subgrid">
+                            {{ form_row(form.ornamento_esfera) }}
+                            {{ form_row(form.ornamento_cuerda) }}
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
+            <div style="margin-top: 30px;">
+                <button type="submit" class="btn-save-build w-100">Guardar Build del Trazacaminos</button>
+            </div>
+            {{ form_end(form) }}
         </div>
-        <button type="submit" class="btn btn-warning mt-3 w-100">Guardar Build</button>
-    {{ form_end(form) }}
-</div>
+    </main>
+
+    <footer>
+        Game Hub &copy; 2025-2026
+    </footer>
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script type="text/javascript" src="{{ asset('js/filtroArmaPersonaje.js') }}"></script>
+    {% endblock %}
+    
 {% endblock %}

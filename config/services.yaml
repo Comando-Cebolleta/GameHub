@@ -6,6 +6,7 @@
 parameters:
     uploads_directory: '%kernel.project_dir%/public/uploads/blog'
     personaje_directory: '%kernel.project_dir%/public/assets/personajes'
+    arma_directory: '%kernel.project_dir%/public/assets/armas'
 
 services:
     # default configuration for services in *this* file

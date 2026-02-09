@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 28, 2026 at 10:23 AM
+-- Generation Time: Feb 05, 2026 at 08:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,6 +33,13 @@ CREATE TABLE `arma` (
   `nivel` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `arma`
+--
+
+INSERT INTO `arma` (`id`, `arma_plantilla_id`, `nivel`) VALUES
+(16, 9, 32);
+
 -- --------------------------------------------------------
 
 --
@@ -55,7 +62,7 @@ CREATE TABLE `arma_plantilla` (
 --
 
 INSERT INTO `arma_plantilla` (`id`, `nombre`, `imagen`, `juego`, `stats_base`, `stats_por_nivel`, `pasiva`, `tipo`) VALUES
-(0, 'Lápida del Lobo', NULL, 'genshin', '{\"ATK\":608,\"ATK%\":0.49}', '{\"ATK\":16,\"ATK%\":0.012}', 'Aumenta el ATQ del portador. Al golpear a enemigos con poca vida, incrementa aún más el daño durante un tiempo.', 'espadón'),
+(0, 'Lápida del Lobo', NULL, 'genshin', '{\"ATK\":608,\"ATK%\":0.49}', '{\"ATK\":16,\"ATK%\":0.012}', 'Aumenta el ATQ del portador. Al golpear a enemigos con poca vida, incrementa aún más el daño durante un tiempo.', 'espadon'),
 (1, 'Estrella Invernal', NULL, 'genshin', '{\"ATK\":608,\"CRIT_DMG\":0.33}', '{\"ATK\":15,\"CRIT_DMG\":0.009}', 'Los ataques normales y cargados aumentan el daño del portador de forma acumulativa.', 'arco'),
 (2, 'Luz del Segador', NULL, 'genshin', '{\"ATK\":674,\"ER\":0.36}', '{\"ATK\":18,\"ER\":0.01}', 'Convierte la Recarga de Energía excedente en ATQ y aumenta el daño de la habilidad definitiva.', 'lanza'),
 (3, 'Fulgor de las Aguas Calmas', NULL, 'genshin', '{\"ATK\":542,\"CRIT_DMG\":0.88}', '{\"ATK\":14,\"CRIT_DMG\":0.02}', 'Aumenta la vida máxima y el daño elemental del portador cuando se consume vida.', 'espada'),
@@ -77,6 +84,18 @@ CREATE TABLE `artefacto` (
   `artefacto_plantilla_id` int(11) DEFAULT NULL,
   `estadisticas` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`estadisticas`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `artefacto`
+--
+
+INSERT INTO `artefacto` (`id`, `artefacto_plantilla_id`, `estadisticas`) VALUES
+(71, 5, '{\"main_stat\":{\"name\":\"HP\",\"value\":32.0},\"sub_stats\":[{\"name\":\"PHYSICAL_DMG_BONUS\",\"value\":3232.0},{\"name\":\"ER\",\"value\":32.0},{\"name\":\"HP%\",\"value\":32.0},{\"name\":\"ATK\",\"value\":32.0}]}'),
+(72, 6, '{\"main_stat\":{\"name\":\"ATK\",\"value\":32.0},\"sub_stats\":[{\"name\":\"FIRE_DMG_BONUS\",\"value\":32.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":32.0},{\"name\":\"DEF%\",\"value\":32.0},{\"name\":\"ATK\",\"value\":32.0}]}'),
+(73, 7, '{\"main_stat\":{\"name\":\"HP\",\"value\":32.0},\"sub_stats\":[{\"name\":\"ER\",\"value\":32.0},{\"name\":\"SPD\",\"value\":43.0},{\"name\":\"EFFECT_RES\",\"value\":54.0},{\"name\":\"EFFECT_RES\",\"value\":54.0}]}'),
+(74, 8, '{\"main_stat\":{\"name\":\"HP\",\"value\":32.0},\"sub_stats\":[{\"name\":\"BREAK_EFFECT\",\"value\":32.0},{\"name\":\"EFFECT_RES\",\"value\":5.0},{\"name\":\"BREAK_EFFECT\",\"value\":5.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":54.0}]}'),
+(75, 9, '{\"main_stat\":{\"name\":\"HP\",\"value\":54.0},\"sub_stats\":[{\"name\":\"HP%\",\"value\":54.0},{\"name\":\"DEF\",\"value\":54.0},{\"name\":\"HP%\",\"value\":54.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":54.0}]}'),
+(76, 10, '{\"main_stat\":{\"name\":\"HP\",\"value\":54.0},\"sub_stats\":[{\"name\":\"BREAK_EFFECT\",\"value\":54.0},{\"name\":\"ATK%\",\"value\":54.0},{\"name\":\"ATK\",\"value\":54.0},{\"name\":\"DEF%\",\"value\":54.0}]}');
 
 -- --------------------------------------------------------
 
@@ -161,7 +180,10 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 ('DoctrineMigrations\\Version20260116123733', '2026-01-16 13:37:41', 529),
 ('DoctrineMigrations\\Version20260120091550', '2026-01-21 11:36:33', 1984),
 ('DoctrineMigrations\\Version20260122110205', '2026-01-22 12:02:12', 66),
-('DoctrineMigrations\\Version20260128092152', '2026-01-28 10:21:59', 81);
+('DoctrineMigrations\\Version20260128092152', '2026-01-28 10:21:59', 81),
+('DoctrineMigrations\\Version20260202090004', '2026-02-02 10:00:11', 165),
+('DoctrineMigrations\\Version20260202092211', '2026-02-02 10:22:18', 47),
+('DoctrineMigrations\\Version20260205073814', '2026-02-05 08:38:21', 115);
 
 -- --------------------------------------------------------
 
@@ -218,28 +240,6 @@ CREATE TABLE `habilidad` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `juego_pieza_tipo`
---
-
-CREATE TABLE `juego_pieza_tipo` (
-  `juego` varchar(255) NOT NULL,
-  `pieza_tipo_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `juego_pieza_tipo`
---
-
-INSERT INTO `juego_pieza_tipo` (`juego`, `pieza_tipo_id`) VALUES
-('genshin', 0),
-('genshin', 1),
-('genshin', 2),
-('genshin', 3),
-('genshin', 4);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `like`
 --
 
@@ -264,6 +264,13 @@ CREATE TABLE `personaje` (
   `nombre` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `personaje`
+--
+
+INSERT INTO `personaje` (`id`, `user_id`, `arma_id`, `personaje_plantilla_id`, `nivel`, `dupe_num`, `nombre`) VALUES
+(18, 17, 16, 7, 32, 3, 'dw');
+
 -- --------------------------------------------------------
 
 --
@@ -274,6 +281,18 @@ CREATE TABLE `personaje_artefacto` (
   `personaje_id` int(11) NOT NULL,
   `artefacto_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `personaje_artefacto`
+--
+
+INSERT INTO `personaje_artefacto` (`personaje_id`, `artefacto_id`) VALUES
+(18, 71),
+(18, 72),
+(18, 73),
+(18, 74),
+(18, 75),
+(18, 76);
 
 -- --------------------------------------------------------
 
@@ -302,24 +321,25 @@ CREATE TABLE `personaje_plantilla` (
   `imagen` varchar(255) DEFAULT NULL,
   `elemento` varchar(255) DEFAULT NULL,
   `senda` varchar(255) DEFAULT NULL,
-  `icono` varchar(255) DEFAULT NULL
+  `icono` varchar(255) DEFAULT NULL,
+  `tipo_arma` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `personaje_plantilla`
 --
 
-INSERT INTO `personaje_plantilla` (`id`, `juego`, `nombre`, `stats_base`, `stats_por_nivel`, `imagen`, `elemento`, `senda`, `icono`) VALUES
-(1, 'genshin', 'Diluc', '{\n \"HP\":12981,\"ATK\":335,\"DEF\":784,\"EM\":0,\"ER\":1.00,\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.50,\n \"PYRO_DMG_BONUS\":0.466,\"HYDRO_DMG_BONUS\":0,\"ELECTRO_DMG_BONUS\":0,\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\n \"HEAL_BONUS\":0\n}', '{\r\n \"HP\":210,\"ATK\":8,\"DEF\":14,\"EM\":0,\"ER\":0.01,\r\n \"CRIT_RATE\":0.002,\"CRIT_DMG\":0.01,\r\n \"PYRO_DMG_BONUS\":0.01,\"HYDRO_DMG_BONUS\":0,\"ELECTRO_DMG_BONUS\":0,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'pyro', NULL, NULL),
-(2, 'genshin', 'Tartaglia', '{\r\n \"HP\":13103,\"ATK\":301,\"DEF\":815,\"EM\":0,\"ER\":1.00,\r\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.50,\r\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0.466,\"ELECTRO_DMG_BONUS\":0,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', '{\r\n \"HP\":215,\"ATK\":7,\"DEF\":15,\"EM\":0,\"ER\":0.01,\r\n \"CRIT_RATE\":0.002,\"CRIT_DMG\":0.01,\r\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0.01,\"ELECTRO_DMG_BONUS\":0,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'hydro', NULL, NULL),
-(3, 'genshin', 'Raiden Shogun', '{\n \"HP\":12907,\"ATK\":337,\"DEF\":789,\"EM\":0,\"ER\":1.32,\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.50,\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0,\"ELECTRO_DMG_BONUS\":0.466,\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\n \"HEAL_BONUS\":0\n}', '{\r\n \"HP\":205,\"ATK\":8,\"DEF\":14,\"EM\":0,\"ER\":0.015,\r\n \"CRIT_RATE\":0.002,\"CRIT_DMG\":0.01,\r\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0,\"ELECTRO_DMG_BONUS\":0.01,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'electro', NULL, NULL),
-(4, 'genshin', 'Furina', '{\r\n \"HP\":15307,\"ATK\":243,\"DEF\":712,\"EM\":0,\"ER\":1.00,\r\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.50,\r\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0.466,\"ELECTRO_DMG_BONUS\":0,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', '{\r\n \"HP\":260,\"ATK\":6,\"DEF\":13,\"EM\":0,\"ER\":0.01,\r\n \"CRIT_RATE\":0.002,\"CRIT_DMG\":0.01,\r\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0.01,\"ELECTRO_DMG_BONUS\":0,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'hydro', NULL, NULL),
-(5, 'genshin', 'Columbina', '{\r\n \"HP\":14000,\"ATK\":320,\"DEF\":760,\"EM\":80,\"ER\":1.10,\r\n \"CRIT_RATE\":0.10,\"CRIT_DMG\":0.60,\r\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0.466,\"ELECTRO_DMG_BONUS\":0,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', '{\r\n \"HP\":230,\"ATK\":9,\"DEF\":15,\"EM\":5,\"ER\":0.012,\r\n \"CRIT_RATE\":0.003,\"CRIT_DMG\":0.012,\r\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0.01,\"ELECTRO_DMG_BONUS\":0,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'hydro', NULL, NULL),
-(6, 'hsr', 'Pela', '{\r\n \"HP\":1047,\"ATK\":476,\"DEF\":463,\"BREAK_EFFECT\":0.25,\"SPD\":105,\r\n \"EFFECT_HIT_RATE\":0.20,\"EFFECT_RES\":0.10,\"ER\":1.00,\r\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.50,\r\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0.20,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', '{\r\n \"HP\":42,\"ATK\":19,\"DEF\":18,\"BREAK_EFFECT\":0.01,\"SPD\":2,\r\n \"EFFECT_HIT_RATE\":0.008,\"EFFECT_RES\":0.006,\"ER\":0.01,\r\n \"CRIT_RATE\":0.003,\"CRIT_DMG\":0.012,\r\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0.005,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'hielo', 'nihilidad', NULL),
-(7, 'hsr', 'Firefly', '{\n \"HP\":1378,\"ATK\":523,\"DEF\":485,\"BREAK_EFFECT\":0.30,\"SPD\":103,\n \"EFFECT_HIT_RATE\":0.15,\"EFFECT_RES\":0.10,\"ER\":1.00,\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.50,\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0.20,\"ICE_DMG_BONUS\":0,\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\n \"HEAL_BONUS\":0\n}', '{\r\n \"HP\":55,\"ATK\":21,\"DEF\":19,\"BREAK_EFFECT\":0.012,\"SPD\":2,\r\n \"EFFECT_HIT_RATE\":0.007,\"EFFECT_RES\":0.006,\"ER\":0.01,\r\n \"CRIT_RATE\":0.003,\"CRIT_DMG\":0.012,\r\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0.005,\"ICE_DMG_BONUS\":0,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'fuego', 'destruccion', NULL),
-(8, 'hsr', 'Sunday', '{\r\n \"HP\":1120,\"ATK\":412,\"DEF\":502,\"BREAK_EFFECT\":0.20,\"SPD\":106,\r\n \"EFFECT_HIT_RATE\":0.25,\"EFFECT_RES\":0.12,\"ER\":1.05,\r\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.50,\r\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0.20,\r\n \"HEAL_BONUS\":0\r\n}', '{\r\n \"HP\":45,\"ATK\":16,\"DEF\":20,\"BREAK_EFFECT\":0.01,\"SPD\":2,\r\n \"EFFECT_HIT_RATE\":0.01,\"EFFECT_RES\":0.007,\"ER\":0.012,\r\n \"CRIT_RATE\":0.002,\"CRIT_DMG\":0.01,\r\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0.005,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'imaginario', 'armonia', NULL),
-(9, 'hsr', 'Jingliu', '{\r\n \"HP\":1436,\"ATK\":592,\"DEF\":436,\"BREAK_EFFECT\":0.22,\"SPD\":100,\r\n \"EFFECT_HIT_RATE\":0.10,\"EFFECT_RES\":0.08,\"ER\":1.00,\r\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.60,\r\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0.20,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', '{\r\n \"HP\":58,\"ATK\":24,\"DEF\":17,\"BREAK_EFFECT\":0.011,\"SPD\":2,\r\n \"EFFECT_HIT_RATE\":0.006,\"EFFECT_RES\":0.005,\"ER\":0.01,\r\n \"CRIT_RATE\":0.003,\"CRIT_DMG\":0.015,\r\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0.005,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'hielo', 'destruccion', NULL),
-(10, 'hsr', 'Phainon', '{\r\n \"HP\":1500,\"ATK\":560,\"DEF\":470,\"BREAK_EFFECT\":0.28,\"SPD\":102,\r\n \"EFFECT_HIT_RATE\":0.12,\"EFFECT_RES\":0.10,\"ER\":1.00,\r\n \"CRIT_RATE\":0.08,\"CRIT_DMG\":0.55,\r\n \"PHYSICAL_DMG_BONUS\":0.20,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', '{\r\n \"HP\":60,\"ATK\":22,\"DEF\":18,\"BREAK_EFFECT\":0.013,\"SPD\":2,\r\n \"EFFECT_HIT_RATE\":0.007,\"EFFECT_RES\":0.006,\"ER\":0.01,\r\n \"CRIT_RATE\":0.003,\"CRIT_DMG\":0.014,\r\n \"PHYSICAL_DMG_BONUS\":0.005,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'fisico', 'destruccion', NULL);
+INSERT INTO `personaje_plantilla` (`id`, `juego`, `nombre`, `stats_base`, `stats_por_nivel`, `imagen`, `elemento`, `senda`, `icono`, `tipo_arma`) VALUES
+(1, 'genshin', 'Diluc', '{\n \"HP\":12981,\"ATK\":335,\"DEF\":784,\"EM\":0,\"ER\":1.00,\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.50,\n \"PYRO_DMG_BONUS\":0.466,\"HYDRO_DMG_BONUS\":0,\"ELECTRO_DMG_BONUS\":0,\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\n \"HEAL_BONUS\":0\n}', '{\r\n \"HP\":210,\"ATK\":8,\"DEF\":14,\"EM\":0,\"ER\":0.01,\r\n \"CRIT_RATE\":0.002,\"CRIT_DMG\":0.01,\r\n \"PYRO_DMG_BONUS\":0.01,\"HYDRO_DMG_BONUS\":0,\"ELECTRO_DMG_BONUS\":0,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'pyro', NULL, NULL, 'espadon'),
+(2, 'genshin', 'Tartaglia', '{\r\n \"HP\":13103,\"ATK\":301,\"DEF\":815,\"EM\":0,\"ER\":1.00,\r\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.50,\r\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0.466,\"ELECTRO_DMG_BONUS\":0,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', '{\r\n \"HP\":215,\"ATK\":7,\"DEF\":15,\"EM\":0,\"ER\":0.01,\r\n \"CRIT_RATE\":0.002,\"CRIT_DMG\":0.01,\r\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0.01,\"ELECTRO_DMG_BONUS\":0,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'hydro', NULL, NULL, 'arco'),
+(3, 'genshin', 'Raiden Shogun', '{\n \"HP\":12907,\"ATK\":337,\"DEF\":789,\"EM\":0,\"ER\":1.32,\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.50,\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0,\"ELECTRO_DMG_BONUS\":0.466,\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\n \"HEAL_BONUS\":0\n}', '{\r\n \"HP\":205,\"ATK\":8,\"DEF\":14,\"EM\":0,\"ER\":0.015,\r\n \"CRIT_RATE\":0.002,\"CRIT_DMG\":0.01,\r\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0,\"ELECTRO_DMG_BONUS\":0.01,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'electro', NULL, NULL, 'lanza'),
+(4, 'genshin', 'Furina', '{\r\n \"HP\":15307,\"ATK\":243,\"DEF\":712,\"EM\":0,\"ER\":1.00,\r\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.50,\r\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0.466,\"ELECTRO_DMG_BONUS\":0,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', '{\r\n \"HP\":260,\"ATK\":6,\"DEF\":13,\"EM\":0,\"ER\":0.01,\r\n \"CRIT_RATE\":0.002,\"CRIT_DMG\":0.01,\r\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0.01,\"ELECTRO_DMG_BONUS\":0,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'hydro', NULL, NULL, 'espada'),
+(5, 'genshin', 'Columbina', '{\r\n \"HP\":14000,\"ATK\":320,\"DEF\":760,\"EM\":80,\"ER\":1.10,\r\n \"CRIT_RATE\":0.10,\"CRIT_DMG\":0.60,\r\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0.466,\"ELECTRO_DMG_BONUS\":0,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', '{\r\n \"HP\":230,\"ATK\":9,\"DEF\":15,\"EM\":5,\"ER\":0.012,\r\n \"CRIT_RATE\":0.003,\"CRIT_DMG\":0.012,\r\n \"PYRO_DMG_BONUS\":0,\"HYDRO_DMG_BONUS\":0.01,\"ELECTRO_DMG_BONUS\":0,\r\n \"CRYO_DMG_BONUS\":0,\"ANEMO_DMG_BONUS\":0,\"GEO_DMG_BONUS\":0,\"DENDRO_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'hydro', NULL, NULL, 'catalizador'),
+(6, 'hsr', 'Pela', '{\r\n \"HP\":1047,\"ATK\":476,\"DEF\":463,\"BREAK_EFFECT\":0.25,\"SPD\":105,\r\n \"EFFECT_HIT_RATE\":0.20,\"EFFECT_RES\":0.10,\"ER\":1.00,\r\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.50,\r\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0.20,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', '{\r\n \"HP\":42,\"ATK\":19,\"DEF\":18,\"BREAK_EFFECT\":0.01,\"SPD\":2,\r\n \"EFFECT_HIT_RATE\":0.008,\"EFFECT_RES\":0.006,\"ER\":0.01,\r\n \"CRIT_RATE\":0.003,\"CRIT_DMG\":0.012,\r\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0.005,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'hielo', 'nihilidad', NULL, 'cono'),
+(7, 'hsr', 'Firefly', '{\n \"HP\":1378,\"ATK\":523,\"DEF\":485,\"BREAK_EFFECT\":0.30,\"SPD\":103,\n \"EFFECT_HIT_RATE\":0.15,\"EFFECT_RES\":0.10,\"ER\":1.00,\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.50,\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0.20,\"ICE_DMG_BONUS\":0,\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\n \"HEAL_BONUS\":0\n}', '{\r\n \"HP\":55,\"ATK\":21,\"DEF\":19,\"BREAK_EFFECT\":0.012,\"SPD\":2,\r\n \"EFFECT_HIT_RATE\":0.007,\"EFFECT_RES\":0.006,\"ER\":0.01,\r\n \"CRIT_RATE\":0.003,\"CRIT_DMG\":0.012,\r\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0.005,\"ICE_DMG_BONUS\":0,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'fuego', 'destruccion', NULL, 'cono'),
+(8, 'hsr', 'Sunday', '{\r\n \"HP\":1120,\"ATK\":412,\"DEF\":502,\"BREAK_EFFECT\":0.20,\"SPD\":106,\r\n \"EFFECT_HIT_RATE\":0.25,\"EFFECT_RES\":0.12,\"ER\":1.05,\r\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.50,\r\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0.20,\r\n \"HEAL_BONUS\":0\r\n}', '{\r\n \"HP\":45,\"ATK\":16,\"DEF\":20,\"BREAK_EFFECT\":0.01,\"SPD\":2,\r\n \"EFFECT_HIT_RATE\":0.01,\"EFFECT_RES\":0.007,\"ER\":0.012,\r\n \"CRIT_RATE\":0.002,\"CRIT_DMG\":0.01,\r\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0.005,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'imaginario', 'armonia', NULL, 'cono'),
+(9, 'hsr', 'Jingliu', '{\r\n \"HP\":1436,\"ATK\":592,\"DEF\":436,\"BREAK_EFFECT\":0.22,\"SPD\":100,\r\n \"EFFECT_HIT_RATE\":0.10,\"EFFECT_RES\":0.08,\"ER\":1.00,\r\n \"CRIT_RATE\":0.05,\"CRIT_DMG\":0.60,\r\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0.20,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', '{\r\n \"HP\":58,\"ATK\":24,\"DEF\":17,\"BREAK_EFFECT\":0.011,\"SPD\":2,\r\n \"EFFECT_HIT_RATE\":0.006,\"EFFECT_RES\":0.005,\"ER\":0.01,\r\n \"CRIT_RATE\":0.003,\"CRIT_DMG\":0.015,\r\n \"PHYSICAL_DMG_BONUS\":0,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0.005,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'hielo', 'destruccion', NULL, 'cono'),
+(10, 'hsr', 'Phainon', '{\r\n \"HP\":1500,\"ATK\":560,\"DEF\":470,\"BREAK_EFFECT\":0.28,\"SPD\":102,\r\n \"EFFECT_HIT_RATE\":0.12,\"EFFECT_RES\":0.10,\"ER\":1.00,\r\n \"CRIT_RATE\":0.08,\"CRIT_DMG\":0.55,\r\n \"PHYSICAL_DMG_BONUS\":0.20,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', '{\r\n \"HP\":60,\"ATK\":22,\"DEF\":18,\"BREAK_EFFECT\":0.013,\"SPD\":2,\r\n \"EFFECT_HIT_RATE\":0.007,\"EFFECT_RES\":0.006,\"ER\":0.01,\r\n \"CRIT_RATE\":0.003,\"CRIT_DMG\":0.014,\r\n \"PHYSICAL_DMG_BONUS\":0.005,\"FIRE_DMG_BONUS\":0,\"ICE_DMG_BONUS\":0,\r\n \"LIGHTNING_DMG_BONUS\":0,\"WIND_DMG_BONUS\":0,\"QUANTUM_DMG_BONUS\":0,\"IMAGINARY_DMG_BONUS\":0,\r\n \"HEAL_BONUS\":0\r\n}', NULL, 'fisico', 'destruccion', NULL, 'cono');
 
 -- --------------------------------------------------------
 
@@ -373,7 +393,8 @@ CREATE TABLE `post` (
 INSERT INTO `post` (`id`, `user_id`, `titulo`, `cuerpo`, `fecha_publicacion`, `visitas`, `juego`) VALUES
 (12, NULL, 'Patata', '<figure class=\"image\"><img style=\"aspect-ratio:232/218;\" src=\"/uploads/blog/images2-696e0ce2b9666.jpg\" width=\"232\" height=\"218\"></figure><p>Ostia un lobo que guapo</p><ul><li>a</li><li>b</li><li>c</li><li>e</li><li>d</li></ul><figure class=\"image\"><img style=\"aspect-ratio:208/242;\" src=\"/uploads/blog/images-696e0cf998508.jpg\" width=\"208\" height=\"242\"></figure><p>Y otro tú</p><p>&nbsp;</p>', '2026-01-19 11:52:49', 0, 'genshin'),
 (13, NULL, 'Patata', '<figure class=\"image\"><img style=\"aspect-ratio:564/846;\" src=\"/uploads/blog/Cerveza-696e0da2bdcbe.webp\" width=\"564\" height=\"846\"></figure><p>dwadwadaw</p>', '2026-01-19 11:55:36', 0, 'hsr'),
-(14, NULL, 'Hola', '<figure class=\"image\"><img style=\"aspect-ratio:232/218;\" src=\"/uploads/blog/images2-696e0deb3e731.jpg\" width=\"232\" height=\"218\"></figure>', '2026-01-19 11:56:45', 0, 'hsr');
+(14, NULL, 'Hola', '<figure class=\"image\"><img style=\"aspect-ratio:232/218;\" src=\"/uploads/blog/images2-696e0deb3e731.jpg\" width=\"232\" height=\"218\"></figure>', '2026-01-19 11:56:45', 0, 'hsr'),
+(15, 17, 'Leche', '<p>Me gusta la fruta</p><ul><li>Platano</li><li>Manzana</li><li>Pera</li></ul>', '2026-02-01 20:46:39', 0, 'genshin');
 
 -- --------------------------------------------------------
 
@@ -385,17 +406,18 @@ CREATE TABLE `set_artefactos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `imagen` varchar(255) NOT NULL,
-  `juego` varchar(255) NOT NULL
+  `juego` varchar(255) NOT NULL,
+  `efectos` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `set_artefactos`
 --
 
-INSERT INTO `set_artefactos` (`id`, `nombre`, `imagen`, `juego`) VALUES
-(0, 'Emblema del Destino', '', 'genshin'),
-(1, 'Relojero de maquinaciones oníricas', '', 'hsr'),
-(2, 'Estación sellaespacios', '', 'hsr');
+INSERT INTO `set_artefactos` (`id`, `nombre`, `imagen`, `juego`, `efectos`) VALUES
+(0, 'Emblema del Destino', '', 'genshin', 'Cosas de recarga'),
+(1, 'Relojero de maquinaciones oníricas', '', 'hsr', 'Cosas de ruptura'),
+(2, 'Estación sellaespacios', '', 'hsr', 'Cosas de ataque');
 
 -- --------------------------------------------------------
 
@@ -428,7 +450,7 @@ INSERT INTO `user` (`id`, `user_name`, `email`, `roles`, `password`, `foto_perfi
 (7, 'dwafdwa', '32@drw.es', '[]', '$2y$13$m0W2PGaCmIJ8fpgU1BLLpOefQSxQRHBkquRk3LL8dFIBcA.KpW/Vq', NULL, '2025-12-22', 0),
 (11, 'dwadwae', 'no.reply.gamehubsite@gmail.com', '[]', '$2y$13$xHa2ZdM4WaLRRwyyrX3F7.ASDlI56pvMHS5VBOUVoSzsIQPK/36pe', NULL, '2025-12-28', 1),
 (15, 'fwafwaf', 'aluort8576@ieselcaminas.org', '[]', '$2y$13$joQkxN9xZhFwnYSWsbBw8eTC3liPdN/H1L0KZsUGBjSy5.wmJMA9O', NULL, '2026-01-08', 0),
-(16, 'Jose', 'aludua2859@ieselcaminas.org', '[\"ROLE_ADMIN\"]', '$2y$13$ttbvYh2HR2kJeDM5mrhAcuWVTTTyc9NiesA0gdBGjqyiPKbC42mhy', NULL, '2026-01-11', 1);
+(17, 'Jose', 'aludua2859@ieselcaminas.org', '[\"ROLE_ADMIN\"]', '$2y$13$opHNEpykEPBG.r17rL.ad.WzheOI4AJnPH/y7b7BHdOBKhu0h4b9m', '697fab8018075.jpg', '2026-01-29', 1);
 
 --
 -- Indexes for dumped tables
@@ -506,13 +528,6 @@ ALTER TABLE `habilidad`
   ADD KEY `IDX_4D2A2AF71F22B4C7` (`personaje_plantilla_id`);
 
 --
--- Indexes for table `juego_pieza_tipo`
---
-ALTER TABLE `juego_pieza_tipo`
-  ADD PRIMARY KEY (`juego`,`pieza_tipo_id`),
-  ADD KEY `IDX_20F42A6333C6862B` (`pieza_tipo_id`);
-
---
 -- Indexes for table `like`
 --
 ALTER TABLE `like`
@@ -585,13 +600,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `arma`
 --
 ALTER TABLE `arma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `artefacto`
 --
 ALTER TABLE `artefacto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `comentario`
@@ -609,19 +624,19 @@ ALTER TABLE `equipo`
 -- AUTO_INCREMENT for table `personaje`
 --
 ALTER TABLE `personaje`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables
@@ -677,12 +692,6 @@ ALTER TABLE `equipo_personaje`
 --
 ALTER TABLE `habilidad`
   ADD CONSTRAINT `FK_4D2A2AF71F22B4C7` FOREIGN KEY (`personaje_plantilla_id`) REFERENCES `personaje_plantilla` (`id`);
-
---
--- Constraints for table `juego_pieza_tipo`
---
-ALTER TABLE `juego_pieza_tipo`
-  ADD CONSTRAINT `FK_20F42A6333C6862B` FOREIGN KEY (`pieza_tipo_id`) REFERENCES `pieza_tipo` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `like`

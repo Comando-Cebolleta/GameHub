@@ -23,7 +23,6 @@ class Comentario
     #[ORM\JoinColumn(name: 'post_id', referencedColumnName: 'id')]
     private ?Post $post = null;
 
-    // Cambié 'userId' a 'user' para mantener consistencia en la nomenclatura.
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comentarios')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private ?User $user = null;
@@ -62,13 +61,11 @@ class Comentario
         return $this;
     }
 
-    // Cambié el nombre del método de 'getPostId' a 'getPost' para hacer el nombre más claro.
     public function getPost(): ?Post
     {
         return $this->post;
     }
 
-    // Cambié el nombre del método de 'setPostId' a 'setPost' para hacerlo coherente con la propiedad.
     public function setPost(?Post $post): static
     {
         $this->post = $post;
@@ -76,13 +73,11 @@ class Comentario
         return $this;
     }
 
-    // Cambié el nombre del método de 'getUserId' a 'getUser' para hacerlo más coherente con la propiedad.
     public function getUser(): ?User
     {
         return $this->user;
     }
 
-    // Cambié el nombre del método de 'setUserId' a 'setUser' para hacer la relación coherente con la propiedad.
     public function setUser(?User $user): static
     {
         $this->user = $user;

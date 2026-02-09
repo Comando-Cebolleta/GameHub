@@ -59,6 +59,7 @@ final class PageController extends AbstractController
         return $this->render('page/nuevo_post.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'PageController',
+            "juego" => $juego
         ]);
     }
 
@@ -67,13 +68,23 @@ final class PageController extends AbstractController
     {
         $repo = $em->getRepository(Post::class);
         $post = $repo->findOneByIdAndGame($id, "genshin");
+        $juego = $post->getJuego();
 
         if (!$post) {
             throw $this->createNotFoundException('Ningún post existente con ese ID');
         }
 
         return $this->render('page/single_post.html.twig', [
-            "post" => $post
+            "post" => $post,
+            "juego" => $juego
+        ]);
+    }
+
+    #[Route('/genshin/builds', name: 'genshin_builds')]
+    public function genshinBuilds(): Response
+    {
+        return $this->render('page/genshin/buildsGenshin.html.twig', [
+            'controller_name' => 'PageController',
         ]);
     }
 
@@ -114,6 +125,7 @@ final class PageController extends AbstractController
         return $this->render('page/nuevo_post.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'PageController',
+            "juego" => $juego
         ]);
     }
 
@@ -122,21 +134,23 @@ final class PageController extends AbstractController
     {
         $repo = $em->getRepository(Post::class);
         $post = $repo->findOneByIdAndGame($id, "hsr");
+        $juego = $post->getJuego();
 
         if (!$post) {
             throw $this->createNotFoundException('Ningún post existente con ese ID');
         }
 
         return $this->render('page/single_post.html.twig', [
-            "post" => $post
+            "post" => $post,
+            "juego" => $juego
         ]);
     }
-  
-    #[Route('/profile', name: 'app_profile')]
-    #[IsGranted('ROLE_USER')]
-    public function perfil(): Response
+
+    #[Route('/hsr/builds', name: 'hsr_builds')]
+    public function hsrBuilds(): Response
     {
-        // Asegúrate de que tu archivo esté en: templates/profile/profile.html.twig
-        return $this->render('profile/profile.html.twig');
+        return $this->render('page/hsr/buildsHonkai.html.twig', [
+            'controller_name' => 'PageController',
+        ]);
     }
 }
