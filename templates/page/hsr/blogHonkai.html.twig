@@ -5,7 +5,6 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/styleBlogHONKAI.css') }}">
 
-    {# Estilos específicos para los elementos dinámicos del header en esta página #}
     <style>
         header .login-container {
             display: flex;
@@ -16,37 +15,40 @@
             box-shadow: none !important;
             padding: 0 !important;
         }
-
         .user-info {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             text-align: right;
         }
-
         .welcome-text {
-            color: #c0c0c0; /* Color plateado para HSR */
+            color: #c0c0c0; /* Plata para HSR */
             font-weight: bold;
             font-size: 0.9rem;
         }
-
         .logout-link {
             color: #ffffff;
             font-size: 0.75rem;
             text-decoration: underline !important;
             opacity: 0.7;
         }
-
         .logout-link:hover {
             opacity: 1;
             color: #ffadad;
+        }
+        .post-link {
+            text-decoration: none;
+            color: inherit;
+            transition: opacity 0.2s;
+        }
+        .post-link:hover {
+            opacity: 0.8;
         }
     </style>
 {% endblock %}
 
 {% block body %}
 
-    {# Invocamos el header modular pidiendo el icono SILVER #}
     {% include 'partials/header.html.twig' with {'iconColor': 'SILVER'} %}
 
     <main>
@@ -61,39 +63,38 @@
                 </a>
             </div>
 
-            <article class="post-card">
-                <div class="post-content">
-                    <h2>Build Suprema de Raiden Shogun</h2>
-                    <p>Aquí explicamos la mejor rotación para el abismo actual. Necesitarás mucha recarga de energía y el set de Emblema del Destino para maximizar el daño de la Musou no Hitotachi.</p>
+            {% if posts is empty %}
+                <div style="text-align: center; padding: 50px; opacity: 0.7;">
+                    <p>Todavía no hay publicaciones sobre Honkai: Star Rail. ¡Sé el primero en subir contenido!</p>
                 </div>
+            {% else %}
+                {% for post in posts %}
+                    <article class="post-card">
+                        <div class="post-content">
+                            <a href="{{ path('hsr_post', {'id': post.id}) }}" class="post-link">
+                                <h2>{{ post.titulo }}</h2>
+                            </a>
+                            <p>
+                                {# striptags limpia el HTML de CKEditor #}
+                                {{ post.cuerpo|striptags|slice(0, 250) ~ '...' }}
+                            </p>
+                        </div>
 
-                <div class="post-icons-area">
-                    <span class="icon-label">Personajes clave:</span>
-                    <div class="icon-grid">
-                        <img src="{{ asset('assets/img/char1.png') }}" alt="Icon" class="char-icon">
-                        <img src="{{ asset('assets/img/char2.png') }}" alt="Icon" class="char-icon">
-                        <img src="{{ asset('assets/img/char3.png') }}" alt="Icon" class="char-icon">
-                        <img src="{{ asset('assets/img/char4.png') }}" alt="Icon" class="char-icon">
-                    </div>
-                </div>
-            </article>
+                        <div class="post-icons-area">
+                            <span class="icon-label">
+                                Autor: {{ post.user ? post.user.username : 'Anónimo' }}
+                            </span>
+                            <span class="icon-label" style="font-size: 0.75rem; opacity: 0.6; margin-top: 5px;">
+                                {{ post.fechaPublicacion|date('d/m/Y') }}
+                            </span>
+                        </div>
+                    </article>
 
-            <hr class="divider">
-
-            <article class="post-card">
-                <div class="post-content">
-                    <h2>Guía de Banner: ¿Tirar o Ahorrar?</h2>
-                    <p>El nuevo banner de Honkai Star Rail trae personajes de Cacería muy fuertes. Analizamos si valen la pena tus jades estelares o si deberías esperar a la versión 2.0.</p>
-                </div>
-
-                <div class="post-icons-area">
-                    <span class="icon-label">Recomendados:</span>
-                    <div class="icon-grid">
-                        <img src="{{ asset('assets/img/char2.png') }}" alt="Icon" class="char-icon">
-                        <img src="{{ asset('assets/img/char1.png') }}" alt="Icon" class="char-icon">
-                    </div>
-                </div>
-            </article>
+                    {% if not loop.last %}
+                        <hr class="divider">
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
 
         </div>
     </main>

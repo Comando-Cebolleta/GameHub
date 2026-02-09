@@ -1,0 +1,146 @@
+/* public/css/styleMisPosts.css */
+
+/* ---------- FUENTES ---------- */
+@font-face { font-family: 'titulos-encabezados'; src: url('../assets/fonts/CostalineThin-OGLRd.otf') format('opentype'); }
+@font-face { font-family: 'texto-parrafos'; src: url('../assets/fonts/Simvoni-d9vV6.otf') format('opentype'); }
+
+/* ---------- BASE ---------- */
+body {
+    margin: 0;
+    font-family: 'texto-parrafos', Arial, sans-serif;
+    background: linear-gradient(180deg, #3a2a4b, #9d835a);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+/* ---------- CONTENEDOR PRINCIPAL ---------- */
+.posts-wrapper {
+    width: 100%;
+    max-width: 1200px; /* Igualado a builds para consistencia */
+    background: rgba(31, 27, 46, 0.95);
+    border: 2px solid #c2b46c;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.title-gold {
+    font-family: 'titulos-encabezados', sans-serif;
+    color: #c2b46c;
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 40px;
+}
+
+/* ---------- GRID DE POSTS (Igual que en builds) ---------- */
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* ---------- CARTA INDIVIDUAL ---------- */
+.post-item {
+    background: #252033; /* Fondo sólido oscuro como las builds */
+    border: 1px solid rgba(194, 180, 108, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Empuja el contenido arriba y acciones abajo */
+    min-height: 250px;
+}
+
+.post-item:hover {
+    border-color: #c2b46c;
+    transform: translateY(-8px);
+    box-shadow: 0 5px 15px rgba(194, 180, 108, 0.2);
+}
+
+.post-item h3 {
+    font-family: 'titulos-encabezados', sans-serif;
+    color: #c2b46c;
+    font-size: 1.7rem;
+    margin: 0 0 15px 0;
+}
+
+.post-content {
+    color: #ddd;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    /* Cortar texto si es muy largo */
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ---------- CONTENEDOR DE ACCIONES (FECHA Y BOTÓN) ---------- */
+.card-actions {
+    display: flex;
+    justify-content: space-between; /* Separa la fecha del botón */
+    align-items: center;
+    margin-top: auto; /* Se pega al fondo de la carta */
+    padding-top: 15px;
+    border-top: 1px solid rgba(194, 180, 108, 0.2);
+}
+
+.post-date {
+    font-size: 0.8rem;
+    color: #c2b46c;
+    opacity: 0.7;
+    font-style: italic;
+}
+
+/* ---------- BOTÓN BORRAR DORADO ---------- */
+.btn-delete-gold {
+    background: transparent;
+    color: #c2b46c;
+    border: 1px solid #c2b46c;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-family: 'titulos-encabezados', sans-serif;
+    font-weight: bold;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-delete-gold:hover {
+    background: rgba(194, 180, 108, 0.1);
+    box-shadow: 0 0 10px rgba(194, 180, 108, 0.5);
+    color: #fff;
+    border-color: #fff;
+}
+
+/* ---------- LINKS Y FOOTER ---------- */
+.back-link {
+    display: inline-block;
+    margin-top: 30px;
+    color: #c2b46c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back-link:hover { text-decoration: underline; }
+
+footer {
+    background-color: #1f1b2e;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto;
+}

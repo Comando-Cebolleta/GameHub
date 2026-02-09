@@ -52,7 +52,13 @@
 
     <main>
         <div class="container">
-            <h2 class="build-title">Configurar Nueva Build - HSR</h2>
+            <h2 class="build-title">
+                {% if is_edit %}
+                    Editar Configuración - HSR
+                {% else %}
+                    Configurar Nueva Build - HSR
+                {% endif %}
+            </h2>
 
             {{ form_start(form) }}
             <div class="build-grid">
@@ -97,7 +103,9 @@
             </div>
 
             <div style="margin-top: 30px;">
-                <button type="submit" class="btn-save-build w-100">Guardar Build del Trazacaminos</button>
+                <button type="submit" class="btn-save-build w-100">
+                    {% if is_edit %}Actualizar Datos{% else %}Guardar Build del Trazacaminos{% endif %}
+                </button>
             </div>
             {{ form_end(form) }}
         </div>
