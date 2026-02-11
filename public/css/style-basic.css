@@ -22,13 +22,12 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-
 }
 
-/* ---------- HEADER ---------- */
+/* ---------- HEADER (ACTUALIZADO) ---------- */
 header {
     background-color: #1f1b2e;
-    height: 150px;
+    height: 200px; /* Igualado a los blogs */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,14 +36,18 @@ header {
 }
 
 .logoIcon {
-    height: 100px;
-    max-height: 120px;
+    height: 180px; /* El logo ahora luce sus 500px */
+    max-height: 200px;
     width: auto;
     object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.logoIcon:hover {
+    transform: scale(1.05);
 }
 
 /* ---------- LOGIN ---------- */
-
 .login-container {
     position: absolute;
     right: 30px;
@@ -96,6 +99,7 @@ main {
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .game-card img {
@@ -132,12 +136,16 @@ footer {
     text-align: center;
     padding: 15px 0;
     font-size: 0.9rem;
+    margin-top: auto;
 }
 
 /* ---------- MEDIA MOVIL ---------- */
 @media (max-width: 768px) {
     header {
-        height: 120px;
+        height: 140px;
+    }
+    .logoIcon {
+        height: 110px;
     }
     .container {
         gap: 20px;
@@ -153,23 +161,16 @@ footer {
         transform: none;
         box-shadow: 0 6px 15px rgba(0,0,0,0.3);
     }
-    footer {
-        font-size: 0.8rem;
-        padding: 12px 0;
-    }
 }
 
 /* ---------- MEDIA PC / PANTALLAS GRANDES ---------- */
 @media (min-width: 1200px) {
-    /* HEADER MÁS GRANDE */
     header {
-        height: 140px;
+        height: 220px;
     }
     .logoIcon {
-        height: 250px;
-        width: auto;
+        height: 200px;
     }
-    /* PARTE CENTRAL */
     .container {
         max-width: 1000px;
         min-height: 500px;
@@ -183,8 +184,6 @@ footer {
     .game-title {
         font-size: 1.3rem;
     }
-
-    /* FOOTER */
     footer {
         padding: 25px 0;
         font-size: 1.1rem;

@@ -1,5 +1,4 @@
 /* ---------- LECTURA DE POST INDIVIDUAL ---------- */
-
 .post-reading {
     animation: fadeIn 0.5s ease-in-out;
 }
@@ -14,7 +13,6 @@
 }
 
 /* ---------- CONTENIDO GENERADO (CKEDITOR) ---------- */
-
 .post-full-content {
     color: #e0e0e0;
     line-height: 1.8;
@@ -22,7 +20,6 @@
     overflow-wrap: break-word;
 }
 
-/* Imágenes dentro del contenido */
 .post-full-content img {
     max-width: 100%;
     height: auto;
@@ -33,38 +30,86 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-/* Títulos dentro del contenido */
 .post-full-content h2,
 .post-full-content h3 {
     color: #fff;
     margin-top: 40px;
     margin-bottom: 20px;
-    text-shadow: 0 0 8px rgba(192, 192, 192, 0.3);
 }
 
-/* Listas */
-.post-full-content ul,
-.post-full-content ol {
-    margin-bottom: 25px;
-    padding-left: 25px;
+/* ---------- SECCIÓN COMENTARIOS ---------- */
+.comments-section {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.post-full-content li {
-    margin-bottom: 10px;
+.comments-section h2 {
+    font-family: 'titulos-encabezados', sans-serif;
+    color: inherit;
 }
 
-/* Citas (Blockquotes) */
-.post-full-content blockquote {
-    border-left: 4px solid #3a2a4b;
-    background: rgba(255, 255, 255, 0.03);
+.comment {
+    background: rgba(0, 0, 0, 0.25);
     padding: 20px;
-    margin: 30px 0;
-    font-style: italic;
-    border-radius: 0 8px 8px 0;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: #c2b46c; /* Color por defecto, se puede pisar en el twig */
+}
+
+.comment-body {
+    color: #ddd;
+    line-height: 1.6;
+}
+
+/* Formulario de Comentarios */
+.new-comment-form {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 40px;
+}
+
+.new-comment-form textarea {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    padding: 15px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Botón unificado */
+.btn-submit-comment {
+    padding: 12px 25px;
+    background: #c2b46c;
+    color: #1f1b2e;
+    border: none;
+    border-radius: 8px;
+    font-family: 'titulos-encabezados', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.btn-submit-comment:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(194, 180, 108, 0.4);
 }
 
 /* ---------- NAVEGACIÓN ---------- */
-
 .back-container {
     margin-top: 50px;
     border-top: 1px solid rgba(192, 192, 192, 0.2);
@@ -79,17 +124,8 @@
     font-family: 'titulos-encabezados', Arial, sans-serif;
     font-size: 1rem;
     transition: all 0.3s ease;
-    padding: 10px 15px;
-    border-radius: 5px;
 }
 
-.back-link:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.05);
-    transform: translateX(-5px);
-}
-
-/* Animación simple */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
