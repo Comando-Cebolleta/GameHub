@@ -67,6 +67,7 @@ class GenshinBuildType extends AbstractType
             ->add('artefacto_reloj', GenshinArtefactoType::class, ['label' => 'Reloj', 'mapped' => false])
             ->add('artefacto_copa', GenshinArtefactoType::class, ['label' => 'Cáliz', 'mapped' => false])
             ->add('artefacto_casco', GenshinArtefactoType::class, ['label' => 'Casco', 'mapped' => false])
+            
             ->add('personajeHabilidades', \Symfony\Component\Form\Extension\Core\Type\CollectionType::class, [
                 'entry_type' => PersonajeHabilidadType::class,
                 'entry_options' => ['label' => false],

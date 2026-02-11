@@ -66,7 +66,9 @@ class BuildController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', '¡Build de Honkai creada!');
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('app_profile', [
+                'id' => $this->getUser()->getId()
+            ]);
         }
 
         return $this->render('build/create_hsr.html.twig', ['form' => $form->createView()]);
@@ -131,20 +133,33 @@ class BuildController extends AbstractController
 
                 $artefactoEntity->setArtefactoPlantilla($plantillaExacta);
 
+                $nombreMain = $subForm->get('statPrincipalNombre')->getData();
+                $valorMain = $subForm->get('statPrincipalValor')->getData();
+
+                // Si el stat principal es porcentual, lo convertimos a decimal para guardarlo (ej: 7.0% -> 0.07)
+                if ($valorMain !== null && $this->esStatPorcentual($nombreMain)) {
+                    $valorMain = $valorMain / 100;
+                }
+
                 $mainStat = [
-                    'name' => $subForm->get('statPrincipalNombre')->getData(),
-                    'value' => $subForm->get('statPrincipalValor')->getData()
+                    'name' => $nombreMain,
+                    'value' => $valorMain
                 ];
 
                 $subStatsArray = [];
                 for ($i = 1; $i <= 4; $i++) {
-                    $nombre = $subForm->get('subStatNombre' . $i)->getData();
-                    $valor = $subForm->get('subStatValor' . $i)->getData();
+                    $nombreSub = $subForm->get('subStatNombre' . $i)->getData();
+                    $valorSub = $subForm->get('subStatValor' . $i)->getData();
 
-                    if ($nombre && $valor !== null) {
+                    if ($nombreSub && $valorSub !== null) {
+                        // Convertir porcentaje a decimal si es necesario
+                        if ($this->esStatPorcentual($nombreSub)) {
+                            $valorSub = $valorSub / 100;
+                        }
+
                         $subStatsArray[] = [
-                            'name' => $nombre,
-                            'value' => $valor
+                            'name' => $nombreSub,
+                            'value' => $valorSub
                         ];
                     }
                 }
@@ -283,8 +298,15 @@ class BuildController extends AbstractController
                 if ($stats) {
                     // Stat Principal
                     if (isset($stats['main_stat']) && $subForm->has('statPrincipalNombre')) {
-                        $subForm->get('statPrincipalNombre')->setData($stats['main_stat']['name']);
-                        $subForm->get('statPrincipalValor')->setData($stats['main_stat']['value']);
+                        $nombreMain = $stats['main_stat']['name'];
+                        $valorMain = $stats['main_stat']['value'];
+
+                        if ($this->esStatPorcentual($nombreMain)) {
+                            $valorMain = round($valorMain * 100, 1); // Redondeo a 1 decimal para que se vea limpio
+                        }
+
+                        $subForm->get('statPrincipalNombre')->setData($nombreMain);
+                        $subForm->get('statPrincipalValor')->setData($valorMain);
                     }
 
                     // Substats
@@ -293,14 +315,49 @@ class BuildController extends AbstractController
                             $num = $index + 1;
                             
                             if ($subForm->has('subStatNombre' . $num)) {
-                                $subForm->get('subStatNombre' . $num)->setData($subStat['name']);
-                                $subForm->get('subStatValor' . $num)->setData($subStat['value']);
+                                $nombreSub = $subStat['name'];
+                                $valorSub = $subStat['value'];
+
+                                // Si es porcentual, convertir a escala 0-100
+                                if ($this->esStatPorcentual($nombreSub)) {
+                                    $valorSub = round($valorSub * 100, 1);
+                                }
+
+                                $subForm->get('subStatNombre' . $num)->setData($nombreSub);
+                                $subForm->get('subStatValor' . $num)->setData($valorSub);
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    private function esStatPorcentual(?string $nombre): bool
+    {
+        if (!$nombre) return false;
+
+        // Lista de claves exactas de Genshin y HSR que son porcentajes
+        $porcentuales = [
+            'CRIT_RATE', 
+            'CRIT_DMG', 
+            'ER', 
+            'HEAL_BONUS',
+            'BREAK_EFFECT',
+            'EFFECT_HIT_RATE',
+            'EFFECT_RES',
+        ];
+
+        if (in_array($nombre, $porcentuales)) {
+            return true;
+        }
+
+        // Chequeo genérico: Si contiene '%' (ej: HP%, ATK%) o termina en '_BONUS' (ej: PYRO_DMG_BONUS)
+        if (str_contains($nombre, '%') || str_ends_with($nombre, '_BONUS')) {
+            return true;
+        }
+
+        return false;
     }
 
     #[Route('/borrar/{id}', name: 'app_build_delete', methods: ['POST'])]
