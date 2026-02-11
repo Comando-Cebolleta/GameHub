@@ -6,6 +6,8 @@
 {% endblock %}
 
 {% block body %}
+    {% set statsPlanas = ['HP', 'ATK', 'DEF', 'SPD', 'EM'] %}
+
     <div style="display: flex; flex-direction: column">
         {% if build is not null %}
             <h1>{{ build.getNombre() }}</h1>
@@ -36,7 +38,18 @@
                     <td style="border: 1px solid black;">
                         <ul>
                             {% for nombreStat, valor in build.getArma().getStatsCalculados() %}
-                                <li>{{ nombreStat }}: {{ valor }}</li>
+                                <li>
+                                    <strong>{{ diccionarioStats[nombreStat] ?? nombreStat }}:</strong> 
+                                    
+                                    {# Lógica de visualización #}
+                                    {% if nombreStat in statsPlanas %}
+                                        {# Valor normal (Plano) #}
+                                        {{ valor|number_format(0) }} {# Los valores planos no llevan decimales #}
+                                    {% else %}
+                                        {# Valor porcentual #}
+                                        {{ (valor * 100)|number_format(1) }}%
+                                    {% endif %}
+                                </li>
                             {% endfor %}
                         </ul>
                     </td>
@@ -50,11 +63,100 @@
             <p>Estadísticas Totales de la Build:</p>
             <ul>
                 {% for nombreStat, valor in build.getStatsCalculados() %}
-                    <li>{{ nombreStat }}: {{ valor }}</li>
+                    <li>
+                        <strong>{{ diccionarioStats[nombreStat] ?? nombreStat }}:</strong> 
+                        
+                        {# Misma lógica aquí #}
+                        {% if nombreStat in statsPlanas %}
+                            {{ valor|number_format(0) }} {# Los valores planos no llevan decimales #}
+                        {% else %}
+                            {{ (valor * 100)|number_format(1) }}%
+                        {% endif %}
+                    </li>
                 {% endfor %}
             </ul>
 
+            <hr>
+
+            <p>Artefactos:</p>
+            <table border="1" style="border-collapse: collapse; width: 100%;">
+                <tr>
+                    <th style="border: 1px solid black;">Imagen</th>
+                    <th style="border: 1px solid black;">Pieza</th>
+                    <th style="border: 1px solid black;">Conjunto</th>
+                    <th style="border: 1px solid black;">Estadísticas</th>
+                    <th style="border: 1px solid black;">Bonificaciones de Conjunto</th>
+                </tr>
+                {% for artefacto in build.getArtefactos() %}
+                    <tr>
+                        <td style="border: 1px solid black;">
+                            {% if artefacto %}
+                                <img src="{{ asset('assets/artefactos/' ~ artefacto.getArtefactoPlantilla().getImagen()) }}" alt="Imagen del artefacto" style="width: 100px; height: auto;">
+                            {% else %}
+                                Sin artefacto
+                            {% endif %}
+                        </td>
+                        <td style="border: 1px solid black;">{{ artefacto.getArtefactoPlantilla().getPiezaTipo().getNombre() }}</td>
+                        <td style="border: 1px solid black;">{{ artefacto.getArtefactoPlantilla().getSetArtefactos().getNombre() }}</td>
+                        <td style="border: 1px solid black;">
+                            {% set stats = artefacto.getEstadisticas() %}
+                            
+                            <ul style="margin: 0; padding-left: 20px;">
+                                {# 1. Renderizar Main Stat (si existe) #}
+                                {% if stats.main_stat is defined %}
+                                    <li style="font-weight: bold; color: #d35400;">
+                                        {{ diccionarioStats[stats.main_stat.name] ?? stats.main_stat.name }}: 
+                                        
+                                        {% if stats.main_stat.name in statsPlanas %}
+                                            {{ stats.main_stat.value|number_format(0) }}
+                                        {% else %}
+                                            {{ (stats.main_stat.value * 100)|number_format(1) }}%
+                                        {% endif %}
+                                    </li>
+                                {% endif %}
+
+                                {# 2. Renderizar Sub Stats (si existen y es una lista) #}
+                                {% if stats.sub_stats is defined %}
+                                    {% for sub in stats.sub_stats %}
+                                        <li>
+                                            {{ diccionarioStats[sub.name] ?? sub.name }}: 
+                                            
+                                            {% if sub.name in statsPlanas %}
+                                                +{{ sub.value|number_format(0) }}
+                                            {% else %}
+                                                +{{ (sub.value * 100)|number_format(1) }}%
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+                            </ul>
+                        </td>
+                        <td style="border: 1px solid black;">{{ artefacto.getArtefactoPlantilla().getSetArtefactos().getEfectos() }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
             <p><a href="{{ path('app_profile', {'id': build.getUser().getId()}) }}">Creador: {{ build.getUser().getUsername() }}</a></p>
+
+            <hr>
+
+            <h3>Habilidades</h3>
+            {% if build.getPersonajePlantilla().getHabilidades() is not empty %}
+                <table border="1" style="border-collapse: collapse; width: 100%; margin-top: 20px;">
+                    <tr>
+                        <th style="border: 1px solid black;">Nombre</th>
+                        <th style="border: 1px solid black;">Efectos</th>
+                    </tr>
+                    {% for habilidad in build.getPersonajePlantilla().getHabilidades() %}
+                        <tr>
+                            <td style="border: 1px solid black;">{{ habilidad.getNombre() }}</td>
+                            <td style="border: 1px solid black;">{{ habilidad.getEfectos() }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No hay habilidades registradas para este personaje.</p>
+            {% endif %}
         {% else %}
             <p>No se ha encontrado esa build.</p>
         {% endif %}

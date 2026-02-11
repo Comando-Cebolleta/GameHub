@@ -47,6 +47,7 @@
 {% endblock %}
 
 {% block body %}
+    {% set is_edit = is_edit|default(false) %}
     {# INCLUSIÓN DEL HEADER MODULAR - Forzamos el icono SILVER #}
     {% include 'partials/header.html.twig' with {'iconColor': 'SILVER'} %}
 
@@ -75,6 +76,12 @@
                         </div>
                         <hr>
                         {{ form_row(form.arma) }}
+
+                        <hr>
+                        <h4 class="section-subtitle">Habilidades</h4>
+                        <div id="habilidades-container" data-prototype="{{ form_widget(form.personajeHabilidades.vars.prototype)|e('html_attr') }}">
+                            {# Aquí se inyectarán las habilidades vía JS #}
+                        </div>
                     </div>
                 </div>
 
@@ -118,6 +125,7 @@
     {% block javascripts %}
         {{ parent() }}
         <script type="text/javascript" src="{{ asset('js/filtroArmaPersonaje.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/habilidadesPersonaje.js') }}"></script>
     {% endblock %}
     
 {% endblock %}
