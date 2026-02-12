@@ -145,12 +145,14 @@
                 <table border="1" style="border-collapse: collapse; width: 100%; margin-top: 20px;">
                     <tr>
                         <th style="border: 1px solid black;">Nombre</th>
+                        <th style="border: 1px solid black;">Nivel</th>
                         <th style="border: 1px solid black;">Efectos</th>
                     </tr>
-                    {% for habilidad in build.getPersonajePlantilla().getHabilidades() %}
+                    {% for habilidad in build.getPersonajeHabilidades() %}
                         <tr>
-                            <td style="border: 1px solid black;">{{ habilidad.getNombre() }}</td>
-                            <td style="border: 1px solid black;">{{ habilidad.getEfectos() }}</td>
+                            <td style="border: 1px solid black;">{{ habilidad.getHabilidad().getNombre() }}</td>
+                            <td style="border: 1px solid black;">{{ habilidad.getNivel() }}</td>
+                            <td style="border: 1px solid black;">{{ habilidad.getHabilidad().getEfectos() }}</td>
                         </tr>
                     {% endfor %}
                 </table>
