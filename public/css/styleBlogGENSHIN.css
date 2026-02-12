@@ -31,7 +31,8 @@ body {
 /* ---------- HEADER ---------- */
 header {
     background-color: #1f1b2e;
-    height: 150px;
+    /* Subimos la altura de 150px a 200px para que el logo respire */
+    height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,10 +41,16 @@ header {
 }
 
 .logoIcon {
-    height: 100px;
-    max-height: 120px;
+    /* Ajustamos el tamaño a 180px para que se vea mucho más grande */
+    height: 180px;
+    max-height: 200px;
     width: auto;
     object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.logoIcon:hover {
+    transform: scale(1.05);
 }
 
 /* ---------- LOGIN ---------- */
@@ -199,7 +206,8 @@ footer {
 
 /* ---------- MEDIA MOVIL (RESPONSIVE) ---------- */
 @media (max-width: 768px) {
-    header { height: 120px; }
+    header { height: 140px; }
+    .logoIcon { height: 110px; } /* En móvil un poco más comedido */
 
     .container {
         padding: 50px 20px 20px 20px;
@@ -230,8 +238,8 @@ footer {
 
 /* ---------- MEDIA PC GRANDE ---------- */
 @media (min-width: 1200px) {
-    header { height: 140px; }
-    .logoIcon { height: 250px; }
+    header { height: 220px; } /* Header más imponente en pantallas grandes */
+    .logoIcon { height: 200px; } /* Logo al máximo */
 
     .container {
         max-width: 1000px;
