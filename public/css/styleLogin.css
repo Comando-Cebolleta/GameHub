@@ -34,12 +34,12 @@ a {
     color: inherit;
 }
 
-/* ---------- HEADER (Universal) ---------- */
+/* ---------- HEADER (Universal y Grande) ---------- */
 header {
     background-color: #1f1b2e;
-    height: 150px;
+    height: 200px; /* Altura unificada con el resto de la web */
     display: flex;
-    justify-content: center; /* Logo al centro */
+    justify-content: center;
     align-items: center;
     padding: 10px 30px;
     position: relative;
@@ -48,10 +48,15 @@ header {
 }
 
 .logoIcon {
-    height: 100px;
-    max-height: 120px;
+    height: 180px; /* Logo grande para lucir los 500px */
+    max-height: 200px;
     width: auto;
     object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.logoIcon:hover {
+    transform: scale(1.05);
 }
 
 /* Contenedor de usuario dentro del Header */
@@ -62,12 +67,11 @@ header .login-container {
     transform: translateY(-50%);
     display: flex;
     align-items: center;
-    background: transparent !important; /* Forzamos transparencia para el header */
+    background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
     width: auto !important;
-    max-width: none !important;
 }
 
 header .login-container img {
@@ -82,7 +86,7 @@ header .login-container img:hover {
     transform: scale(1.1);
 }
 
-/* ---------- MAIN (Contenido) ---------- */
+/* ---------- MAIN (Contenido del Formulario) ---------- */
 main {
     flex: 1;
     display: flex;
@@ -91,7 +95,7 @@ main {
     padding: 20px;
 }
 
-/* El contenedor del formulario de Login/Registro */
+/* El cuadro del formulario de Login */
 main .login-container {
     width: 100%;
     max-width: 450px;
@@ -119,7 +123,6 @@ form {
 
 .form-group {
     margin-bottom: 20px;
-    width: 100%;
 }
 
 .form-label {
@@ -145,7 +148,6 @@ form {
     outline: none;
     border-color: #c2b46c;
     box-shadow: 0 0 10px rgba(194, 180, 108, 0.2);
-    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .btn-login {
@@ -184,12 +186,6 @@ form {
     color: #ffadad;
 }
 
-.alert-info {
-    background-color: rgba(13, 202, 240, 0.2);
-    border: 1px solid #0dcaf0;
-    color: #9eeaf9;
-}
-
 /* ---------- FOOTER ---------- */
 footer {
     background-color: #1f1b2e;
@@ -197,18 +193,18 @@ footer {
     text-align: center;
     padding: 15px 0;
     font-size: 0.9rem;
+    margin-top: auto;
 }
 
-/* ---------- MEDIA QUERIES ---------- */
+/* ---------- RESPONSIVE ---------- */
 @media (max-width: 768px) {
-    header { height: 120px; }
-    .logoIcon { height: 80px; }
-    header .login-container img { width: 50px; }
-    main .login-container { padding: 25px; margin: 0 15px; }
+    header { height: 140px; }
+    .logoIcon { height: 110px; }
+    main .login-container { padding: 25px; }
 }
 
 @media (min-width: 1200px) {
-    header { height: 140px; }
-    .logoIcon { height: 120px; } /* Evitamos que el logo crezca excesivamente y tape el login */
+    header { height: 220px; }
+    .logoIcon { height: 200px; }
     footer { padding: 25px 0; font-size: 1.1rem; }
 }
