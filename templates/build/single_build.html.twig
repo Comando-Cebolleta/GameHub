@@ -152,14 +152,16 @@
                         <thead>
                         <tr>
                             <th>Nombre</th>
+                            <th>Nivel</th>
                             <th>Efectos</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for habilidad in build.getPersonajePlantilla().getHabilidades() %}
+                        {% for habilidad in build.getPersonajeHabilidades() %}
                             <tr>
-                                <td class="habilidad-nombre">{{ habilidad.getNombre() }}</td>
-                                <td>{{ habilidad.getEfectos() }}</td>
+                                <td class="habilidad-nombre">{{ habilidad.getHabilidad().getNombre() }}</td>
+                                <td>{{ habilidad.getNivel() }}</td>
+                                <td>{{ habilidad.getHabilidad().getEfectos() }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
