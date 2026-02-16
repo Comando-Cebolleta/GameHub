@@ -62,7 +62,7 @@
                 {% endif %}
             </h2>
 
-            {{ form_start(form) }}
+            {{ form_start(form, {'attr': {'id': 'form-build-genshin'}}) }}
             <div class="build-grid">
 
                 {# BLOQUE PERSONAJE #}
@@ -81,8 +81,32 @@
 
                         <hr>
                         <h4 class="section-subtitle">Habilidades</h4>
-                        <div id="habilidades-container" data-prototype="{{ form_widget(form.personajeHabilidades.vars.prototype)|e('html_attr') }}">
-                            {# Aquí se inyectarán las habilidades vía JS #}
+                        <div id="habilidades-container" 
+                            data-prototype="{{ form_widget(form.personajeHabilidades.vars.prototype)|e('html_attr') }}">
+                            
+                            {# Recorremos las habilidades existentes #}
+                            {% for field in form.personajeHabilidades %}
+                                
+                                <div class="grupo-habilidad" style="margin-bottom: 10px;">
+                                    {% set habilidadEntidad = field.vars.value.habilidad %}
+                                    
+                                    <label style="display:block; margin-bottom: 5px; color: #ffffff;">
+                                        {% if habilidadEntidad %}
+                                            {{ habilidadEntidad.nombre }}
+                                        {% else %}
+                                            Habilidad #{{ loop.index }}
+                                        {% endif %}
+                                    </label>
+
+                                    {{ form_widget(field.nivel) }}
+
+                                    {{ form_widget(field.habilidad) }}
+                                    
+                                    {{ form_errors(field) }}
+                                </div>
+
+                            {% endfor %}
+                            
                         </div>
                     </div>
                 </div>
@@ -92,15 +116,93 @@
                     <div class="build-section-card">
                         <h4 class="section-subtitle">Conjunto de Artefactos</h4>
                         <div class="subgrid-artefactos">
-                            {{ form_row(form.artefacto_flor) }}
-                            <hr>
-                            {{ form_row(form.artefacto_pluma) }}
-                            <hr>
-                            {{ form_row(form.artefacto_reloj) }}
-                            <hr>
-                            {{ form_row(form.artefacto_copa) }}
-                            <hr>
-                            {{ form_row(form.artefacto_casco) }}
+                            <div class="grid-botones-artefactos">
+                                <button type="button" class="btn-modal-artefactos" data-artefacto="pluma">+ Añadir Pluma <img src=""/></button>
+                                <button type="button" class="btn-modal-artefactos" data-artefacto="flor">+ Añadir Flor <img src=""/></button>
+                                <button type="button" class="btn-modal-artefactos" data-artefacto="reloj">+ Añadir Reloj <img src=""/></button>
+                                <button type="button" class="btn-modal-artefactos" data-artefacto="caliz">+ Añadir Cáliz <img src=""/></button>
+                                <button type="button" class="btn-modal-artefactos" data-artefacto="sombrero">+ Añadir Tiara <img src=""/></button>
+                            </div>
+                            
+                            {% set piezas = [
+                                {'id': 'flor', 'titulo': 'Flor de la Vida', 'form': form.artefacto_flor},
+                                {'id': 'pluma', 'titulo': 'Pluma de la Muerte', 'form': form.artefacto_pluma},
+                                {'id': 'reloj', 'titulo': 'Arenas del Eón', 'form': form.artefacto_reloj},
+                                {'id': 'caliz', 'titulo': 'Cáliz de Eonothem', 'form': form.artefacto_copa},
+                                {'id': 'sombrero', 'titulo': 'Tiara de Logos', 'form': form.artefacto_casco}
+                            ] %}
+
+                            {% for pieza in piezas %}
+                                <div id="modal-{{ pieza.id }}" class="modal-artefacto-overlay">
+                                    <div class="modal-artefacto-content">
+                                        <span class="btn-cerrar-modal">&times;</span>
+                                        
+                                        <h3>{{ pieza.titulo }}</h3>
+
+                                        {# INICIO DEL LAYOUT HORIZONTAL #}
+                                        <div class="layout-horizontal">
+                                            
+                                            {# COLUMNA IZQUIERDA: SET Y STAT PRINCIPAL #}
+                                            <div class="col-main-info">
+                                                <h4 class="col-title">Stat Principal</h4>
+                                                
+                                                <div class="input-group-compact">
+                                                    <label>Set de Artefactos</label>
+                                                    {{ form_widget(pieza.form.setSeleccionado, {'attr': {'data-artefacto': pieza.id}}) }}
+                                                </div>
+
+                                                <div class="input-group-compact">
+                                                    <label>Atributo Principal</label>
+                                                    {{ form_widget(pieza.form.statPrincipalNombre) }}
+                                                </div>
+
+                                                <div class="input-group-compact">
+                                                    <label>Valor</label>
+                                                    {{ form_widget(pieza.form.statPrincipalValor) }}
+                                                </div>
+                                            </div>
+
+                                            {# COLUMNA DERECHA: SUBSTATS (GRID 2x2) #}
+                                            <div class="col-substats">
+                                                {# Ponemos un título invisible o decorativo para alinear si quieres #}
+                                                <h4 class="col-title" style="grid-column: span 2;">Sub-Stats</h4>
+
+                                                {# Substat 1 #}
+                                                <div class="input-group-compact">
+                                                    <label>Substat 1</label>
+                                                    {{ form_widget(pieza.form.subStatNombre1) }}
+                                                    {{ form_widget(pieza.form.subStatValor1, {'attr': {'placeholder': 'Valor', 'style': 'margin-top:5px'}}) }}
+                                                </div>
+
+                                                {# Substat 2 #}
+                                                <div class="input-group-compact">
+                                                    <label>Substat 2</label>
+                                                    {{ form_widget(pieza.form.subStatNombre2) }}
+                                                    {{ form_widget(pieza.form.subStatValor2, {'attr': {'placeholder': 'Valor', 'style': 'margin-top:5px'}}) }}
+                                                </div>
+
+                                                {# Substat 3 #}
+                                                <div class="input-group-compact">
+                                                    <label>Substat 3</label>
+                                                    {{ form_widget(pieza.form.subStatNombre3) }}
+                                                    {{ form_widget(pieza.form.subStatValor3, {'attr': {'placeholder': 'Valor', 'style': 'margin-top:5px'}}) }}
+                                                </div>
+
+                                                {# Substat 4 #}
+                                                <div class="input-group-compact">
+                                                    <label>Substat 4</label>
+                                                    {{ form_widget(pieza.form.subStatNombre4) }}
+                                                    {{ form_widget(pieza.form.subStatValor4, {'attr': {'placeholder': 'Valor', 'style': 'margin-top:5px'}}) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {# FIN LAYOUT HORIZONTAL #}
+
+                                        <button type="button" class="btn-guardar-modal">Confirmar Artefacto</button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+
                         </div>
                     </div>
                 </div>
@@ -120,8 +222,9 @@
     {% block javascripts %}
         {{ parent() }}
         <script type="text/javascript" src="{{ asset('js/filtroArmaPersonaje.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/habilidadesPersonaje.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/filtroArtefactos.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/imagenesBuild.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/alertaModals.js') }}"></script>
     {% endblock %}
 
 {% endblock %}
