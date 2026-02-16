@@ -31,7 +31,6 @@ body {
 /* ---------- HEADER ---------- */
 header {
     background-color: #1f1b2e;
-    /* Subimos a 200px para dar espacio al logo grande */
     height: 200px;
     display: flex;
     justify-content: center;
@@ -41,7 +40,6 @@ header {
 }
 
 .logoIcon {
-    /* El logo ahora es casi el doble de grande que antes */
     height: 180px;
     max-height: 200px;
     width: auto;
@@ -54,12 +52,44 @@ header {
 }
 
 /* ---------- LOGIN ---------- */
-.login-container {
+header .login-container {
     position: absolute;
     right: 30px;
     top: 50%;
     transform: translateY(-50%);
-    padding: 0;
+    /* Estilos movidos del Twig */
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.welcome-text {
+    color: #c0c0c0; /* Plata para HSR */
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.logout-link {
+    color: #ffffff;
+    font-size: 0.75rem;
+    text-decoration: underline !important;
+    opacity: 0.7;
+}
+
+.logout-link:hover {
+    opacity: 1;
+    color: #ffadad;
 }
 
 .login-container img {
@@ -88,7 +118,6 @@ main {
     border: 2px solid #c0c0c0; /* Plata para Honkai */
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-
     position: relative;
     padding: 60px 40px 40px 40px;
     display: flex;
@@ -96,7 +125,7 @@ main {
     gap: 30px;
 }
 
-a{
+a {
     text-decoration: none;
     color: rgb(255, 224, 68);
 }
@@ -136,6 +165,17 @@ a{
 
 .post-card:hover {
     background: rgba(255, 255, 255, 0.05);
+}
+
+/* Enlace del título del post */
+.post-link {
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+}
+
+.post-link:hover {
+    opacity: 0.8;
 }
 
 /* Texto del Post */
@@ -197,6 +237,59 @@ a{
     width: 100%;
     margin: 10px 0;
     opacity: 0.5;
+}
+
+/* ---------- CARRUSEL POSTS VS BUILDS ---------- */
+.carousel-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(192, 192, 192, 0.3);
+}
+
+.carousel-title {
+    font-family: 'titulos-encabezados', sans-serif;
+    font-size: 2.5rem;
+    color: #ffffff;
+    margin: 0;
+    min-width: 300px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+    transition: color 0.3s;
+}
+
+.carousel-btn {
+    background: transparent;
+    border: none;
+    color: #c0c0c0;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s, text-shadow 0.2s;
+    padding: 0 20px;
+}
+
+.carousel-btn:hover {
+    color: #ffffff;
+    transform: scale(1.2);
+    text-shadow: 0 0 10px #c0c0c0;
+}
+
+/* Animación para cuando cambias de sección */
+.carousel-section {
+    display: none;
+    animation: fadeInSlide 0.4s ease-in-out;
+}
+
+.carousel-section.active {
+    display: block;
+}
+
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 /* ---------- FOOTER ---------- */
