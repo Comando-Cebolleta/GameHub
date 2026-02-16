@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\Post;
+use App\Entity\Personaje;
 use App\Form\PostFormType;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
@@ -30,8 +31,21 @@ final class PageController extends AbstractController
             ['fechaPublicacion' => 'DESC']
         );
 
+        // 1. Obtenemos todas las builds (Personajes)
+        $todasLasBuilds = $em->getRepository(Personaje::class)->findAll();
+        $buildsGenshin = [];
+
+        // 2. Filtramos manualmente solo las de Genshin
+        foreach ($todasLasBuilds as $build) {
+            // Accedemos a la plantilla y comprobamos el juego
+            if ($build->getPersonajePlantilla()->getJuego() === 'genshin') {
+                $buildsGenshin[] = $build;
+            }
+        }
+
         return $this->render('page/genshin/blogGenshin.html.twig', [
             'posts' => $posts,
+            'builds' => $buildsGenshin, // Enviamos el array filtrado
         ]);
     }
 
@@ -118,8 +132,21 @@ final class PageController extends AbstractController
             ['fechaPublicacion' => 'DESC']
         );
 
+        // 1. Obtenemos todas las builds (Personajes)
+        $todasLasBuilds = $em->getRepository(Personaje::class)->findAll();
+        $buildsHonkai = [];
+
+        // 2. Filtramos manualmente solo las de Honkai
+        foreach ($todasLasBuilds as $build) {
+            // Accedemos a la plantilla y comprobamos el juego
+            if ($build->getPersonajePlantilla()->getJuego() === 'hsr') {
+                $buildsHonkai[] = $build;
+            }
+        }
+
         return $this->render('page/hsr/blogHonkai.html.twig', [
             'posts' => $posts,
+            'builds' => $buildsHonkai, // Enviamos el array filtrado
         ]);
     }
 
