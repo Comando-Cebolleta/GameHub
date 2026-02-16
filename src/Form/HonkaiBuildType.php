@@ -58,24 +58,26 @@ class HonkaiBuildType extends AbstractType
                 'label' => 'Cabeza',
                 'mapped' => false,
                 'pieza_testigo' => $filtroReliquia,
-                'stat_fijo' => 'HP'
+                'tipo_pieza' => 'cabeza',
             ])
             ->add('reliquia_manos', HonkaiArtefactoType::class, [
                 'label' => 'Manos',
                 'mapped' => false,
                 'pieza_testigo' => $filtroReliquia,
-                'stat_fijo' => 'ATK'
+                'tipo_pieza' => 'manos',
             ])
 
             ->add('reliquia_torso', HonkaiArtefactoType::class, [
                 'label' => 'Torso',
                 'mapped' => false,
-                'pieza_testigo' => $filtroReliquia
+                'pieza_testigo' => $filtroReliquia,
+                'tipo_pieza' => 'torso',
             ])
             ->add('reliquia_pies', HonkaiArtefactoType::class, [
                 'label' => 'Pies',
                 'mapped' => false,
-                'pieza_testigo' => $filtroReliquia
+                'pieza_testigo' => $filtroReliquia,
+                'tipo_pieza' => 'pies'  
             ])
 
             // --- ORNAMENTOS (Sets Planares) ---
@@ -83,13 +85,16 @@ class HonkaiBuildType extends AbstractType
             ->add('ornamento_esfera', HonkaiArtefactoType::class, [
                 'label' => 'Esfera',
                 'mapped' => false,
-                'pieza_testigo' => $filtroOrnamento
+                'pieza_testigo' => $filtroOrnamento,
+                'tipo_pieza' => 'esfera'
             ])
             ->add('ornamento_cuerda', HonkaiArtefactoType::class, [
                 'label' => 'Cuerda',
                 'mapped' => false,
-                'pieza_testigo' => $filtroOrnamento
+                'pieza_testigo' => $filtroOrnamento,
+                'tipo_pieza' => 'cuerda'
             ])
+
             ->add('personajeHabilidades', \Symfony\Component\Form\Extension\Core\Type\CollectionType::class, [
                 'entry_type' => PersonajeHabilidadType::class,
                 'entry_options' => ['label' => false],

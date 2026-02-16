@@ -20,7 +20,13 @@
         {# Le pasamos el tema como clase al contenedor #}
         <div class="container theme-{{ juego }}">
             <article class="post-reading">
-                <h1 class="post-header-title">{{ post.titulo }}</h1>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h1 class="post-header-title m-0">{{ post.titulo }}</h1>
+                    <button id="like-btn" class="btn {{ isLiked ? 'btn-danger' : 'btn-outline-danger' }} d-flex align-items-center gap-2" data-post-id="{{ post.id }}">
+                        <i id="like-icon" class="bi {{ isLiked ? 'bi-heart-fill' : 'bi-heart' }}"></i>
+                        <span id="like-count">{{ post.likes|length }}</span>
+                    </button>
+                </div>
 
                 <div class="post-meta">
                     Escrito por <strong>
@@ -105,4 +111,8 @@
     <footer>
         Game Hub &copy; 2025-2026
     </footer>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/like_system.js') }}"></script>
 {% endblock %}
