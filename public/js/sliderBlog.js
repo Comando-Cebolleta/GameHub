@@ -6,7 +6,7 @@ $(document).ready(function(){
     $carrusel.slick({
         dots: false,
         autoplay: false,
-        infinite: false,
+        infinite: true,
         adaptiveHeight: true,
         arrows: true,
         prevArrow: $('.btn-prev'),
