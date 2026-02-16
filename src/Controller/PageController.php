@@ -95,10 +95,21 @@ final class PageController extends AbstractController
             return $this->redirectToRoute('genshin_post', ['id' => $post->getId()]);
         }
 
+        $isLiked = false;
+        if ($this->getUser()) {
+            foreach ($post->getLikes() as $like) {
+                if ($like->getUser() === $this->getUser()) {
+                    $isLiked = true;
+                    break;
+                }
+            }
+        }
+
         return $this->render('page/single_post.html.twig', [
             "post" => $post,
             "juego" => $juego,
-            "commentForm" => $formComentario->createView()
+            "commentForm" => $formComentario->createView(),
+            "isLiked" => $isLiked
         ]);
     }
 
@@ -183,10 +194,21 @@ final class PageController extends AbstractController
             return $this->redirectToRoute('hsr_post', ['id' => $post->getId()]);
         }
 
+        $isLiked = false;
+        if ($this->getUser()) {
+            foreach ($post->getLikes() as $like) {
+                if ($like->getUser() === $this->getUser()) {
+                    $isLiked = true;
+                    break;
+                }
+            }
+        }
+
         return $this->render('page/single_post.html.twig', [
             "post" => $post,
             "juego" => $juego,
-            "commentForm" => $formComentario->createView()
+            "commentForm" => $formComentario->createView(),
+            "isLiked" => $isLiked
         ]);
     }
 

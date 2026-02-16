@@ -96,6 +96,11 @@ main {
     gap: 30px;
 }
 
+a{
+    text-decoration: none;
+    color: rgb(255, 224, 68);
+}
+
 /* ---------- BOTONES SUPERIORES (POST & BUILD) ---------- */
 .top-actions {
     position: absolute;
