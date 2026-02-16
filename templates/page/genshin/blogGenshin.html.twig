@@ -123,6 +123,7 @@
 {# --- CARGAMOS EL JS EXTERNO AQUÍ --- #}
 {% block javascripts %}
     {{ parent() }}
+    {# El parent() trae los scripts generales de base.html.twig (como el menú o cosas globales) para no borrarlos al añadir los nuestros #}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="{{ asset('js/sliderBlog.js') }}"></script>
