@@ -31,7 +31,8 @@ body {
 /* ---------- HEADER ---------- */
 header {
     background-color: #1f1b2e;
-    height: 150px;
+    /* Subimos a 200px para dar espacio al logo grande */
+    height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,10 +41,16 @@ header {
 }
 
 .logoIcon {
-    height: 100px;
-    max-height: 120px;
+    /* El logo ahora es casi el doble de grande que antes */
+    height: 180px;
+    max-height: 200px;
     width: auto;
     object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.logoIcon:hover {
+    transform: scale(1.05);
 }
 
 /* ---------- LOGIN ---------- */
@@ -78,7 +85,7 @@ main {
     max-width: 1200px;
     min-height: 500px;
     background: rgb(31, 27, 46);
-    border: 2px solid #c0c0c0;
+    border: 2px solid #c0c0c0; /* Plata para Honkai */
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 
@@ -199,7 +206,8 @@ footer {
 
 /* ---------- MEDIA MOVIL (RESPONSIVE) ---------- */
 @media (max-width: 768px) {
-    header { height: 120px; }
+    header { height: 140px; }
+    .logoIcon { height: 110px; }
 
     .container {
         padding: 50px 20px 20px 20px;
@@ -230,8 +238,8 @@ footer {
 
 /* ---------- MEDIA PC GRANDE ---------- */
 @media (min-width: 1200px) {
-    header { height: 140px; }
-    .logoIcon { height: 250px; }
+    header { height: 220px; }
+    .logoIcon { height: 200px; }
 
     .container {
         max-width: 1000px;

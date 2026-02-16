@@ -6,6 +6,8 @@
 {% endblock %}
 
 {% block body %}
+    {% set statsPlanas = ['HP', 'ATK', 'DEF', 'SPD', 'EM'] %}
+
     <div style="display: flex; flex-direction: column">
         {% if build is not null %}
             <h1>{{ build.getNombre() }}</h1>
@@ -37,7 +39,16 @@
                         <ul>
                             {% for nombreStat, valor in build.getArma().getStatsCalculados() %}
                                 <li>
-                                    <strong>{{ diccionarioStats[nombreStat] ?? nombreStat }}:</strong> {{ valor }}
+                                    <strong>{{ diccionarioStats[nombreStat] ?? nombreStat }}:</strong> 
+                                    
+                                    {# Lógica de visualización #}
+                                    {% if nombreStat in statsPlanas %}
+                                        {# Valor normal (Plano) #}
+                                        {{ valor|number_format(0) }} {# Los valores planos no llevan decimales #}
+                                    {% else %}
+                                        {# Valor porcentual #}
+                                        {{ (valor * 100)|number_format(1) }}%
+                                    {% endif %}
                                 </li>
                             {% endfor %}
                         </ul>
@@ -53,7 +64,14 @@
             <ul>
                 {% for nombreStat, valor in build.getStatsCalculados() %}
                     <li>
-                        <strong>{{ diccionarioStats[nombreStat] ?? nombreStat }}:</strong> {{ valor }}
+                        <strong>{{ diccionarioStats[nombreStat] ?? nombreStat }}:</strong> 
+                        
+                        {# Misma lógica aquí #}
+                        {% if nombreStat in statsPlanas %}
+                            {{ valor|number_format(0) }} {# Los valores planos no llevan decimales #}
+                        {% else %}
+                            {{ (valor * 100)|number_format(1) }}%
+                        {% endif %}
                     </li>
                 {% endfor %}
             </ul>
@@ -87,7 +105,13 @@
                                 {# 1. Renderizar Main Stat (si existe) #}
                                 {% if stats.main_stat is defined %}
                                     <li style="font-weight: bold; color: #d35400;">
-                                        {{ diccionarioStats[stats.main_stat.name] ?? stats.main_stat.name }}: {{ stats.main_stat.value }}
+                                        {{ diccionarioStats[stats.main_stat.name] ?? stats.main_stat.name }}: 
+                                        
+                                        {% if stats.main_stat.name in statsPlanas %}
+                                            {{ stats.main_stat.value|number_format(0) }}
+                                        {% else %}
+                                            {{ (stats.main_stat.value * 100)|number_format(1) }}%
+                                        {% endif %}
                                     </li>
                                 {% endif %}
 
@@ -95,7 +119,13 @@
                                 {% if stats.sub_stats is defined %}
                                     {% for sub in stats.sub_stats %}
                                         <li>
-                                            {{ diccionarioStats[sub.name] ?? sub.name }}: +{{ sub.value }}
+                                            {{ diccionarioStats[sub.name] ?? sub.name }}: 
+                                            
+                                            {% if sub.name in statsPlanas %}
+                                                +{{ sub.value|number_format(0) }}
+                                            {% else %}
+                                                +{{ (sub.value * 100)|number_format(1) }}%
+                                            {% endif %}
                                         </li>
                                     {% endfor %}
                                 {% endif %}

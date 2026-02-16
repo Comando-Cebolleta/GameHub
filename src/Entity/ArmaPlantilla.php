@@ -29,7 +29,7 @@ class ArmaPlantilla
     #[ORM\Column(nullable: true)]
     private ?array $statsPorNivel = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 4096, nullable: true)]
     private ?string $pasiva = null;
 
     #[ORM\Column(nullable: true)]

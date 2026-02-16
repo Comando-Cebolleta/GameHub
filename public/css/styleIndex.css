@@ -36,12 +36,13 @@ a {
     color: inherit;
 }
 
-/* ---------- HEADER (Unificado) ---------- */
+/* ---------- HEADER (Unificado y Grande) ---------- */
 header {
     background-color: #1f1b2e;
-    height: 150px;
+    /* Subimos la altura a 200px para que el logo grande no agobie */
+    height: 200px;
     display: flex;
-    justify-content: center; /* Mantiene el logo al centro */
+    justify-content: center;
     align-items: center;
     padding: 10px 30px;
     position: relative;
@@ -50,10 +51,16 @@ header {
 }
 
 .logoIcon {
-    height: 100px;
-    max-height: 120px;
+    /* Logo de 180px para aprovechar la calidad de la imagen */
+    height: 180px;
+    max-height: 200px;
     width: auto;
     object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.logoIcon:hover {
+    transform: scale(1.05);
 }
 
 /* Contenedor de Login/Usuario en el Header */
@@ -99,7 +106,6 @@ main {
     margin-bottom: 40px;
     margin-top: 40px;
     padding: 0 20px;
-    overflow: hidden;
 }
 
 .container {
@@ -157,7 +163,7 @@ footer {
     background-color: #1f1b2e;
     color: #ffffff;
     text-align: center;
-    padding: 15px 0;
+    padding: 20px 0;
     font-size: 0.9rem;
     margin-top: auto;
 }
@@ -165,7 +171,10 @@ footer {
 /* ---------- RESPONSIVE MOVIL ---------- */
 @media (max-width: 768px) {
     header {
-        height: 120px;
+        height: 140px;
+    }
+    .logoIcon {
+        height: 110px;
     }
     header .login-container img {
         width: 55px;
@@ -184,11 +193,10 @@ footer {
 /* ---------- RESPONSIVE PC / GRANDE ---------- */
 @media (min-width: 1200px) {
     header {
-        height: 140px;
+        height: 220px; /* Un pelín más alto para que el logo luzca increíble */
     }
-    /* Logo ajustado para no colisionar con el login */
     .logoIcon {
-        height: 180px;
+        height: 200px;
     }
     .container {
         max-width: 1000px;
