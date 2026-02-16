@@ -11,21 +11,14 @@
 
     <link rel="stylesheet" href="{{ asset('css/styleSinglePost.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styleLogin.css') }}">
-
-    <style>
-        .container { border-color: {{ juego == 'hsr' ? '#c0c0c0' : '#e0c080' }}; }
-        .welcome-text { color: {{ juego == 'hsr' ? '#c0c0c0' : '#c2b46c' }}; }
-        /* Ajuste de color dinámico para los bordes de comentarios */
-        .comment { border-color: {{ juego == 'hsr' ? 'rgba(192,192,192,0.3)' : 'rgba(194,180,108,0.3)' }}; }
-        .comment-header { color: {{ juego == 'hsr' ? '#c0c0c0' : '#c2b46c' }}; }
-    </style>
 {% endblock %}
 
 {% block body %}
     {% include 'partials/header.html.twig' with {'iconColor': juego == 'hsr' ? 'SILVER' : 'GOLD'} %}
 
     <main>
-        <div class="container">
+        {# Le pasamos el tema como clase al contenedor #}
+        <div class="container theme-{{ juego }}">
             <article class="post-reading">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h1 class="post-header-title m-0">{{ post.titulo }}</h1>
@@ -33,6 +26,20 @@
                         <i id="like-icon" class="bi {{ isLiked ? 'bi-heart-fill' : 'bi-heart' }}"></i>
                         <span id="like-count">{{ post.likes|length }}</span>
                     </button>
+                </div>
+
+                <div class="post-meta">
+                    Escrito por <strong>
+                        {% if post.user %}
+                            {# ENLACE AL PERFIL DEL CREADOR DEL POST #}
+                            <a href="{{ path('app_profile', {'id': post.user.id}) }}" style="color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+                                {{ post.user.username }}
+                            </a>
+                        {% else %}
+                            Anónimo
+                        {% endif %}
+                    </strong>
+                    el <span>{{ post.fechaPublicacion ? post.fechaPublicacion|date('d/m/Y') : 'Fecha desconocida' }}</span>
                 </div>
 
                 <div class="post-full-content">
@@ -54,7 +61,16 @@
                         {% for comentario in post.comentarios %}
                             <div class="comment">
                                 <div class="comment-header">
-                                    <strong>{{ comentario.user ? comentario.user.username : 'Anónimo' }}</strong>
+                                    <strong>
+                                        {% if comentario.user %}
+                                            {# ENLACE AL PERFIL DEL CREADOR DEL COMENTARIO #}
+                                            <a href="{{ path('app_profile', {'id': comentario.user.id}) }}" style="color: inherit; text-decoration: none; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+                                                &commat;{{ comentario.user.username }}
+                                            </a>
+                                        {% else %}
+                                            Anónimo
+                                        {% endif %}
+                                    </strong>
                                     <span>{{ comentario.fechaPublicacion|date('d/m/Y H:i') }}</span>
                                 </div>
                                 <div class="comment-body">
@@ -62,7 +78,7 @@
                                 </div>
                             </div>
                         {% else %}
-                            <p style="opacity: 0.6;">No hay comentarios todavía. ¡Sé el primero en comentar!</p>
+                            <p class="empty-comments">No hay comentarios todavía. ¡Sé el primero en comentar!</p>
                         {% endfor %}
                     </div>
 
@@ -74,15 +90,12 @@
                                 {{ form_widget(commentForm.cuerpo, {'attr': {'placeholder': 'Escribe tu comentario aquí...'}}) }}
                             </div>
 
-                            {# 1. RENDERIZAMOS EL TOKEN DE SEGURIDAD (Sin esto no funciona) #}
                             {{ form_row(commentForm._token) }}
 
-                            {# 2. NUESTRO BOTÓN #}
-                            <button type="submit" class="btn-submit-comment" style="background: {{ juego == 'hsr' ? '#5a4b6e' : '#948459' }}; color: white;">
+                            <button type="submit" class="btn-submit-comment">
                                 Publicar Comentario
                             </button>
 
-                            {# 3. CERRAMOS SIN RENDERIZAR EL RESTO (Para que no salga el segundo botón) #}
                             {{ form_end(commentForm, {'render_rest': false}) }}
                         </div>
                     {% else %}
