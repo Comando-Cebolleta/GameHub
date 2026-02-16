@@ -56,17 +56,28 @@ class GenshinBuildType extends AbstractType
             ->add('artefacto_flor', GenshinArtefactoType::class, [
                 'label' => 'Flor',
                 'mapped' => false,
-                'stat_fijo' => 'HP'
+                'tipo_pieza' => 'flor'
             ])
             ->add('artefacto_pluma', GenshinArtefactoType::class, [
                 'label' => 'Pluma',
                 'mapped' => false,
-                'stat_fijo' => 'ATK'
+                'tipo_pieza' => 'pluma'
             ])
-
-            ->add('artefacto_reloj', GenshinArtefactoType::class, ['label' => 'Reloj', 'mapped' => false])
-            ->add('artefacto_copa', GenshinArtefactoType::class, ['label' => 'Cáliz', 'mapped' => false])
-            ->add('artefacto_casco', GenshinArtefactoType::class, ['label' => 'Casco', 'mapped' => false])
+            ->add('artefacto_reloj', GenshinArtefactoType::class, [
+                'label' => 'Reloj', 
+                'mapped' => false, 
+                'tipo_pieza' => 'reloj'
+            ])
+            ->add('artefacto_copa', GenshinArtefactoType::class, [
+                'label' => 'Cáliz', 
+                'mapped' => false,
+                'tipo_pieza' => 'copa'
+            ])
+            ->add('artefacto_casco', GenshinArtefactoType::class, [
+                'label' => 'Casco', 
+                'mapped' => false,
+                'tipo_pieza' => 'casco'
+            ])
             
             ->add('personajeHabilidades', \Symfony\Component\Form\Extension\Core\Type\CollectionType::class, [
                 'entry_type' => PersonajeHabilidadType::class,
