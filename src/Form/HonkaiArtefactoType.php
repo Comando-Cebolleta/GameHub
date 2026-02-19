@@ -74,6 +74,7 @@ class HonkaiArtefactoType extends AbstractType
                 'class' => SetArtefactos::class,
                 'choice_label' => 'nombre',
                 'label' => 'Set',
+                'placeholder' => 'Seleccionar...',
                 'mapped' => false,
                 'query_builder' => function (EntityRepository $er) use ($piezaTestigo) {
                     $qb = $er->createQueryBuilder('s')

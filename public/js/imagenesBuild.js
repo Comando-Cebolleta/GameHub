@@ -93,7 +93,7 @@ function actualizarBotonPrincipal(tipo, srcImagen) {
         let img = document.createElement("img");
         img.src = srcImagen;
         img.className = "img-artefacto";
-        img.style.maxHeight = "50px";
+        img.style.maxHeight = "100px";
         
         boton.appendChild(img);
     }
@@ -175,29 +175,34 @@ function abrirModal() {
 }
 
 function cerrarModal(boton, i) {
-    let modal = boton.closest(".modal-artefacto-overlay"); // Buscamos el modal padre más cercano
+    let modal = boton.closest(".modal-artefacto-overlay");
+
     if (modal) {
-        modal.classList.remove("active"); // Ocultamos el modal
+        modal.classList.remove("active");
     }
 
-    if (boton.classList.contains("btn-guardar-modal")) {
-        let select = document.getElementsByClassName("artefacto-set-select")[i];
+    if (!boton.classList.contains("btn-guardar-modal")) return;
 
-        let tipo = modal.id.replace("modal-", ""); // Obtenemos el tipo de artefacto del id del modal
-        let botonModal = document.querySelector(`.btn-modal-artefactos[data-artefacto="${tipo}"]`);
+    let select = document.getElementsByClassName("artefacto-set-select")[i];
+    let tipo = modal.id.replace("modal-", "");
+    let botonModal = document.querySelector(`.btn-modal-artefactos[data-artefacto="${tipo}"]`);
 
-        if (select.value !== "") {
-            botonModal.textContent = ""; // Limpiamos el texto del botón para añadir la imagen
+    if (select.value !== "") {
 
-            let img = document.createElement("img");
-            img.setAttribute("src", "");
-            img.classList.add("img-artefacto");
-            botonModal.appendChild(img); // Añadimos la imagen al botón del artefacto
+        let imgPreview = modal.querySelector(".img-preview-artefacto img");
 
-            botonModal.querySelector("img").src = document.getElementById("imagen-artefacto").src; // Actualizamos la imagen del botón con la del artefacto seleccionado
-        } else {
-            botonModal.textContent = "+ Añadir " + tipo.charAt(0).toUpperCase() + tipo.slice(1); // Restauramos el texto del botón si no se ha seleccionado ningún artefacto
-        }
+        if (!imgPreview) return;
+
+        botonModal.textContent = "";
+
+        let img = document.createElement("img");
+        img.src = imgPreview.src;
+        img.classList.add("img-artefacto");
+
+        botonModal.appendChild(img);
+
+    } else {
+        botonModal.textContent = "+ Añadir " + tipo.charAt(0).toUpperCase() + tipo.slice(1);
     }
 }
 
