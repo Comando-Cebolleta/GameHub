@@ -1,6 +1,10 @@
 function mostrarImagenPersonaje() {
     document.getElementById("imagen-personaje-container")?.remove(); // Eliminar imagen anterior si existe
     let id = this.value;
+    
+    // Si no hay ID seleccionado, no hacer nada
+    if (!id) return;
+    
     let imagen = '<img src="" alt="Imagen del personaje" class="img-fluid rounded" id="imagen-personaje">';
     let p = document.createElement('p');
     p.id = "imagen-personaje-container";
@@ -12,7 +16,14 @@ function mostrarImagenPersonaje() {
                 console.error(data.error);
                 return;
             }
-            this.before(p);
+            // Insertar después del botón modal visible
+            let btnModal = document.getElementById('btn-personaje-modal');
+            if (btnModal && btnModal.parentNode) {
+                btnModal.parentNode.appendChild(p);
+            } else {
+                // Fallback: insertar antes del select si no encuentra el botón
+                this.before(p);
+            }
             p.innerHTML = imagen;
             document.getElementById("imagen-personaje").src = "/assets/personajes/" + data.imagen;
     });
@@ -21,6 +32,10 @@ function mostrarImagenPersonaje() {
 function mostrarImagenArma() {
     document.getElementById("imagen-arma-container")?.remove(); // Eliminar imagen anterior si existe
     let id = this.value;
+    
+    // Si no hay ID seleccionado, no hacer nada
+    if (!id) return;
+    
     let imagen = '<img src="" alt="Imagen del arma" class="img-fluid rounded" id="imagen-arma">';
     let p = document.createElement('p');
     p.id = "imagen-arma-container";
@@ -32,7 +47,14 @@ function mostrarImagenArma() {
                 console.error(data.error);
                 return;
             }
-            this.before(p);
+            // Insertar después del botón modal visible
+            let btnModal = document.getElementById('btn-arma-modal');
+            if (btnModal && btnModal.parentNode) {
+                btnModal.parentNode.appendChild(p);
+            } else {
+                // Fallback: insertar antes del select si no encuentra el botón
+                this.before(p);
+            }
             p.innerHTML = imagen;
             document.getElementById("imagen-arma").src = "/assets/armas/" + data.imagen;
     });
@@ -44,7 +66,14 @@ function mostrarImagenArtefacto() {
     if (previewAntigua) previewAntigua.remove();
 
     let id = this.value;
-    if (!id) return; // Si selecciona "Vacío", no hacemos nada
+    
+    // Si selecciona "Vacío", actualizar efectos y retornar
+    if (!id) {
+        if (typeof actualizarEfectosSet === 'function') {
+            actualizarEfectosSet();
+        }
+        return;
+    }
 
     // Creamos el contenedor para la imagen del modal
     let div = document.createElement('div');
@@ -72,8 +101,16 @@ function mostrarImagenArtefacto() {
             // 1. Ponemos la imagen en el MODAL
             let rutaImagen = "/assets/artefactos/" + data.imagen;
             imgTagModal.src = rutaImagen;
+            imgTagModal.classList.add("img-set-data");
+            imgTagModal.dataset.idSet = data.idSet;
 
-            // 2. Ponemos la imagen en el BOTÓN PRINCIPAL (Fuera del modal)
+            // 2. Actualizar efectos de conjunto
+            if (typeof actualizarEfectosSet === 'function') {
+                console.log("Llamando a actualizarEfectosSet desde mostrarImagenArtefacto");
+                actualizarEfectosSet();
+            }
+
+            // 3. Ponemos la imagen en el BOTÓN PRINCIPAL (Fuera del modal)
             actualizarBotonPrincipal(set, rutaImagen);
         })
         .catch(err => {
@@ -93,7 +130,7 @@ function actualizarBotonPrincipal(tipo, srcImagen) {
         let img = document.createElement("img");
         img.src = srcImagen;
         img.className = "img-artefacto";
-        img.style.maxHeight = "50px";
+        img.style.maxHeight = "100px";
         
         boton.appendChild(img);
     }
@@ -175,29 +212,34 @@ function abrirModal() {
 }
 
 function cerrarModal(boton, i) {
-    let modal = boton.closest(".modal-artefacto-overlay"); // Buscamos el modal padre más cercano
+    let modal = boton.closest(".modal-artefacto-overlay");
+
     if (modal) {
-        modal.classList.remove("active"); // Ocultamos el modal
+        modal.classList.remove("active");
     }
 
-    if (boton.classList.contains("btn-guardar-modal")) {
-        let select = document.getElementsByClassName("artefacto-set-select")[i];
+    if (!boton.classList.contains("btn-guardar-modal")) return;
 
-        let tipo = modal.id.replace("modal-", ""); // Obtenemos el tipo de artefacto del id del modal
-        let botonModal = document.querySelector(`.btn-modal-artefactos[data-artefacto="${tipo}"]`);
+    let select = document.getElementsByClassName("artefacto-set-select")[i];
+    let tipo = modal.id.replace("modal-", "");
+    let botonModal = document.querySelector(`.btn-modal-artefactos[data-artefacto="${tipo}"]`);
 
-        if (select.value !== "") {
-            botonModal.textContent = ""; // Limpiamos el texto del botón para añadir la imagen
+    if (select.value !== "") {
 
-            let img = document.createElement("img");
-            img.setAttribute("src", "");
-            img.classList.add("img-artefacto");
-            botonModal.appendChild(img); // Añadimos la imagen al botón del artefacto
+        let imgPreview = modal.querySelector(".img-preview-artefacto img");
 
-            botonModal.querySelector("img").src = document.getElementById("imagen-artefacto").src; // Actualizamos la imagen del botón con la del artefacto seleccionado
-        } else {
-            botonModal.textContent = "+ Añadir " + tipo.charAt(0).toUpperCase() + tipo.slice(1); // Restauramos el texto del botón si no se ha seleccionado ningún artefacto
-        }
+        if (!imgPreview) return;
+
+        botonModal.textContent = "";
+
+        let img = document.createElement("img");
+        img.src = imgPreview.src;
+        img.classList.add("img-artefacto");
+
+        botonModal.appendChild(img);
+
+    } else {
+        botonModal.textContent = "+ Añadir " + tipo.charAt(0).toUpperCase() + tipo.slice(1);
     }
 }
 

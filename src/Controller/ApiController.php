@@ -91,7 +91,26 @@ class ApiController extends AbstractController
             return new JsonResponse(['error' => 'Artefacto no encontrado'], 404);
         }
 
-        return new JsonResponse(['imagen' => $plantilla->getImagen()]);
+        return new JsonResponse([
+            'imagen' => $plantilla->getImagen(),
+            'idSet' => $plantilla->getSetArtefactos()->getId()]);
     }
 
+    #[Route('/set/{idSet}/cantidad/{cantidad}/efectos', name: 'api_set_efectos', methods: ['GET'])]
+    public function getSetEfectos(int $idSet, int $cantidad, SetArtefactosRepository $setRepo): JsonResponse
+    {
+        $set = $setRepo->find($idSet);
+
+        if (!$set) {
+            return new JsonResponse(['error' => 'Set no encontrado'], 404);
+        }
+
+        $efectos = $set->getEfectosSum($cantidad);
+
+        if (empty($efectos)) {
+            return new JsonResponse(['error' => 'No hay efectos para esa cantidad'], 404);
+        }
+
+        return new JsonResponse(['efectos' => $efectos]);
+    }
 }

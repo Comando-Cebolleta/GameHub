@@ -138,7 +138,20 @@
                                     {% endif %}
                                 </ul>
                             </td>
-                            <td>{{ artefacto.getArtefactoPlantilla().getSetArtefactos().getEfectos() }}</td>
+                            {% set efectosSet = artefacto.getArtefactoPlantilla().getSetArtefactos().getEfectos() %}
+                            <td>
+                                {% if efectosSet is iterable and efectosSet is not same as(false) %}
+                                    <ul class="stats-list">
+                                        {% for piezas, descripcion in efectosSet %}
+                                            <li><strong>{{ piezas }} piezas:</strong> {{ descripcion }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% elseif efectosSet is not empty %}
+                                    {{ efectosSet }}
+                                {% else %}
+                                    <span class="empty-text">-</span>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -152,14 +165,16 @@
                         <thead>
                         <tr>
                             <th>Nombre</th>
+                            <th>Nivel</th>
                             <th>Efectos</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for habilidad in build.getPersonajePlantilla().getHabilidades() %}
+                        {% for habilidad in build.getPersonajeHabilidades() %}
                             <tr>
-                                <td class="habilidad-nombre">{{ habilidad.getNombre() }}</td>
-                                <td>{{ habilidad.getEfectos() }}</td>
+                                <td class="habilidad-nombre">{{ habilidad.getHabilidad().getNombre() }}</td>
+                                <td>{{ habilidad.getNivel() }}</td>
+                                <td>{{ habilidad.getHabilidad().getEfectos() }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

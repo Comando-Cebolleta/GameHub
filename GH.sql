@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 11, 2026 at 12:51 PM
+-- Generation Time: Feb 20, 2026 at 06:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,11 +38,13 @@ CREATE TABLE `arma` (
 --
 
 INSERT INTO `arma` (`id`, `arma_plantilla_id`, `nivel`) VALUES
-(16, 9, 32),
 (17, 0, 65),
 (18, 9, 55),
-(19, 4, 23),
-(20, 9, 80);
+(21, 9, 80),
+(22, 2, 90),
+(23, 0, 90),
+(27, 5, 80),
+(28, 6, 80);
 
 -- --------------------------------------------------------
 
@@ -94,12 +96,6 @@ CREATE TABLE `artefacto` (
 --
 
 INSERT INTO `artefacto` (`id`, `artefacto_plantilla_id`, `estadisticas`) VALUES
-(71, 5, '{\"main_stat\":{\"name\":\"HP\",\"value\":32.0},\"sub_stats\":[{\"name\":\"PHYSICAL_DMG_BONUS\",\"value\":3232.0},{\"name\":\"ER\",\"value\":32.0},{\"name\":\"HP%\",\"value\":32.0},{\"name\":\"ATK\",\"value\":32.0}]}'),
-(72, 6, '{\"main_stat\":{\"name\":\"ATK\",\"value\":32.0},\"sub_stats\":[{\"name\":\"FIRE_DMG_BONUS\",\"value\":32.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":32.0},{\"name\":\"DEF%\",\"value\":32.0},{\"name\":\"ATK\",\"value\":32.0}]}'),
-(73, 7, '{\"main_stat\":{\"name\":\"HP\",\"value\":32.0},\"sub_stats\":[{\"name\":\"ER\",\"value\":32.0},{\"name\":\"SPD\",\"value\":43.0},{\"name\":\"EFFECT_RES\",\"value\":54.0},{\"name\":\"EFFECT_RES\",\"value\":54.0}]}'),
-(74, 8, '{\"main_stat\":{\"name\":\"HP\",\"value\":32.0},\"sub_stats\":[{\"name\":\"BREAK_EFFECT\",\"value\":32.0},{\"name\":\"EFFECT_RES\",\"value\":5.0},{\"name\":\"BREAK_EFFECT\",\"value\":5.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":54.0}]}'),
-(75, 9, '{\"main_stat\":{\"name\":\"HP\",\"value\":54.0},\"sub_stats\":[{\"name\":\"HP%\",\"value\":54.0},{\"name\":\"DEF\",\"value\":54.0},{\"name\":\"HP%\",\"value\":54.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":54.0}]}'),
-(76, 10, '{\"main_stat\":{\"name\":\"HP\",\"value\":54.0},\"sub_stats\":[{\"name\":\"BREAK_EFFECT\",\"value\":54.0},{\"name\":\"ATK%\",\"value\":54.0},{\"name\":\"ATK\",\"value\":54.0},{\"name\":\"DEF%\",\"value\":54.0}]}'),
 (77, 2, '{\"main_stat\":{\"name\":\"HP\",\"value\":7.4},\"sub_stats\":[{\"name\":\"PYRO_DMG_BONUS\",\"value\":55.0},{\"name\":\"ATK\",\"value\":55.0},{\"name\":\"PYRO_DMG_BONUS\",\"value\":11.0},{\"name\":\"PYRO_DMG_BONUS\",\"value\":22.0}]}'),
 (78, 0, '{\"main_stat\":{\"name\":\"ATK\",\"value\":55.0},\"sub_stats\":[{\"name\":\"ELECTRO_DMG_BONUS\",\"value\":55.0},{\"name\":\"DEF%\",\"value\":55.0},{\"name\":\"PYRO_DMG_BONUS\",\"value\":44.0},{\"name\":\"DENDRO_DMG_BONUS\",\"value\":44.0}]}'),
 (79, 3, '{\"main_stat\":{\"name\":\"HP\",\"value\":44.0},\"sub_stats\":[{\"name\":\"ATK%\",\"value\":44.0},{\"name\":\"PYRO_DMG_BONUS\",\"value\":44.0},{\"name\":\"DEF\",\"value\":44.0},{\"name\":\"ELECTRO_DMG_BONUS\",\"value\":44.0}]}'),
@@ -111,17 +107,34 @@ INSERT INTO `artefacto` (`id`, `artefacto_plantilla_id`, `estadisticas`) VALUES
 (85, 8, '{\"main_stat\":{\"name\":\"HP\",\"value\":44.0},\"sub_stats\":[{\"name\":\"EFFECT_HIT_RATE\",\"value\":44.0},{\"name\":\"PHYSICAL_DMG_BONUS\",\"value\":44.0},{\"name\":\"SPD\",\"value\":44.0},{\"name\":\"SPD\",\"value\":44.0}]}'),
 (86, 9, '{\"main_stat\":{\"name\":\"BREAK_EFFECT\",\"value\":44.0},\"sub_stats\":[{\"name\":\"DEF%\",\"value\":44.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":44.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":44.0},{\"name\":\"LIGHTNING_DMG_BONUS\",\"value\":44.0}]}'),
 (87, 10, '{\"main_stat\":{\"name\":\"HP\",\"value\":44.0},\"sub_stats\":[{\"name\":\"SPD\",\"value\":44.0},{\"name\":\"HP%\",\"value\":44.0},{\"name\":\"ATK%\",\"value\":44.0},{\"name\":\"ICE_DMG_BONUS\",\"value\":44.0}]}'),
-(88, 2, '{\"main_stat\":{\"name\":\"HP\",\"value\":1024.0},\"sub_stats\":[{\"name\":\"ATK%\",\"value\":23.0},{\"name\":\"ER\",\"value\":42.0},{\"name\":\"HP%\",\"value\":32.0},{\"name\":\"EM\",\"value\":23.0}]}'),
-(89, 0, '{\"main_stat\":{\"name\":\"ATK\",\"value\":43.0},\"sub_stats\":[{\"name\":\"HYDRO_DMG_BONUS\",\"value\":32.0},{\"name\":\"ER\",\"value\":32.0},{\"name\":\"ATK%\",\"value\":32.0},{\"name\":\"ATK\",\"value\":100.0}]}'),
-(90, 3, '{\"main_stat\":{\"name\":\"DEF\",\"value\":43.0},\"sub_stats\":[{\"name\":\"ATK\",\"value\":43.0},{\"name\":\"DENDRO_DMG_BONUS\",\"value\":22.0},{\"name\":\"HYDRO_DMG_BONUS\",\"value\":77.0},{\"name\":\"DEF\",\"value\":75.0}]}'),
-(91, 4, '{\"main_stat\":{\"name\":\"HYDRO_DMG_BONUS\",\"value\":43.0},\"sub_stats\":[{\"name\":\"EM\",\"value\":66.0},{\"name\":\"EM\",\"value\":44.0},{\"name\":\"EM\",\"value\":66.0},{\"name\":\"GEO_DMG_BONUS\",\"value\":42.0}]}'),
-(92, 1, '{\"main_stat\":{\"name\":\"EM\",\"value\":32.0},\"sub_stats\":[{\"name\":\"HP%\",\"value\":43.0},{\"name\":\"DEF\",\"value\":32.0},{\"name\":\"ATK%\",\"value\":32.0},{\"name\":\"ANEMO_DMG_BONUS\",\"value\":32.0}]}'),
-(93, 5, '{\"main_stat\":{\"name\":\"HP\",\"value\":500.0},\"sub_stats\":[{\"name\":\"CRIT_RATE\",\"value\":0.057},{\"name\":\"CRIT_DMG\",\"value\":0.14800000000000002},{\"name\":\"ATK%\",\"value\":0.085},{\"name\":\"DEF\",\"value\":14.0}]}'),
-(94, 6, '{\"main_stat\":{\"name\":\"ATK\",\"value\":218.0},\"sub_stats\":[{\"name\":\"ATK%\",\"value\":0.08199999999999999},{\"name\":\"HP\",\"value\":133.0},{\"name\":\"SPD\",\"value\":6.0},{\"name\":\"EFFECT_RES\",\"value\":0.057}]}'),
-(95, 7, '{\"main_stat\":{\"name\":\"CRIT_DMG\",\"value\":0.789},\"sub_stats\":[{\"name\":\"ATK\",\"value\":45.0},{\"name\":\"ATK%\",\"value\":0.102},{\"name\":\"SPD\",\"value\":2.0},{\"name\":\"CRIT_RATE\",\"value\":0.034}]}'),
-(96, 8, '{\"main_stat\":{\"name\":\"SPD\",\"value\":26.0},\"sub_stats\":[{\"name\":\"HP%\",\"value\":0.057},{\"name\":\"EFFECT_HIT_RATE\",\"value\":0.102},{\"name\":\"DEF\",\"value\":107.0},{\"name\":\"ATK\",\"value\":21.0}]}'),
-(97, 9, '{\"main_stat\":{\"name\":\"PHYSICAL_DMG_BONUS\",\"value\":0.43200000000000005},\"sub_stats\":[{\"name\":\"ATK\",\"value\":191.0},{\"name\":\"CRIT_RATE\",\"value\":0.124},{\"name\":\"CRIT_DMG\",\"value\":0.201},{\"name\":\"ATK%\",\"value\":0.022000000000000002}]}'),
-(98, 10, '{\"main_stat\":{\"name\":\"ATK%\",\"value\":0.245},\"sub_stats\":[{\"name\":\"ATK\",\"value\":23.0},{\"name\":\"CRIT_RATE\",\"value\":0.025},{\"name\":\"CRIT_DMG\",\"value\":0.08900000000000001},{\"name\":\"ATK%\",\"value\":0.038}]}');
+(99, 5, '{\"main_stat\":{\"name\":\"HP\",\"value\":450.0},\"sub_stats\":[{\"name\":\"CRIT_RATE\",\"value\":0.034},{\"name\":\"CRIT_DMG\",\"value\":0.18899999999999997},{\"name\":\"ATK%\",\"value\":0.045},{\"name\":\"HP%\",\"value\":0.047}]}'),
+(100, 6, '{\"main_stat\":{\"name\":\"ATK\",\"value\":244.0},\"sub_stats\":[{\"name\":\"CRIT_RATE\",\"value\":0.043},{\"name\":\"CRIT_DMG\",\"value\":0.125},{\"name\":\"ATK%\",\"value\":0.127},{\"name\":\"DEF%\",\"value\":0.051}]}'),
+(101, 7, '{\"main_stat\":{\"name\":\"CRIT_DMG\",\"value\":0.688},\"sub_stats\":[{\"name\":\"CRIT_RATE\",\"value\":0.064},{\"name\":\"HP%\",\"value\":0.107},{\"name\":\"HP\",\"value\":24.0},{\"name\":\"ATK%\",\"value\":0.047}]}'),
+(102, 8, '{\"main_stat\":{\"name\":\"SPD\",\"value\":26.0},\"sub_stats\":[{\"name\":\"HP\",\"value\":100.0},{\"name\":\"DEF\",\"value\":7.2},{\"name\":\"EFFECT_HIT_RATE\",\"value\":0.027000000000000003},{\"name\":\"EFFECT_RES\",\"value\":0.051}]}'),
+(103, 9, '{\"main_stat\":{\"name\":\"PHYSICAL_DMG_BONUS\",\"value\":0.546},\"sub_stats\":[{\"name\":\"ATK\",\"value\":24.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":0.045},{\"name\":\"EFFECT_RES\",\"value\":0.107},{\"name\":\"SPD\",\"value\":2.0}]}'),
+(104, 10, '{\"main_stat\":{\"name\":\"ATK%\",\"value\":0.267},\"sub_stats\":[{\"name\":\"BREAK_EFFECT\",\"value\":0.084},{\"name\":\"HP\",\"value\":21.0},{\"name\":\"HP%\",\"value\":0.044000000000000004},{\"name\":\"CRIT_DMG\",\"value\":0.106}]}'),
+(105, 2, '{\"main_stat\":{\"name\":\"HP\",\"value\":560.0},\"sub_stats\":[{\"name\":\"CRIT_RATE\",\"value\":0.10300000000000001},{\"name\":\"CRIT_DMG\",\"value\":0.07400000000000001},{\"name\":\"ER\",\"value\":0.040999999999999995},{\"name\":\"EM\",\"value\":18.0}]}'),
+(106, 0, '{\"main_stat\":{\"name\":\"ATK\",\"value\":231.0},\"sub_stats\":[{\"name\":\"CRIT_RATE\",\"value\":0.025},{\"name\":\"CRIT_DMG\",\"value\":0.147},{\"name\":\"ATK%\",\"value\":0.067},{\"name\":\"DEF\",\"value\":23.0}]}'),
+(107, 3, '{\"main_stat\":{\"name\":\"ER\",\"value\":0.457},\"sub_stats\":[{\"name\":\"EM\",\"value\":39.0},{\"name\":\"CRIT_DMG\",\"value\":0.081},{\"name\":\"CRIT_RATE\",\"value\":0.043},{\"name\":\"ATK\",\"value\":19.0}]}'),
+(108, 4, '{\"main_stat\":{\"name\":\"ELECTRO_DMG_BONUS\",\"value\":0.34600000000000003},\"sub_stats\":[{\"name\":\"ER\",\"value\":0.10400000000000001},{\"name\":\"DEF%\",\"value\":0.037000000000000005},{\"name\":\"HP%\",\"value\":0.125},{\"name\":\"ATK\",\"value\":23.0}]}'),
+(109, 1, '{\"main_stat\":{\"name\":\"CRIT_RATE\",\"value\":0.299},\"sub_stats\":[{\"name\":\"ER\",\"value\":0.057},{\"name\":\"CRIT_DMG\",\"value\":0.071},{\"name\":\"ATK\",\"value\":49.0},{\"name\":\"DEF%\",\"value\":0.047}]}'),
+(110, 2, '{\"main_stat\":{\"name\":\"HP\",\"value\":32.0},\"sub_stats\":[{\"name\":\"ATK%\",\"value\":0.32},{\"name\":\"EM\",\"value\":43.0},{\"name\":\"ATK\",\"value\":43.0},{\"name\":\"DEF\",\"value\":3.0}]}'),
+(111, 0, '{\"main_stat\":{\"name\":\"ATK\",\"value\":435.0},\"sub_stats\":[{\"name\":\"CRIT_RATE\",\"value\":0.034},{\"name\":\"CRIT_DMG\",\"value\":0.069},{\"name\":\"HP\",\"value\":43.0},{\"name\":\"ATK%\",\"value\":0.145}]}'),
+(112, 3, '{\"main_stat\":{\"name\":\"HP%\",\"value\":0.43},\"sub_stats\":[{\"name\":\"DEF\",\"value\":32.0},{\"name\":\"ATK%\",\"value\":0.05},{\"name\":\"EM\",\"value\":3.0},{\"name\":\"DEF%\",\"value\":0.43}]}'),
+(113, 4, '{\"main_stat\":{\"name\":\"PYRO_DMG_BONUS\",\"value\":0.43},\"sub_stats\":[{\"name\":\"HP%\",\"value\":0.047},{\"name\":\"HP\",\"value\":134.0},{\"name\":\"CRIT_DMG\",\"value\":0.043},{\"name\":\"ATK%\",\"value\":0.043}]}'),
+(114, 1, '{\"main_stat\":{\"name\":\"EM\",\"value\":432.0},\"sub_stats\":[{\"name\":\"ATK%\",\"value\":0.01},{\"name\":\"DEF\",\"value\":3.0},{\"name\":\"ER\",\"value\":0.32},{\"name\":\"HP\",\"value\":3.0}]}'),
+(140, 5, '{\"main_stat\":{\"name\":\"HP\",\"value\":240.0},\"sub_stats\":[{\"name\":\"BREAK_EFFECT\",\"value\":0.10300000000000001},{\"name\":\"HP%\",\"value\":0.034},{\"name\":\"DEF\",\"value\":18.0},{\"name\":\"SPD\",\"value\":2.0}]}'),
+(141, 6, '{\"main_stat\":{\"name\":\"ATK\",\"value\":238.0},\"sub_stats\":[{\"name\":\"BREAK_EFFECT\",\"value\":0.08900000000000001},{\"name\":\"DEF\",\"value\":23.0},{\"name\":\"EFFECT_RES\",\"value\":0.047},{\"name\":\"CRIT_DMG\",\"value\":0.076}]}'),
+(142, 7, '{\"main_stat\":{\"name\":\"HP%\",\"value\":0.433},\"sub_stats\":[{\"name\":\"HP\",\"value\":19.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":0.025},{\"name\":\"SPD\",\"value\":4.0},{\"name\":\"BREAK_EFFECT\",\"value\":0.14300000000000002}]}'),
+(143, 8, '{\"main_stat\":{\"name\":\"SPD\",\"value\":26.0},\"sub_stats\":[{\"name\":\"BREAK_EFFECT\",\"value\":0.08800000000000001},{\"name\":\"EFFECT_RES\",\"value\":0.08800000000000001},{\"name\":\"EFFECT_HIT_RATE\",\"value\":0.08800000000000001},{\"name\":\"CRIT_RATE\",\"value\":0.035}]}'),
+(144, 9, '{\"main_stat\":{\"name\":\"HP%\",\"value\":0.451},\"sub_stats\":[{\"name\":\"BREAK_EFFECT\",\"value\":0.11900000000000001},{\"name\":\"HP\",\"value\":21.0},{\"name\":\"SPD\",\"value\":2.0},{\"name\":\"CRIT_DMG\",\"value\":0.055999999999999994}]}'),
+(145, 10, '{\"main_stat\":{\"name\":\"BREAK_EFFECT\",\"value\":0.278},\"sub_stats\":[{\"name\":\"ATK\",\"value\":100.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":0.023},{\"name\":\"SPD\",\"value\":2.0},{\"name\":\"DEF\",\"value\":27.0}]}'),
+(146, 5, '{\"main_stat\":{\"name\":\"HP\",\"value\":222.0},\"sub_stats\":[{\"name\":\"EFFECT_HIT_RATE\",\"value\":0.04},{\"name\":\"DEF%\",\"value\":0.06},{\"name\":\"BREAK_EFFECT\",\"value\":0.07},{\"name\":\"DEF\",\"value\":2.0}]}'),
+(147, 6, '{\"main_stat\":{\"name\":\"ATK\",\"value\":244.0},\"sub_stats\":[{\"name\":\"DEF\",\"value\":32.0},{\"name\":\"ATK%\",\"value\":0.07},{\"name\":\"CRIT_RATE\",\"value\":0.05},{\"name\":\"EFFECT_HIT_RATE\",\"value\":0.09}]}'),
+(148, 18, '{\"main_stat\":{\"name\":\"EFFECT_HIT_RATE\",\"value\":0.23},\"sub_stats\":[{\"name\":\"ATK\",\"value\":23.0},{\"name\":\"DEF\",\"value\":43.0},{\"name\":\"EFFECT_RES\",\"value\":0.025},{\"name\":\"CRIT_RATE\",\"value\":0.079}]}'),
+(149, 19, '{\"main_stat\":{\"name\":\"SPD\",\"value\":26.0},\"sub_stats\":[{\"name\":\"ATK%\",\"value\":0.044000000000000004},{\"name\":\"DEF%\",\"value\":0.044000000000000004},{\"name\":\"BREAK_EFFECT\",\"value\":0.078},{\"name\":\"DEF\",\"value\":23.0}]}'),
+(150, 20, '{\"main_stat\":{\"name\":\"FIRE_DMG_BONUS\",\"value\":0.27899999999999997},\"sub_stats\":[{\"name\":\"ATK\",\"value\":100.0},{\"name\":\"EFFECT_HIT_RATE\",\"value\":0.099},{\"name\":\"SPD\",\"value\":4.0},{\"name\":\"EFFECT_RES\",\"value\":0.047}]}'),
+(151, 21, '{\"main_stat\":{\"name\":\"BREAK_EFFECT\",\"value\":0.284},\"sub_stats\":[{\"name\":\"DEF%\",\"value\":0.073},{\"name\":\"EFFECT_RES\",\"value\":0.049},{\"name\":\"CRIT_DMG\",\"value\":0.127},{\"name\":\"DEF\",\"value\":28.0}]}');
 
 -- --------------------------------------------------------
 
@@ -152,7 +165,18 @@ INSERT INTO `artefacto_plantilla` (`id`, `pieza_tipo_id`, `set_artefactos_id`, `
 (7, 7, 1, 'Relojero3.webp', 'hsr'),
 (8, 8, 1, 'Relojero4.webp', 'hsr'),
 (9, 9, 2, 'Estacion1.webp', 'hsr'),
-(10, 10, 2, 'Estacion2.webp', 'hsr');
+(10, 10, 2, 'Estacion2.webp', 'hsr'),
+(11, 0, 3, 'Bruja2.webp', 'genshin'),
+(12, 1, 3, 'Bruja5.webp', 'genshin'),
+(13, 2, 3, 'Bruja1.webp', 'genshin'),
+(14, 3, 3, 'Bruja3.webp', 'genshin'),
+(15, 4, 3, 'Bruja4.webp', 'genshin'),
+(16, 5, 4, 'Pionera1.webp', 'hsr'),
+(17, 6, 4, 'Pionera2.webp', 'hsr'),
+(18, 7, 4, 'Pionera3.webp', 'hsr'),
+(19, 8, 4, 'Pionera4.webp', 'hsr'),
+(20, 9, 5, 'Glamoth1.webp', 'hsr'),
+(21, 10, 5, 'Glamoth2.webp', 'hsr');
 
 -- --------------------------------------------------------
 
@@ -167,6 +191,13 @@ CREATE TABLE `comentario` (
   `post_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `comentario`
+--
+
+INSERT INTO `comentario` (`id`, `cuerpo`, `fecha_publicacion`, `post_id`, `user_id`) VALUES
+(1, 'AAA', '2026-02-11 12:56:10', 14, 17);
 
 -- --------------------------------------------------------
 
@@ -211,7 +242,10 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 ('DoctrineMigrations\\Version20260202092211', '2026-02-02 10:22:18', 47),
 ('DoctrineMigrations\\Version20260205073814', '2026-02-05 08:38:21', 115),
 ('DoctrineMigrations\\Version20260209150106', '2026-02-09 16:01:14', 1229),
-('DoctrineMigrations\\Version20260209150343', '2026-02-09 16:03:46', 64);
+('DoctrineMigrations\\Version20260209150343', '2026-02-09 16:03:46', 64),
+('DoctrineMigrations\\Version20260219075027', '2026-02-19 08:50:35', 69),
+('DoctrineMigrations\\Version20260219091221', '2026-02-19 10:12:26', 576),
+('DoctrineMigrations\\Version20260220153544', '2026-02-20 16:35:57', 563);
 
 -- --------------------------------------------------------
 
@@ -333,11 +367,13 @@ CREATE TABLE `personaje` (
 --
 
 INSERT INTO `personaje` (`id`, `user_id`, `arma_id`, `personaje_plantilla_id`, `nivel`, `dupe_num`, `nombre`) VALUES
-(18, 17, 16, 7, 32, 3, 'dw'),
 (19, 18, 17, 1, 70, 3, 'DILUC 1'),
 (20, 18, 18, 9, 55, 4, 'Jingliu 1'),
-(21, 17, 19, 5, 89, 3, 'Columbina'),
-(22, 17, 20, 10, 80, 3, 'Dios creo en ti');
+(23, 17, 21, 10, 80, 2, 'Dios creo en ti'),
+(24, 17, 22, 3, 90, 1, 'La Xogun'),
+(25, 17, 23, 1, 90, 6, 'Ayuda por favor'),
+(29, 17, 27, 6, 80, 6, 'Prueba nuclear'),
+(30, 17, 28, 7, 70, 2, 'Kebab Mixto');
 
 -- --------------------------------------------------------
 
@@ -355,12 +391,6 @@ CREATE TABLE `personaje_artefacto` (
 --
 
 INSERT INTO `personaje_artefacto` (`personaje_id`, `artefacto_id`) VALUES
-(18, 71),
-(18, 72),
-(18, 73),
-(18, 74),
-(18, 75),
-(18, 76),
 (19, 77),
 (19, 78),
 (19, 79),
@@ -372,17 +402,34 @@ INSERT INTO `personaje_artefacto` (`personaje_id`, `artefacto_id`) VALUES
 (20, 85),
 (20, 86),
 (20, 87),
-(21, 88),
-(21, 89),
-(21, 90),
-(21, 91),
-(21, 92),
-(22, 93),
-(22, 94),
-(22, 95),
-(22, 96),
-(22, 97),
-(22, 98);
+(23, 99),
+(23, 100),
+(23, 101),
+(23, 102),
+(23, 103),
+(23, 104),
+(24, 105),
+(24, 106),
+(24, 107),
+(24, 108),
+(24, 109),
+(25, 110),
+(25, 111),
+(25, 112),
+(25, 113),
+(25, 114),
+(29, 140),
+(29, 141),
+(29, 142),
+(29, 143),
+(29, 144),
+(29, 145),
+(30, 146),
+(30, 147),
+(30, 148),
+(30, 149),
+(30, 150),
+(30, 151);
 
 -- --------------------------------------------------------
 
@@ -404,12 +451,21 @@ INSERT INTO `personaje_habilidad` (`personaje_id`, `habilidad_id`, `nivel`) VALU
 (20, 25, 10),
 (20, 26, 10),
 (20, 27, 8),
-(21, 13, 4),
-(21, 14, 4),
-(21, 15, 9),
-(22, 28, 4),
-(22, 29, 4),
-(22, 30, 7);
+(23, 28, 3),
+(23, 29, 3),
+(23, 30, 8),
+(24, 7, 7),
+(24, 8, 8),
+(24, 9, 10),
+(25, 1, 4),
+(25, 2, 4),
+(25, 3, 8),
+(29, 16, 4),
+(29, 17, 8),
+(29, 18, 10),
+(30, 19, 3),
+(30, 20, 7),
+(30, 21, 10);
 
 -- --------------------------------------------------------
 
@@ -510,9 +566,9 @@ INSERT INTO `post` (`id`, `user_id`, `titulo`, `cuerpo`, `fecha_publicacion`, `v
 CREATE TABLE `set_artefactos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
-  `imagen` varchar(255) NOT NULL,
+  `imagen` varchar(255) DEFAULT NULL,
   `juego` varchar(255) NOT NULL,
-  `efectos` varchar(255) NOT NULL
+  `efectos` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '(DC2Type:json)' CHECK (json_valid(`efectos`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -520,9 +576,12 @@ CREATE TABLE `set_artefactos` (
 --
 
 INSERT INTO `set_artefactos` (`id`, `nombre`, `imagen`, `juego`, `efectos`) VALUES
-(0, 'Emblema del Destino', '', 'genshin', 'Cosas de recarga'),
-(1, 'Relojero de maquinaciones oníricas', '', 'hsr', 'Cosas de ruptura'),
-(2, 'Estación sellaespacios', '', 'hsr', 'Cosas de ataque');
+(0, 'Emblema del Destino', '', 'genshin', '{\n  \"2\": \"Recarga de Energía +20%.\",\n  \"4\": \"Aumenta el daño infligido con la Habilidad Definitiva en una cantidad equivalente al 25% de la Recarga de Energía. Se puede obtener un aumento del 75% como máximo.\"\n}\n'),
+(1, 'Relojero de maquinaciones oníricas', '', 'hsr', '{\n  \"2\": \"+16% Efecto de Ruptura.\",\n  \"4\": \"+30% Efecto de Ruptura al equipo durante 2 turnos al usar la Habilidad Definitiva sobre un aliado.\"\n}\n'),
+(2, 'Estación sellaespacios', '', 'hsr', '{\n  \"2\": \"+12% ATQ y +12% de ATQ adicional si el personaje tiene 120 o más de VEL.\"\n}\n'),
+(3, 'Bruja Carmesí en Llamas', NULL, 'genshin', '{\"2\":\"Bono de Da\\u00f1o Pyro +15%.\",\"4\":\"Aumenta el da\\u00f1o causado por Sobrecarga, Quemadura y Crepitar en un 40%, y el de Vaporizaci\\u00f3n y Derretido en un 15%. El uso de una Habilidad Elemental aumenta los efectos del conjunto de 2 piezas en un 50% durante 10 s. Puede acumularse hasta un m\\u00e1ximo de 3 veces.\"}'),
+(4, 'Buceadora pionera del agua muerta', NULL, 'hsr', '{\"2\":\"El da\\u00f1o infligido a los enemigos afectados por estados negativos aumenta en un 12%.\",\"4\":\"La Prob. CRIT aumenta en un 4%. El Da\\u00f1o CRIT que el portador inflige a los enemigos que tengan 2\\/3 o m\\u00e1s estados negativos aumenta en un 8%\\/12%. Cuando el portador aplica un estado negativo a un enemigo, los efectos mencionados aumentan en un 100% durante 1 turno.\"}'),
+(5, 'Glamoth, frente del firmamento', NULL, 'hsr', '{\"2\":\"El ATQ del portador aumenta en un 12%. Cuando su VEL es igual o superior a 135\\/160, el da\\u00f1o que inflige aumenta en un 12%\\/18%.\"}');
 
 -- --------------------------------------------------------
 
@@ -706,19 +765,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `arma`
 --
 ALTER TABLE `arma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `artefacto`
 --
 ALTER TABLE `artefacto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- AUTO_INCREMENT for table `comentario`
 --
 ALTER TABLE `comentario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `equipo`
@@ -730,7 +789,7 @@ ALTER TABLE `equipo`
 -- AUTO_INCREMENT for table `personaje`
 --
 ALTER TABLE `personaje`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `post`
