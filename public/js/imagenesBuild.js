@@ -44,7 +44,14 @@ function mostrarImagenArtefacto() {
     if (previewAntigua) previewAntigua.remove();
 
     let id = this.value;
-    if (!id) return; // Si selecciona "Vacío", no hacemos nada
+    
+    // Si selecciona "Vacío", actualizar efectos y retornar
+    if (!id) {
+        if (typeof actualizarEfectosSet === 'function') {
+            actualizarEfectosSet();
+        }
+        return;
+    }
 
     // Creamos el contenedor para la imagen del modal
     let div = document.createElement('div');
@@ -72,8 +79,16 @@ function mostrarImagenArtefacto() {
             // 1. Ponemos la imagen en el MODAL
             let rutaImagen = "/assets/artefactos/" + data.imagen;
             imgTagModal.src = rutaImagen;
+            imgTagModal.classList.add("img-set-data");
+            imgTagModal.dataset.idSet = data.idSet;
 
-            // 2. Ponemos la imagen en el BOTÓN PRINCIPAL (Fuera del modal)
+            // 2. Actualizar efectos de conjunto
+            if (typeof actualizarEfectosSet === 'function') {
+                console.log("Llamando a actualizarEfectosSet desde mostrarImagenArtefacto");
+                actualizarEfectosSet();
+            }
+
+            // 3. Ponemos la imagen en el BOTÓN PRINCIPAL (Fuera del modal)
             actualizarBotonPrincipal(set, rutaImagen);
         })
         .catch(err => {

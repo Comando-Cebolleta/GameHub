@@ -27,6 +27,26 @@
     padding-left: 15px;
 }
 
+.section-subtitle2 {
+    position: relative;
+    color: #ffffff;
+    font-family: 'titulos-encabezados', Arial, sans-serif;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    padding-left: 15px;
+    padding-top: 20px;
+}
+
+.section-subtitle2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 20px;        /* empieza después del padding-top */
+    bottom: 0;
+    width: 4px;
+    background: #948459;
+}
+
 /* Inputs y Selects */
 .build-section-card label {
     color: #e0e0e0;
