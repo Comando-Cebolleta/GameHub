@@ -1,51 +1,56 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("form-build-genshin");
-    
+
+    // Buscamos el formulario de Genshin o el de HSR
+    const form =
+        document.getElementById("form-build-genshin") ||
+        document.getElementById("form-build-hsr");
+
+    // Si no hay formulario, no hacemos nada
     if (!form) return;
 
-    if (form.getAttribute("data-js-preparado") === "true") {
-        console.log("El script ya estaba cargado. Evitando ejecución doble.");
-        return; 
-    }
-    form.setAttribute("data-js-preparado", "true");
+    // Evitamos que el script se ejecute dos veces sobre el mismo formulario
+    if (form.dataset.jsPreparado === "true") return;
+
+    // Marcamos el formulario como ya preparado
+    form.dataset.jsPreparado = "true";
 
     const inputsOcultos = form.querySelectorAll(".modal-artefacto-content [required]");
-    
-    // Les quitamos el atributo 'required' para que el navegador no se queje,
-    // pero les ponemos una marca nuestra 'data-check-me' para revisarlos nosotros.
+
     inputsOcultos.forEach(input => {
+        // Quitamos el 'required' nativo del navegador
+        // (porque al estar en modales ocultos bloquearía el submit)
         input.removeAttribute("required");
-        input.setAttribute("data-check-me", "true");
+
+        // Añadimos una marca personalizada para validarlos manualmente después
+        input.dataset.checkMe = "true";
     });
 
-
     form.addEventListener("submit", (e) => {
-        // Buscamos campos vacíos que tengan nuestra marca
-        const inputsArtefactos = form.querySelectorAll("[data-check-me='true']");
-        
-        let errorEncontrado = false;
-        let modalParaAbrir = null;
 
-        // Revisamos uno por uno
-        for (let i = 0; i < inputsArtefactos.length; i++) {
-            if (!inputsArtefactos[i].value.trim()) {
-                errorEncontrado = true;
-                // Guardamos el modal padre
-                modalParaAbrir = inputsArtefactos[i].closest(".modal-artefacto-overlay");
-                break;
+        // Seleccionamos todos los campos que deben validarse manualmente
+        const inputs = form.querySelectorAll("[data-check-me='true']");
+
+        for (const input of inputs) {
+
+            // Si el campo está vacío (tras quitar espacios)
+            if (!input.value.trim()) {
+
+                // Bloqueamos el envío del formulario
+                e.preventDefault();
+
+                // Evitamos que otros listeners intenten enviarlo igualmente
+                e.stopImmediatePropagation();
+
+                // Buscamos el modal padre de ese input vacío
+                const modal = input.closest(".modal-artefacto-overlay");
+
+                // Si existe, lo abrimos para que el usuario vea el error
+                if (modal) modal.classList.add("active");
+
+                alert("Error: Faltan datos en las piezas del equipo.");
+
+                return;
             }
-        }
-
-        // Si encontramos un error en los artefactos...
-        if (errorEncontrado) {
-            e.preventDefault();           // Frena el envío
-            e.stopImmediatePropagation(); // Frena cualquier otro script que intente saltar
-            
-            if (modalParaAbrir) {
-                modalParaAbrir.classList.add("active");
-            }
-
-            alert("Error: Faltan datos en los Artefactos. Revisa la ventana abierta.");
         }
     });
 });
