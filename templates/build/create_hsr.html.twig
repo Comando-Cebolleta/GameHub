@@ -79,8 +79,33 @@
                         <h4 class="section-subtitle">Personaje y Arma</h4>
                         {{ form_row(form.nombre) }}
                         
-                        {# Añadimos la clase 'personaje-selector' para que el JS la detecte #}
-                        {{ form_row(form.personajePlantilla, {'attr': {'class': 'form-select personaje-selector'}}) }}
+                        {# SELECT OCULTO - Mantiene la funcionalidad del formulario #}
+                        <div style="display: none;">
+                            {{ form_row(form.personajePlantilla, {'attr': {'class': 'form-select personaje-selector'}}) }}
+                        </div>
+
+                        {# BOTÓN MODAL PARA PERSONAJE #}
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #bbb; font-weight: 600;">Personaje</label>
+                            <button type="button" class="btn-modal-personaje" id="btn-personaje-modal">
+                                <span class="btn-personaje-text">Selecciona personaje...</span>
+                                <img src="" alt="" class="btn-personaje-img" style="display: none; max-height: 80px;">
+                            </button>
+                            {# Contenedor para la imagen del fetch #}
+                            <div id="imagen-personaje-container" style="margin-top: 10px; text-align: center;"></div>
+                        </div>
+
+                        {# MODAL DE PERSONAJES #}
+                        <div id="modal-personajes" class="modal-personajes-overlay">
+                            <div class="modal-personajes-content">
+                                <span class="btn-cerrar-modal-personajes">&times;</span>
+                                <h3>Selecciona tu Personaje</h3>
+                                <button type="button" class="btn-limpiar-seleccion" id="btn-limpiar-personaje" style="width: 100%; margin-bottom: 15px; padding: 10px; background-color: #3b4252; border: 1px solid #d4b16a; color: #fff; border-radius: 4px; cursor: pointer; font-weight: bold;">Ninguno</button>
+                                <div class="grid-personajes" id="grid-personajes">
+                                    {# Las imágenes se cargarán con JavaScript #}
+                                </div>
+                            </div>
+                        </div>
                         
                         <div class="subgrid">
                             {{ form_row(form.nivel) }}
@@ -88,8 +113,32 @@
                         </div>
                         <hr>
                         
-                        {# Añadimos la clase 'arma-selector' para que el JS la detecte #}
-                        {{ form_row(form.arma) }}
+                        {# SELECT OCULTO - Mantiene la funcionalidad del formulario #}
+                        <div style="display: none;">
+                            {{ form_row(form.arma) }}
+                        </div>
+
+                        {# BOTÓN MODAL PARA ARMA #}
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #bbb; font-weight: 600;">Arma</label>
+                            <button type="button" class="btn-modal-arma" id="btn-arma-modal">
+                                <span class="btn-arma-text">Selecciona arma...</span>
+                                <img src="" alt="" class="btn-arma-img" style="display: none; max-height: 80px;">
+                            </button>
+                            {# Contenedor para la imagen del fetch #}
+                            <div id="imagen-arma-container" style="margin-top: 10px; text-align: center;"></div>
+                        </div>
+
+                        {# MODAL DE ARMAS #}
+                        <div id="modal-armas" class="modal-armas-overlay">
+                            <div class="modal-armas-content">
+                                <span class="btn-cerrar-modal-armas">&times;</span>
+                                <h3>Selecciona tu Arma</h3>
+                                <div class="grid-armas" id="grid-armas">
+                                    {# Las imágenes se cargarán con JavaScript #}
+                                </div>
+                            </div>
+                        </div>
 
                         <hr>
                         <h4 class="section-subtitle">Habilidades (Rastros)</h4>
@@ -241,6 +290,8 @@
         <script type="text/javascript" src="{{ asset('js/habilidadesPersonaje.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/filtroArtefactos.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/imagenesBuild.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/modalPersonajes.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/modalArmas.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/alertaModals.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/efectosSet.js') }}"></script>
     {% endblock %}

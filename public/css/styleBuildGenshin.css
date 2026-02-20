@@ -307,7 +307,148 @@ hr {
 }
 .btn-guardar-modal:hover { background-color: #e5c585; }
 
-/* RESPONSIVE: En móviles volver a columna vertical */
+/* ============================================ */
+/* ESTILOS DEL MODAL DE PERSONAJES */
+/* ============================================ */
+
+.btn-modal-personaje {
+    width: 100%;
+    min-height: 90px;
+    border-radius: 8px;
+    background-color: #2e3440;
+    border: 2px dashed #4c566a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    color: #81a1c1;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.btn-modal-personaje:hover {
+    background-color: #3b4252;
+    border-color: #81a1c1;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+.btn-personaje-text {
+    flex: 1;
+}
+
+.btn-personaje-img {
+    max-height: 80px;
+    border-radius: 4px;
+}
+
+/* Modal de Personajes */
+.modal-personajes-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+
+.modal-personajes-overlay.active {
+    display: flex !important;
+}
+
+.modal-personajes-content {
+    background-color: #232830;
+    border: 1px solid #4a422e;
+    border-radius: 8px;
+    padding: 25px;
+    width: 95%;
+    max-width: 1000px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 0 25px rgba(212, 177, 106, 0.15);
+    color: #eee;
+}
+
+.modal-personajes-content h3 {
+    text-align: center;
+    color: #d4b16a;
+    font-family: 'titulos-encabezados', sans-serif;
+    border-bottom: 1px solid #4a422e;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.btn-cerrar-modal-personajes {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s;
+    line-height: 1;
+}
+
+.btn-cerrar-modal-personajes:hover {
+    color: #fff;
+}
+
+/* Grid de Personajes */
+.grid-personajes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.personaje-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.personaje-card:hover {
+    border-color: #d4b16a;
+    background-color: rgba(212, 177, 106, 0.1);
+    transform: translateY(-5px);
+}
+
+.personaje-card img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 6px;
+    max-height: 100px;
+}
+
+.personaje-card-nombre {
+    font-size: 0.75rem;
+    text-align: center;
+    color: #bbb;
+    font-weight: 500;
+    word-wrap: break-word;
+}
+
+/* RESPONSIVE: En móviles aumentar tamaño del grid */
 @media (max-width: 768px) {
     .layout-horizontal {
         flex-direction: column;
@@ -315,4 +456,151 @@ hr {
     .col-substats {
         grid-template-columns: 1fr; /* 1 sola columna en substats para móvil */
     }
+    .grid-personajes {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+    .grid-armas {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+}
+
+/* ============================================ */
+/* ESTILOS DEL MODAL DE ARMAS */
+/* ============================================ */
+
+.btn-modal-arma {
+    width: 100%;
+    min-height: 90px;
+    border-radius: 8px;
+    background-color: #2e3440;
+    border: 2px dashed #4c566a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    color: #81a1c1;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.btn-modal-arma:hover {
+    background-color: #3b4252;
+    border-color: #81a1c1;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+.btn-arma-text {
+    flex: 1;
+}
+
+.btn-arma-img {
+    max-height: 80px;
+    border-radius: 4px;
+}
+
+/* Modal de Armas */
+.modal-armas-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+
+.modal-armas-overlay.active {
+    display: flex !important;
+}
+
+.modal-armas-content {
+    background-color: #232830;
+    border: 1px solid #4a422e;
+    border-radius: 8px;
+    padding: 25px;
+    width: 95%;
+    max-width: 1000px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 0 25px rgba(212, 177, 106, 0.15);
+    color: #eee;
+}
+
+.modal-armas-content h3 {
+    text-align: center;
+    color: #d4b16a;
+    font-family: 'titulos-encabezados', sans-serif;
+    border-bottom: 1px solid #4a422e;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.btn-cerrar-modal-armas {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s;
+    line-height: 1;
+}
+
+.btn-cerrar-modal-armas:hover {
+    color: #fff;
+}
+
+/* Grid de Armas */
+.grid-armas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.arma-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.arma-card:hover {
+    border-color: #d4b16a;
+    background-color: rgba(212, 177, 106, 0.1);
+    transform: translateY(-5px);
+}
+
+.arma-card img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 6px;
+    max-height: 100px;
+}
+
+.arma-card-nombre {
+    font-size: 0.75rem;
+    text-align: center;
+    color: #bbb;
+    font-weight: 500;
+    word-wrap: break-word;
 }

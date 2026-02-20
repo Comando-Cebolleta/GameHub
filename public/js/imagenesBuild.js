@@ -1,6 +1,10 @@
 function mostrarImagenPersonaje() {
     document.getElementById("imagen-personaje-container")?.remove(); // Eliminar imagen anterior si existe
     let id = this.value;
+    
+    // Si no hay ID seleccionado, no hacer nada
+    if (!id) return;
+    
     let imagen = '<img src="" alt="Imagen del personaje" class="img-fluid rounded" id="imagen-personaje">';
     let p = document.createElement('p');
     p.id = "imagen-personaje-container";
@@ -12,7 +16,14 @@ function mostrarImagenPersonaje() {
                 console.error(data.error);
                 return;
             }
-            this.before(p);
+            // Insertar después del botón modal visible
+            let btnModal = document.getElementById('btn-personaje-modal');
+            if (btnModal && btnModal.parentNode) {
+                btnModal.parentNode.appendChild(p);
+            } else {
+                // Fallback: insertar antes del select si no encuentra el botón
+                this.before(p);
+            }
             p.innerHTML = imagen;
             document.getElementById("imagen-personaje").src = "/assets/personajes/" + data.imagen;
     });
@@ -21,6 +32,10 @@ function mostrarImagenPersonaje() {
 function mostrarImagenArma() {
     document.getElementById("imagen-arma-container")?.remove(); // Eliminar imagen anterior si existe
     let id = this.value;
+    
+    // Si no hay ID seleccionado, no hacer nada
+    if (!id) return;
+    
     let imagen = '<img src="" alt="Imagen del arma" class="img-fluid rounded" id="imagen-arma">';
     let p = document.createElement('p');
     p.id = "imagen-arma-container";
@@ -32,7 +47,14 @@ function mostrarImagenArma() {
                 console.error(data.error);
                 return;
             }
-            this.before(p);
+            // Insertar después del botón modal visible
+            let btnModal = document.getElementById('btn-arma-modal');
+            if (btnModal && btnModal.parentNode) {
+                btnModal.parentNode.appendChild(p);
+            } else {
+                // Fallback: insertar antes del select si no encuentra el botón
+                this.before(p);
+            }
             p.innerHTML = imagen;
             document.getElementById("imagen-arma").src = "/assets/armas/" + data.imagen;
     });
