@@ -41,7 +41,9 @@ class BuildController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', '¡Build de Genshin creada!');
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('app_profile', [
+                'id' => $this->getUser()->getId()
+            ]);
         }
 
         return $this->render('build/create_genshin.html.twig', ['form' => $form->createView()]);

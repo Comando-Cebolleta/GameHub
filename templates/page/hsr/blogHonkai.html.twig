@@ -3,48 +3,10 @@
 {% block title %}GameHub Blog Honkai: Star Rail{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/styleBlogHONKAI.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 
-    <style>
-        header .login-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            padding: 0 !important;
-        }
-        .user-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            text-align: right;
-        }
-        .welcome-text {
-            color: #c0c0c0; /* Plata para HSR */
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-        .logout-link {
-            color: #ffffff;
-            font-size: 0.75rem;
-            text-decoration: underline !important;
-            opacity: 0.7;
-        }
-        .logout-link:hover {
-            opacity: 1;
-            color: #ffadad;
-        }
-        .post-link {
-            text-decoration: none;
-            color: inherit;
-            transition: opacity 0.2s;
-        }
-        .post-link:hover {
-            opacity: 0.8;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/styleBlogHONKAI.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -53,6 +15,7 @@
 
     <main>
         <div class="container blog-wrapper">
+
             <div class="top-actions">
                 <a href="{{ path('hsr_nuevo_post', {'juego': 'hsr'}) }}" title="Crear Post">
                     <img src="{{ asset('assets/img/postIconSILVER.webp') }}" alt="Crear Post" class="action-icon">
@@ -63,36 +26,89 @@
                 </a>
             </div>
 
-            {% if posts is empty %}
-                <div style="text-align: center; padding: 50px; opacity: 0.7;">
-                    <p>Todavía no hay publicaciones sobre Honkai: Star Rail. ¡Sé el primero en subir contenido!</p>
-                </div>
-            {% else %}
-                {% for post in posts %}
-                    <article class="post-card">
-                        <div class="post-content">
-                            <a href="{{ path('hsr_post', {'id': post.id}) }}" class="post-link">
-                                <h2>{{ post.titulo }}</h2>
-                            </a>
-                            <p>
-                                {# striptags limpia el HTML de CKEditor #}
-                                {{ post.cuerpo|striptags|slice(0, 250) ~ '...' }}
-                            </p>
-                        </div>
+            {# --- CONTROLES DEL CARRUSEL --- #}
+            <div class="carousel-header">
+                <button class="carousel-btn btn-prev">&#10094;</button>
+                <h1 id="carousel-title" class="carousel-title">Publicaciones</h1>
+                <button class="carousel-btn btn-next">&#10095;</button>
+            </div>
 
-                        <div class="post-icons-area">
-                            <span class="icon-label"><a href="{{ path('app_profile', {'id': post.user.id}) }}">Autor: {{ post.user.username }}</a></span>
-                            <span class="icon-label" style="font-size: 0.75rem; opacity: 0.6; margin-top: 5px;">
-                                {{ post.fechaPublicacion|date('d/m/Y') }}
-                            </span>
-                        </div>
-                    </article>
+            {# --- CONTENEDOR SLICK --- #}
+            <div class="mi-carrusel">
 
-                    {% if not loop.last %}
-                        <hr class="divider">
+                {# ========================================== #}
+                {# SECCIÓN 1: POSTS (Slide 0)                 #}
+                {# ========================================== #}
+                <div id="section-posts">
+                    {% if posts is empty %}
+                        <div style="text-align: center; padding: 50px; opacity: 0.7;">
+                            <p>Todavía no hay publicaciones sobre Honkai: Star Rail. ¡Sé el primero en subir contenido!</p>
+                        </div>
+                    {% else %}
+                        {% for post in posts %}
+                            <article class="post-card">
+                                <div class="post-content">
+                                    <a href="{{ path('hsr_post', {'id': post.id}) }}" class="post-link">
+                                        <h2>{{ post.titulo }}</h2>
+                                    </a>
+                                    <p>
+                                        {{ post.cuerpo|striptags|slice(0, 250) ~ '...' }}
+                                    </p>
+                                </div>
+
+                                <div class="post-icons-area">
+                                    <span class="icon-label">
+                                        <a href="{{ path('app_profile', {'id': post.user.id}) }}">Autor: {{ post.user.username }}</a>
+                                    </span>
+                                    <span class="icon-label" style="font-size: 0.75rem; opacity: 0.6; margin-top: 5px;">
+                                        {{ post.fechaPublicacion|date('d/m/Y') }}
+                                    </span>
+                                </div>
+                            </article>
+
+                            {% if not loop.last %}
+                                <hr class="divider">
+                            {% endif %}
+                        {% endfor %}
                     {% endif %}
-                {% endfor %}
-            {% endif %}
+                </div>
+
+                {# ========================================== #}
+                {# SECCIÓN 2: BUILDS (Slide 1)                #}
+                {# ========================================== #}
+                <div id="section-builds">
+                    {% if builds is not defined or builds is empty %}
+                        <div style="text-align: center; padding: 50px; opacity: 0.7;">
+                            <p>Todavía no hay builds creadas. ¡Sé el primero en aportar una!</p>
+                        </div>
+                    {% else %}
+                        {% for build in builds %}
+                            <article class="post-card">
+                                <div class="post-content">
+                                    <a href="{{ path('app_build_view', {'id': build.id}) }}" class="post-link">
+                                        <h2>Build: {{ build.nombre }}</h2>
+                                    </a>
+                                    <p>
+                                        <strong>Personaje:</strong> {{ build.personajePlantilla.nombre }} <br>
+                                        <strong>Nivel:</strong> {{ build.nivel }} | <strong>Arma:</strong> {{ build.arma.armaPlantilla.nombre|default('Ninguna') }}
+                                    </p>
+                                </div>
+
+                                <div class="post-icons-area">
+                                    <span class="icon-label">
+                                        <a href="{{ path('app_profile', {'id': build.user.id}) }}">Autor: {{ build.user.username }}</a>
+                                    </span>
+                                </div>
+                            </article>
+
+                            {% if not loop.last %}
+                                <hr class="divider">
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+            </div> {# FIN DEL CARRUSEL #}
 
         </div>
     </main>
@@ -101,4 +117,12 @@
         Game Hub &copy; 2025-2026
     </footer>
 
+{% endblock %}
+
+{# --- CARGAMOS EL JS EXTERNO AQUÍ --- #}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="{{ asset('js/sliderBlog.js') }}"></script>
 {% endblock %}

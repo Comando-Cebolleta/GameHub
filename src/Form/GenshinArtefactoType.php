@@ -24,17 +24,43 @@ class GenshinArtefactoType extends AbstractType
         'Prob. Crítico' => 'CRIT_RATE', 'Daño Crítico' => 'CRIT_DMG', 'Bono Curación' => 'HEAL_BONUS',
     ];
 
+    const SUBSTATS_PERMITIDOS = [
+        'ATK', 'ATK%', 'DEF', 'DEF%', 'HP', 'HP%', 'EM', 'ER', 'CRIT_RATE', 'CRIT_DMG'
+    ];
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        // Esta parte antes de $build filtra para forzar que las flores tengan HP y las plumas ATK
-        $statFijo = $options['stat_fijo'];
-
-        $opcionesStats = self::STATS_GENSHIN;
-
-        if ($statFijo) {
-            $key = array_search($statFijo, self::STATS_GENSHIN);
-            $opcionesStats = [$key => $statFijo];
+        $tipoPieza = $options['tipo_pieza'];
+        
+        // Definir opciones para Main Stat según la pieza
+        $choicesMain = self::STATS_GENSHIN; // Por defecto todo
+        
+        // Filtrar opciones de Main Stat según el tipo de pieza
+        switch ($tipoPieza) {
+            case 'flor':
+                $choicesMain = ['Vida (HP)' => 'HP'];
+                break;
+            case 'pluma':
+                $choicesMain = ['Ataque (ATK)' => 'ATK'];
+                break;
+            case 'reloj':
+                $allow = ['ATK%', 'DEF%', 'HP%', 'EM', 'ER'];
+                $choicesMain = array_filter(self::STATS_GENSHIN, fn($v) => in_array($v, $allow));
+                break;
+            case 'copa':
+                $allow = ['ATK%', 'DEF%', 'HP%', 'EM', 'PYRO_DMG_BONUS', 'HYDRO_DMG_BONUS', 
+                          'GEO_DMG_BONUS', 'DENDRO_DMG_BONUS', 'ELECTRO_DMG_BONUS', 
+                          'ANEMO_DMG_BONUS', 'CRYO_DMG_BONUS'];
+                $choicesMain = array_filter(self::STATS_GENSHIN, fn($v) => in_array($v, $allow));
+                break;
+            case 'casco':
+                $allow = ['ATK%', 'DEF%', 'HP%', 'EM', 'HEAL_BONUS', 'CRIT_RATE', 'CRIT_DMG'];
+                $choicesMain = array_filter(self::STATS_GENSHIN, fn($v) => in_array($v, $allow));
+                break;
         }
+
+        // Definir opciones para Substats
+        $choicesSubs = array_filter(self::STATS_GENSHIN, fn($v) => in_array($v, self::SUBSTATS_PERMITIDOS));
 
         $builder
             ->add('setSeleccionado', EntityType::class, [
@@ -46,21 +72,24 @@ class GenshinArtefactoType extends AbstractType
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('s')->where('s.juego = :j')->setParameter('j', 'Genshin')->orderBy('s.nombre', 'ASC');
                 },
+                'attr' => ['class' => 'artefacto-set-select']
             ])
-
             ->add('statPrincipalNombre', ChoiceType::class, [
-                'choices' => $opcionesStats, 
+                'choices' => $choicesMain, 
                 'label' => 'Stat Principal', 
-                'mapped' => false
-                ])
+                'mapped' => false,
+                'attr' => ['class' => 'main-stat-select']
+            ])
             ->add('statPrincipalValor', NumberType::class, ['label' => 'Valor', 'mapped' => false, 'html5' => true, 'attr' => ['step' => '0.1']]);
 
-            for ($i = 1; $i <= 4; $i++) {
+        for ($i = 1; $i <= 4; $i++) {
             $builder->add('subStatNombre' . $i, ChoiceType::class, [
-                'choices' => self::STATS_GENSHIN,
+                'choices' => $choicesSubs,
                 'label' => 'Substat ' . $i,
                 'placeholder' => 'Seleccionar...',
-                'mapped' => false
+                'mapped' => false,
+                'required' => false,
+                'attr' => ['class' => 'sub-stat-select'] // Clase para JS
             ]);
             
             $builder->add('subStatValor' . $i, NumberType::class, [
@@ -77,9 +106,10 @@ class GenshinArtefactoType extends AbstractType
     { 
         $resolver->setDefaults([
             'data_class' => Artefacto::class,
+            'tipo_pieza' => null,
             'stat_fijo' => null
         ]); 
 
-        $resolver->setAllowedTypes('stat_fijo', ['null', 'string']);
+        $resolver->setAllowedTypes('tipo_pieza', ['null', 'string']);
     }
 }

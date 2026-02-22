@@ -24,7 +24,8 @@ class PersonajeHabilidadType extends AbstractType
             ])
             ->add('nivel', IntegerType::class, [
                 'label' => false,
-                'attr' => ['class' => 'form-control', 'min' => 1, 'max' => 10, 'placeholder' => 'Nivel']
+                'attr' => ['class' => 'form-control', 'min' => 1, 'max' => 10, 'placeholder' => 'Nivel'],
+                'required' => true,
             ])
         ;
     }

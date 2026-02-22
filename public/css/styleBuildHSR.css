@@ -103,3 +103,485 @@ hr {
     grid-template-columns: 1fr 1fr;
     gap: 15px;
 }
+
+.btn-modal-artefactos {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: #2e3440; /* Fondo oscuro */
+    border: 2px dashed #4c566a; /* Borde punteado si está vacío */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    color: #81a1c1; /* Color del texto */
+    overflow: hidden;
+}
+
+.img-artefacto {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;     /* rellena sin deformarse */
+}
+
+.btn-modal-artefactos:hover {
+    background-color: #3b4252; /* Cambio de fondo al hover */
+    border-color: #81a1c1; /* Cambio de borde al hover */
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+.grid-botones-artefactos {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* --- ESTILOS DEL MODAL GENERAL --- */
+.modal-artefacto-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px); /* Efecto borroso de fondo */
+}
+
+.modal-artefacto-overlay.active {
+    display: flex !important;
+}
+
+.modal-artefacto-content {
+    background-color: #232830; /* Fondo oscuro Genshin */
+    border: 1px solid #4a422e;
+    border-radius: 8px;
+    padding: 25px;
+    width: 95%;
+    max-width: 900px; /* MÁS ANCHO para diseño horizontal */
+    max-height: 95vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 0 25px rgba(212, 177, 106, 0.15);
+    color: #eee;
+}
+
+/* Título del Modal */
+.modal-artefacto-content h3 {
+    text-align: center;
+    color: #d4b16a; /* Dorado */
+    font-family: 'titulos-encabezados', sans-serif;
+    border-bottom: 1px solid #4a422e;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+/* Botón cerrar (X) */
+.btn-cerrar-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s;
+    line-height: 1;
+}
+.btn-cerrar-modal:hover { color: #fff; }
+
+/* --- LAYOUT HORIZONTAL (NUEVO) --- */
+.layout-horizontal {
+    display: flex;
+    gap: 30px;
+    align-items: stretch;
+}
+
+/* Columna Izquierda (Info Principal) */
+.col-main-info {
+    flex: 1; /* Ocupa el 33% aprox */
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Columna Derecha (Substats en Grid 2x2) */
+.col-substats {
+    flex: 2; /* Ocupa el 66% aprox */
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 columnas iguales */
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Títulos de las columnas */
+.col-title {
+    color: #a0a0a0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #d4b16a;
+    display: inline-block;
+    padding-bottom: 5px;
+    width: 100%;
+}
+
+/* Estilos de los inputs compactos */
+.input-group-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input-group-compact label {
+    font-size: 0.85rem;
+    color: #bbb;
+    font-weight: 600;
+}
+
+/* Ajuste fino de los inputs dentro del modal */
+.modal-artefacto-content select, 
+.modal-artefacto-content input {
+    background-color: #1a1e25 !important;
+    border: 1px solid #3c414d !important;
+    color: #e6e6e6 !important;
+    font-size: 0.9rem !important;
+    padding: 8px !important;
+    margin-bottom: 0 !important; /* Quitamos margen default */
+    border-radius: 4px !important;
+}
+
+.modal-artefacto-content select:focus, 
+.modal-artefacto-content input:focus {
+    border-color: #d4b16a !important;
+    box-shadow: 0 0 5px rgba(212, 177, 106, 0.3);
+}
+
+/* Botón Guardar */
+.btn-guardar-modal {
+    background-color: #d4b16a;
+    color: #232830;
+    border: none;
+    padding: 12px 30px;
+    margin-top: 25px;
+    width: 100%;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-guardar-modal:hover { background-color: #e5c585; }
+
+/* ============================================ */
+/* ESTILOS DEL MODAL DE PERSONAJES */
+/* ============================================ */
+
+.btn-modal-personaje {
+    width: 100%;
+    min-height: 90px;
+    border-radius: 8px;
+    background-color: #2e3440;
+    border: 2px dashed #4c566a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    color: #81a1c1;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.btn-modal-personaje:hover {
+    background-color: #3b4252;
+    border-color: #81a1c1;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+.btn-personaje-text {
+    flex: 1;
+}
+
+.btn-personaje-img {
+    max-height: 80px;
+    border-radius: 4px;
+}
+
+/* Modal de Personajes */
+.modal-personajes-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+
+.modal-personajes-overlay.active {
+    display: flex !important;
+}
+
+.modal-personajes-content {
+    background-color: #232830;
+    border: 1px solid #4a422e;
+    border-radius: 8px;
+    padding: 25px;
+    width: 95%;
+    max-width: 1000px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 0 25px rgba(212, 177, 106, 0.15);
+    color: #eee;
+}
+
+.modal-personajes-content h3 {
+    text-align: center;
+    color: #d4b16a;
+    font-family: 'titulos-encabezados', sans-serif;
+    border-bottom: 1px solid #4a422e;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.btn-cerrar-modal-personajes {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s;
+    line-height: 1;
+}
+
+.btn-cerrar-modal-personajes:hover {
+    color: #fff;
+}
+
+/* Grid de Personajes */
+.grid-personajes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.personaje-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.personaje-card:hover {
+    border-color: #d4b16a;
+    background-color: rgba(212, 177, 106, 0.1);
+    transform: translateY(-5px);
+}
+
+.personaje-card img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 6px;
+    max-height: 100px;
+}
+
+.personaje-card-nombre {
+    font-size: 0.75rem;
+    text-align: center;
+    color: #bbb;
+    font-weight: 500;
+    word-wrap: break-word;
+}
+
+/* RESPONSIVE: En móviles aumentar tamaño del grid */
+@media (max-width: 768px) {
+    .layout-horizontal {
+        flex-direction: column;
+    }
+    .col-substats {
+        grid-template-columns: 1fr; /* 1 sola columna en substats para móvil */
+    }
+    .grid-personajes {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+    .grid-armas {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+}
+
+/* ============================================ */
+/* ESTILOS DEL MODAL DE ARMAS */
+/* ============================================ */
+
+.btn-modal-arma {
+    width: 100%;
+    min-height: 90px;
+    border-radius: 8px;
+    background-color: #2e3440;
+    border: 2px dashed #4c566a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    color: #81a1c1;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.btn-modal-arma:hover {
+    background-color: #3b4252;
+    border-color: #81a1c1;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+.btn-arma-text {
+    flex: 1;
+}
+
+.btn-arma-img {
+    max-height: 80px;
+    border-radius: 4px;
+}
+
+/* Modal de Armas */
+.modal-armas-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+
+.modal-armas-overlay.active {
+    display: flex !important;
+}
+
+.modal-armas-content {
+    background-color: #232830;
+    border: 1px solid #4a422e;
+    border-radius: 8px;
+    padding: 25px;
+    width: 95%;
+    max-width: 1000px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 0 25px rgba(212, 177, 106, 0.15);
+    color: #eee;
+}
+
+.modal-armas-content h3 {
+    text-align: center;
+    color: #d4b16a;
+    font-family: 'titulos-encabezados', sans-serif;
+    border-bottom: 1px solid #4a422e;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+.btn-cerrar-modal-armas {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s;
+    line-height: 1;
+}
+
+.btn-cerrar-modal-armas:hover {
+    color: #fff;
+}
+
+/* Grid de Armas */
+.grid-armas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.arma-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.arma-card:hover {
+    border-color: #d4b16a;
+    background-color: rgba(212, 177, 106, 0.1);
+    transform: translateY(-5px);
+}
+
+.arma-card img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 6px;
+    max-height: 100px;
+}
+
+.arma-card-nombre {
+    font-size: 0.75rem;
+    text-align: center;
+    color: #bbb;
+    font-weight: 500;
+    word-wrap: break-word;
+}

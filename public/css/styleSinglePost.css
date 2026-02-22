@@ -12,6 +12,15 @@
     line-height: 1.2;
 }
 
+/* Información del Autor y Fecha */
+.post-meta {
+    margin-bottom: 30px;
+    font-size: 1rem;
+    opacity: 0.9;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+}
+
 /* ---------- CONTENIDO GENERADO (CKEDITOR) ---------- */
 .post-full-content {
     color: #e0e0e0;
@@ -49,6 +58,11 @@
     color: inherit;
 }
 
+.empty-comments {
+    opacity: 0.6;
+    font-style: italic;
+}
+
 .comment {
     background: rgba(0, 0, 0, 0.25);
     padding: 20px;
@@ -62,7 +76,6 @@
     justify-content: space-between;
     margin-bottom: 12px;
     font-size: 0.9rem;
-    color: #c2b46c; /* Color por defecto, se puede pisar en el twig */
 }
 
 .comment-body {
@@ -93,8 +106,6 @@
 /* Botón unificado */
 .btn-submit-comment {
     padding: 12px 25px;
-    background: #c2b46c;
-    color: #1f1b2e;
     border: none;
     border-radius: 8px;
     font-family: 'titulos-encabezados', sans-serif;
@@ -106,7 +117,6 @@
 
 .btn-submit-comment:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(194, 180, 108, 0.4);
 }
 
 /* ---------- NAVEGACIÓN ---------- */
@@ -129,4 +139,38 @@
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   SISTEMA DE TEMAS DINÁMICOS (GENSHIN VS HSR)
+   ========================================================= */
+
+/* --- TEMA GENSHIN (DORADOS) --- */
+.theme-genshin { border-color: #e0c080; }
+.theme-genshin .welcome-text { color: #c2b46c; }
+.theme-genshin .comment { border-color: rgba(194, 180, 108, 0.3); }
+.theme-genshin .comment-header { color: #c2b46c; }
+.theme-genshin .post-meta { color: #c2b46c; }
+
+.theme-genshin .btn-submit-comment {
+    background: #948459;
+    color: white;
+}
+.theme-genshin .btn-submit-comment:hover {
+    box-shadow: 0 5px 15px rgba(148, 132, 89, 0.4);
+}
+
+/* --- TEMA HONKAI STAR RAIL (PLATEADOS/MORADOS) --- */
+.theme-hsr { border-color: #c0c0c0; }
+.theme-hsr .welcome-text { color: #c0c0c0; }
+.theme-hsr .comment { border-color: rgba(192, 192, 192, 0.3); }
+.theme-hsr .comment-header { color: #c0c0c0; }
+.theme-hsr .post-meta { color: #c0c0c0; }
+
+.theme-hsr .btn-submit-comment {
+    background: #5a4b6e;
+    color: white;
+}
+.theme-hsr .btn-submit-comment:hover {
+    box-shadow: 0 5px 15px rgba(90, 75, 110, 0.4);
 }

@@ -43,6 +43,14 @@
             opacity: 1;
             color: #ffadad;
         }
+
+        /* Separador específico para HSR */
+        .hr-hsr {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+            margin: 20px 0;
+        }
     </style>
 {% endblock %}
 
@@ -61,7 +69,8 @@
                 {% endif %}
             </h2>
 
-            {{ form_start(form) }}
+            {# Añadimos ID al formulario para consistencia #}
+            {{ form_start(form, {'attr': {'id': 'form-build-hsr'}}) }}
             <div class="build-grid">
 
                 {# COLUMNA IZQUIERDA: DATOS BÁSICOS #}
@@ -69,41 +78,194 @@
                     <div class="build-section-card">
                         <h4 class="section-subtitle">Personaje y Arma</h4>
                         {{ form_row(form.nombre) }}
-                        {{ form_row(form.personajePlantilla) }}
+                        
+                        {# SELECT OCULTO - Mantiene la funcionalidad del formulario #}
+                        <div style="display: none;">
+                            {{ form_row(form.personajePlantilla, {'attr': {'class': 'form-select personaje-selector'}}) }}
+                        </div>
+
+                        {# BOTÓN MODAL PARA PERSONAJE #}
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #bbb; font-weight: 600;">Personaje</label>
+                            <button type="button" class="btn-modal-personaje" id="btn-personaje-modal">
+                                <span class="btn-personaje-text">Selecciona personaje...</span>
+                                <img src="" alt="" class="btn-personaje-img" style="display: none; max-height: 80px;">
+                            </button>
+                            {# Contenedor para la imagen del fetch #}
+                            <div id="imagen-personaje-container" style="margin-top: 10px; text-align: center;"></div>
+                        </div>
+
+                        {# MODAL DE PERSONAJES #}
+                        <div id="modal-personajes" class="modal-personajes-overlay">
+                            <div class="modal-personajes-content">
+                                <span class="btn-cerrar-modal-personajes">&times;</span>
+                                <h3>Selecciona tu Personaje</h3>
+                                <button type="button" class="btn-limpiar-seleccion" id="btn-limpiar-personaje" style="width: 100%; margin-bottom: 15px; padding: 10px; background-color: #3b4252; border: 1px solid #d4b16a; color: #fff; border-radius: 4px; cursor: pointer; font-weight: bold;">Ninguno</button>
+                                <div class="grid-personajes" id="grid-personajes">
+                                    {# Las imágenes se cargarán con JavaScript #}
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="subgrid">
                             {{ form_row(form.nivel) }}
                             {{ form_row(form.dupeNum) }}
                         </div>
                         <hr>
-                        {{ form_row(form.arma) }}
+                        
+                        {# SELECT OCULTO - Mantiene la funcionalidad del formulario #}
+                        <div style="display: none;">
+                            {{ form_row(form.arma) }}
+                        </div>
+
+                        {# BOTÓN MODAL PARA ARMA #}
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 8px; color: #bbb; font-weight: 600;">Arma</label>
+                            <button type="button" class="btn-modal-arma" id="btn-arma-modal">
+                                <span class="btn-arma-text">Selecciona arma...</span>
+                                <img src="" alt="" class="btn-arma-img" style="display: none; max-height: 80px;">
+                            </button>
+                            {# Contenedor para la imagen del fetch #}
+                            <div id="imagen-arma-container" style="margin-top: 10px; text-align: center;"></div>
+                        </div>
+
+                        {# MODAL DE ARMAS #}
+                        <div id="modal-armas" class="modal-armas-overlay">
+                            <div class="modal-armas-content">
+                                <span class="btn-cerrar-modal-armas">&times;</span>
+                                <h3>Selecciona tu Arma</h3>
+                                <div class="grid-armas" id="grid-armas">
+                                    {# Las imágenes se cargarán con JavaScript #}
+                                </div>
+                            </div>
+                        </div>
 
                         <hr>
-                        <h4 class="section-subtitle">Habilidades</h4>
+                        <h4 class="section-subtitle">Habilidades (Rastros)</h4>
+                        
+                        {# Estructura Híbrida para Habilidades (Igual que en Genshin) #}
                         <div id="habilidades-container" data-prototype="{{ form_widget(form.personajeHabilidades.vars.prototype)|e('html_attr') }}">
-                            {# Aquí se inyectarán las habilidades vía JS #}
+                             {# Recorremos las habilidades existentes (Modo Edición) #}
+                            {% for field in form.personajeHabilidades %}
+                                <div class="grupo-habilidad" style="margin-bottom: 10px;">
+                                    {% set habilidadEntidad = field.vars.value.habilidad %}
+                                    
+                                    <label style="display:block; margin-bottom: 5px; color: #ffffff;">
+                                        {% if habilidadEntidad %}
+                                            {{ habilidadEntidad.nombre }}
+                                        {% else %}
+                                            Habilidad #{{ loop.index }}
+                                        {% endif %}
+                                    </label>
+
+                                    {{ form_widget(field.nivel) }}
+                                    {{ form_widget(field.habilidad) }}
+                                    {{ form_errors(field) }}
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
 
-                {# COLUMNA DERECHA: RELIQUIAS #}
+                {# COLUMNA DERECHA: RELIQUIAS Y ORNAMENTOS #}
                 <div class="col-right">
                     <div class="build-section-card">
-                        <h4 class="section-subtitle">Reliquias y Ornamentos</h4>
-
-                        <div class="subgrid">
-                            {{ form_row(form.reliquia_cabeza) }}
-                            {{ form_row(form.reliquia_manos) }}
-                            {{ form_row(form.reliquia_torso) }}
-                            {{ form_row(form.reliquia_pies) }}
+                        
+                        {# --- BLOQUE 1: RELIQUIAS (4 Piezas) --- #}
+                        <h4 class="section-subtitle">Reliquias Cavernosas</h4>
+                        <div class="grid-botones-artefactos">
+                            <button type="button" class="btn-modal-artefactos hsr" data-artefacto="cabeza">+ Añadir Cabeza <img src=""/></button>
+                            <button type="button" class="btn-modal-artefactos hsr" data-artefacto="manos">+ Añadir Manos <img src=""/></button>
+                            <button type="button" class="btn-modal-artefactos hsr" data-artefacto="torso">+ Añadir Torso <img src=""/></button>
+                            <button type="button" class="btn-modal-artefactos hsr" data-artefacto="pies">+ Añadir Pies <img src=""/></button>
                         </div>
 
-                        <hr>
-                        <h4 class="section-subtitle" style="font-size: 1.1rem; border-color: #888;">Ornamentos del Universo Simulado</h4>
+                        {# Separador visual solicitado #}
+                        <hr class="hr-hsr">
 
-                        <div class="subgrid">
-                            {{ form_row(form.ornamento_esfera) }}
-                            {{ form_row(form.ornamento_cuerda) }}
+                        {# --- BLOQUE 2: ORNAMENTOS (2 Piezas) --- #}
+                        <h4 class="section-subtitle">Ornamentos Planares</h4>
+                        <div class="grid-botones-artefactos">
+                            <button type="button" class="btn-modal-artefactos hsr" data-artefacto="esfera">+ Añadir Esfera <img src=""/></button>
+                            <button type="button" class="btn-modal-artefactos hsr" data-artefacto="cuerda">+ Añadir Cuerda <img src=""/></button>
                         </div>
+
+                        {# --- DEFINICIÓN DE MODALES (Para las 6 piezas) --- #}
+                        {% set piezas = [
+                            {'id': 'cabeza', 'titulo': 'Cabeza', 'form': form.reliquia_cabeza},
+                            {'id': 'manos', 'titulo': 'Manos', 'form': form.reliquia_manos},
+                            {'id': 'torso', 'titulo': 'Torso', 'form': form.reliquia_torso},
+                            {'id': 'pies', 'titulo': 'Pies', 'form': form.reliquia_pies},
+                            {'id': 'esfera', 'titulo': 'Esfera Planar', 'form': form.ornamento_esfera},
+                            {'id': 'cuerda', 'titulo': 'Cuerda de Unión', 'form': form.ornamento_cuerda}
+                        ] %}
+
+                        {% for pieza in piezas %}
+                            <div id="modal-{{ pieza.id }}" class="modal-artefacto-overlay">
+                                <div class="modal-artefacto-content">
+                                    <span class="btn-cerrar-modal">&times;</span>
+                                    
+                                    <h3>{{ pieza.titulo }}</h3>
+
+                                    <div class="layout-horizontal">
+                                        {# COLUMNA IZQUIERDA #}
+                                        <div class="col-main-info">
+                                            <h4 class="col-title">Stat Principal</h4>
+                                            
+                                            <div class="input-group-compact">
+                                                <label>Set de Artefactos</label>
+                                                {# Importante: clase 'artefacto-set-select' para el JS #}
+                                                {{ form_widget(pieza.form.setSeleccionado, {'attr': {'class': 'artefacto-set-select', 'data-artefacto': pieza.id}}) }}
+                                            </div>
+
+                                            <div class="input-group-compact">
+                                                <label>Main Stat</label>
+                                                {{ form_widget(pieza.form.statPrincipalNombre) }}
+                                            </div>
+
+                                            <div class="input-group-compact">
+                                                <label>Valor</label>
+                                                {{ form_widget(pieza.form.statPrincipalValor) }}
+                                            </div>
+                                        </div>
+
+                                        {# COLUMNA DERECHA: SUBSTATS #}
+                                        <div class="col-substats">
+                                            <h4 class="col-title" style="grid-column: span 2;">Sub-Stats</h4>
+                                            
+                                            {# Iteramos 1 a 4 para substats #}
+                                            <div class="input-group-compact">
+                                                <label>Sub 1</label>
+                                                {{ form_widget(pieza.form.subStatNombre1) }}
+                                                {{ form_widget(pieza.form.subStatValor1, {'attr': {'placeholder': 'Valor', 'style': 'margin-top:5px'}}) }}
+                                            </div>
+                                            <div class="input-group-compact">
+                                                <label>Sub 2</label>
+                                                {{ form_widget(pieza.form.subStatNombre2) }}
+                                                {{ form_widget(pieza.form.subStatValor2, {'attr': {'placeholder': 'Valor', 'style': 'margin-top:5px'}}) }}
+                                            </div>
+                                            <div class="input-group-compact">
+                                                <label>Sub 3</label>
+                                                {{ form_widget(pieza.form.subStatNombre3) }}
+                                                {{ form_widget(pieza.form.subStatValor3, {'attr': {'placeholder': 'Valor', 'style': 'margin-top:5px'}}) }}
+                                            </div>
+                                            <div class="input-group-compact">
+                                                <label>Sub 4</label>
+                                                {{ form_widget(pieza.form.subStatNombre4) }}
+                                                {{ form_widget(pieza.form.subStatValor4, {'attr': {'placeholder': 'Valor', 'style': 'margin-top:5px'}}) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="btn-guardar-modal">Confirmar Pieza</button>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <hr class="hr-hsr">
+                        <h4 class="section-subtitle2">Efectos de Conjunto</h4>
+                        <div id="div-set"></div>
+
                     </div>
                 </div>
 
@@ -126,6 +288,12 @@
         {{ parent() }}
         <script type="text/javascript" src="{{ asset('js/filtroArmaPersonaje.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/habilidadesPersonaje.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/filtroArtefactos.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/imagenesBuild.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/modalPersonajes.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/modalArmas.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/alertaModals.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/efectosSet.js') }}"></script>
     {% endblock %}
     
 {% endblock %}
