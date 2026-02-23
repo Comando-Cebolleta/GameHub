@@ -408,7 +408,7 @@ hr {
 /* Grid de Personajes */
 .grid-personajes {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
     padding: 10px 0;
 }
@@ -437,11 +437,11 @@ hr {
     aspect-ratio: 1;
     object-fit: cover;
     border-radius: 6px;
-    max-height: 100px;
+    max-height: 200px;
 }
 
 .personaje-card-nombre {
-    font-size: 0.75rem;
+    font-size: 1.1rem;
     text-align: center;
     color: #bbb;
     font-weight: 500;
@@ -565,7 +565,7 @@ hr {
 /* Grid de Armas */
 .grid-armas {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
     padding: 10px 0;
 }
@@ -594,11 +594,11 @@ hr {
     aspect-ratio: 1;
     object-fit: cover;
     border-radius: 6px;
-    max-height: 100px;
+    max-height: 200px;
 }
 
 .arma-card-nombre {
-    font-size: 0.75rem;
+    font-size: 1.1rem;
     text-align: center;
     color: #bbb;
     font-weight: 500;

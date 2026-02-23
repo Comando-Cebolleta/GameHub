@@ -106,10 +106,6 @@
                         <hr>
                         <h4 class="section-subtitle">Arma Equipada</h4>
 
-                        {# SELECT OCULTO - Mantiene la funcionalidad del formulario #}
-                        <div style="display: none;">
-                            {{ form_row(form.arma) }}
-                        </div>
 
                         {# BOTÓN MODAL PARA ARMA #}
                         <div style="margin-bottom: 15px;">
@@ -120,6 +116,16 @@
                             </button>
                             {# Contenedor para la imagen del fetch #}
                             <div id="imagen-arma-container" style="margin-top: 10px; text-align: center;"></div>
+                        </div>
+
+                        {# Campo de nivel del arma #}
+                        <div style="">
+                            {{ form_row(form.arma.nivel) }}
+                        </div>
+
+                        {# Campo de nivel del arma #}
+                        <div style="display: none;">
+                            {{ form_row(form.arma.armaPlantilla) }}
                         </div>
 
                         {# MODAL DE ARMAS #}

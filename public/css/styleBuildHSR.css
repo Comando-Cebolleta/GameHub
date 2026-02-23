@@ -28,6 +28,26 @@
     padding-left: 15px;
 }
 
+.section-subtitle2 {
+    position: relative;
+    color: #fff;
+    font-family: 'titulos-encabezados', Arial, sans-serif;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    padding-left: 15px;
+    padding-top: 20px;
+}
+
+.section-subtitle2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 20px;        /* empieza después del padding-top */
+    bottom: 0;
+    width: 4px;
+    background: #fff;
+}
+
 /* Estilo de los inputs y selects */
 .build-section-card label {
     color: #d1d1d1;
@@ -389,7 +409,7 @@ hr {
 /* Grid de Personajes */
 .grid-personajes {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
     padding: 10px 0;
 }
@@ -418,11 +438,11 @@ hr {
     aspect-ratio: 1;
     object-fit: cover;
     border-radius: 6px;
-    max-height: 100px;
+    max-height: 200px;
 }
 
 .personaje-card-nombre {
-    font-size: 0.75rem;
+    font-size: 1.1rem;
     text-align: center;
     color: #bbb;
     font-weight: 500;
@@ -546,7 +566,7 @@ hr {
 /* Grid de Armas */
 .grid-armas {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
     padding: 10px 0;
 }
@@ -575,11 +595,11 @@ hr {
     aspect-ratio: 1;
     object-fit: cover;
     border-radius: 6px;
-    max-height: 100px;
+    max-height: 200px;
 }
 
 .arma-card-nombre {
-    font-size: 0.75rem;
+    font-size: 1.1rem;
     text-align: center;
     color: #bbb;
     font-weight: 500;

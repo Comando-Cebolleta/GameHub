@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 20, 2026 at 06:50 PM
+-- Generation Time: Feb 23, 2026 at 10:11 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -77,7 +77,8 @@ INSERT INTO `arma_plantilla` (`id`, `nombre`, `imagen`, `juego`, `stats_base`, `
 (6, 'A donde regresan los sueños', 'ADondeRegresanLosSuenyos.webp', 'hsr', '{\"ATK\": 21, \"BREAK_EFFECT\": 0.102}', '{\"ATK\": 5.7595, \"BREAK_EFFECT\": 0.00444}', 'El efecto de Ruptura del portador aumenta en un 60%. Cuando el portador inflige Daño de Ruptura a un enemigo, este entra en el estado de Vencido durante 2 turnos. Los objetivos afectados con Vencido reciben un 24% más de Daño de Ruptura del portador y su VEL se reduce en un 20%. Los efectos del mismo tipo no se pueden acumular.', 'cono'),
 (7, 'De vuelta a la tierra', 'DeVueltaALaTierra.webp', 'hsr', '{\"ATK\": 21, \"ER\": 0.124}', '{\"ATK\": 5.7595, \"ER\": 0.00572}', 'Después de que el portador lance la habilidad básica o la habilidad definitiva sobre un personaje aliado, el portador recupera 6 pts. de energía y el objetivo recibe 1 acumulación de Himno sagrado durante 3 turnos. Se puede acumular hasta 3 veces. Cada acumulación de Himno sagrado aumenta el daño en un 15%. Tras cada 2 lanzamientos de la habilidad básica o la habilidad definitiva sobre un personaje aliado, el portador recupera 1 pt. de habilidad básica.', 'cono'),
 (8, 'Yo seré mi propia espada', 'YoSereMiPropiaEspada.webp', 'hsr', '{\"ATK\": 26, \"CRIT_DMG\": 0.12}', '{\"ATK\": 7.0380, \"CRIT_DMG\": 0.00714}', 'El Daño CRIT del portador aumenta en un 20%. Cuando un aliado recibe un ataque o consume PV, el portador obtiene 1 acumulación de Eclipse. Se puede acumular hasta 3 veces. Por cada acumulación, el daño que inflige el siguiente ataque del portador aumenta en un 14%. Cuando se alcanzan 3 acumulaciones, el ataque actual ignora un 12% de la DEF del objetivo. Este efecto se elimina después de que el portador lance un ataque.', 'cono'),
-(9, 'Que arda el alba', 'QueArdaElAlba.webp', 'hsr', '{\"ATK\": 31, \"CRIT_DMG\": 0.12}', '{\"ATK\": 8.3038, \"CRIT_DMG\": 0.00714}', 'La VEL base del portador aumenta en 12 y este ignora un 18% de la DEF del objetivo cuando inflige daño. Después de que el portador lance su habilidad definitiva, obtiene Sol abrasador, el cual se disipa al comenzar el turno. Cuando tiene Sol abrasador, el daño que inflige el portador aumenta en un 60%.', 'cono');
+(9, 'Que arda el alba', 'QueArdaElAlba.webp', 'hsr', '{\"ATK\": 31, \"CRIT_DMG\": 0.12}', '{\"ATK\": 8.3038, \"CRIT_DMG\": 0.00714}', 'La VEL base del portador aumenta en 12 y este ignora un 18% de la DEF del objetivo cuando inflige daño. Después de que el portador lance su habilidad definitiva, obtiene Sol abrasador, el cual se disipa al comenzar el turno. Cuando tiene Sol abrasador, el daño que inflige el portador aumenta en un 60%.', 'cono'),
+(10, 'Tirachinas', 'Tirachinas.webp', 'genshin', '{\"ATQ\": 38, \"CRIT_RATE\": 0.068}', '{\"ATQ\": 3.5505617978, \"CRIT_RATE\": 0.0027415730}', 'Si un Ataque Normal o Cargado golpea al enemigo en menos de 0.3 s de ser lanzado, el daño infligido aumentará en un 36%. Si se excede este tiempo, el daño disminuirá en un 10%.', 'arco');
 
 -- --------------------------------------------------------
 
@@ -765,13 +766,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `arma`
 --
 ALTER TABLE `arma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `artefacto`
 --
 ALTER TABLE `artefacto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 
 --
 -- AUTO_INCREMENT for table `comentario`
@@ -789,7 +790,7 @@ ALTER TABLE `equipo`
 -- AUTO_INCREMENT for table `personaje`
 --
 ALTER TABLE `personaje`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `post`
