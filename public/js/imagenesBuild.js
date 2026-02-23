@@ -247,6 +247,21 @@ function cerrarModal(boton, i) {
 window.addEventListener('click', function(event) {
     if (event.target.classList.contains('modal-artefacto-overlay')) {
         event.target.classList.remove('active');
+        
+        // Obtener el tipo de artefacto del ID del modal
+        let modalId = event.target.id; // modal-{tipo}
+        let tipo = modalId.replace("modal-", "");
+        
+        // Obtener el select del artefacto dentro del modal
+        let select = event.target.querySelector('.artefacto-set-select');
+        let botonModal = document.querySelector(`.btn-modal-artefactos[data-artefacto="${tipo}"]`);
+        
+        // Si el select está vacío (placeholder), limpiar la imagen del botón
+        if (select && botonModal) {
+            if (select.value === "") {
+                botonModal.textContent = "+ Añadir " + tipo.charAt(0).toUpperCase() + tipo.slice(1);
+            }
+        }
     }
 });
 
