@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Obtener elementos
     const btnAbrirModal = document.getElementById('btn-personaje-modal');
     const modalPersonajes = document.getElementById('modal-personajes');
     const gridPersonajes = document.getElementById('grid-personajes');

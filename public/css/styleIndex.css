@@ -51,7 +51,6 @@ header {
 }
 
 .logoIcon {
-    /* Logo de 180px para aprovechar la calidad de la imagen */
     height: 180px;
     max-height: 200px;
     width: auto;
@@ -193,7 +192,7 @@ footer {
 /* ---------- RESPONSIVE PC / GRANDE ---------- */
 @media (min-width: 1200px) {
     header {
-        height: 220px; /* Un pelín más alto para que el logo luzca increíble */
+        height: 220px;
     }
     .logoIcon {
         height: 200px;

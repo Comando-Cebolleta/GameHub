@@ -73,7 +73,7 @@ header .login-container img {
     transition: transform 0.2s;
 }
 
-/* ---------- MAIN CONTENT (CORRECCIÓN AQUÍ) ---------- */
+/* ---------- MAIN CONTENT ---------- */
 .main-build-page {
     flex: 1;
     display: flex;

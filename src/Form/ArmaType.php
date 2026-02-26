@@ -54,7 +54,6 @@ class ArmaType extends AbstractType
             'data_class' => Arma::class,'juego' => null, 
         ]);
         
-        // Indicamos que 'juego' puede ser string o null
         $resolver->setAllowedTypes('juego', ['null', 'string']);
     }
 }

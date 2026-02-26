@@ -38,7 +38,7 @@ function actualizarEfectosSet() {
     // Hacer un fetch por cada conjunto distinto
     Object.entries(efectosPorSet).forEach(([idSet, cantidad]) => {
         let p = document.createElement('p');
-        p.className = "efecto-container"; // Usar clase en lugar de ID para permitir múltiples elementos
+        p.className = "efecto-container"; // Usar clase
 
         // Crear un AbortController por cada fetch y almacenar para poder cancelarlo
         const controller = new AbortController();

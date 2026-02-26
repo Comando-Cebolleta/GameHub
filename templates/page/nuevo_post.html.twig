@@ -65,7 +65,6 @@
 
 {% block body %}
     {# INCLUSIÓN DEL HEADER MODULAR DINÁMICO #}
-    {# Enviamos SILVER si es HSR, de lo contrario usará GOLD por defecto #}
     {% include 'partials/header.html.twig' with {'iconColor': juego == 'hsr' ? 'SILVER' : 'GOLD'} %}
 
     <main>
