@@ -108,7 +108,7 @@ input:focus, select:focus {
 
 .subgrid-artefactos {
     display: grid;
-    grid-template-columns: 1fr; /* En Genshin 5 artefactos suelen ir bien en lista o 2-2-1 */
+    grid-template-columns: 1fr;
     gap: 10px;
 }
 
@@ -180,12 +180,12 @@ hr {
 }
 
 .modal-artefacto-content {
-    background-color: #232830; /* Fondo oscuro Genshin */
+    background-color: #232830;
     border: 1px solid #4a422e;
     border-radius: 8px;
     padding: 25px;
     width: 95%;
-    max-width: 900px; /* MÁS ANCHO para diseño horizontal */
+    max-width: 900px;
     max-height: 95vh;
     overflow-y: auto;
     position: relative;
@@ -204,7 +204,7 @@ hr {
     letter-spacing: 1px;
 }
 
-/* Botón cerrar (X) */
+/* Botón cerrar */
 .btn-cerrar-modal {
     position: absolute;
     top: 15px;
@@ -224,9 +224,9 @@ hr {
     align-items: stretch;
 }
 
-/* Columna Izquierda (Info Principal) */
+/* Columna Izquierda */
 .col-main-info {
-    flex: 1; /* Ocupa el 33% aprox */
+    flex: 1;
     background: rgba(0, 0, 0, 0.2);
     padding: 20px;
     border-radius: 6px;
@@ -236,9 +236,9 @@ hr {
     gap: 15px;
 }
 
-/* Columna Derecha (Substats en Grid 2x2) */
+/* Columna Derecha */
 .col-substats {
-    flex: 2; /* Ocupa el 66% aprox */
+    flex: 2;
     display: grid;
     grid-template-columns: 1fr 1fr; /* 2 columnas iguales */
     gap: 20px;
@@ -273,7 +273,6 @@ hr {
     font-weight: 600;
 }
 
-/* Ajuste fino de los inputs dentro del modal */
 .modal-artefacto-content select, 
 .modal-artefacto-content input {
     background-color: #1a1e25 !important;
@@ -281,7 +280,7 @@ hr {
     color: #e6e6e6 !important;
     font-size: 0.9rem !important;
     padding: 8px !important;
-    margin-bottom: 0 !important; /* Quitamos margen default */
+    margin-bottom: 0 !important;
     border-radius: 4px !important;
 }
 
@@ -448,13 +447,13 @@ hr {
     word-wrap: break-word;
 }
 
-/* RESPONSIVE: En móviles aumentar tamaño del grid */
+/* RESPONSIVE: En móviles */
 @media (max-width: 768px) {
     .layout-horizontal {
         flex-direction: column;
     }
     .col-substats {
-        grid-template-columns: 1fr; /* 1 sola columna en substats para móvil */
+        grid-template-columns: 1fr;
     }
     .grid-personajes {
         grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));

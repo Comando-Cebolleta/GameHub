@@ -258,7 +258,6 @@ class Personaje
         }
 
         // Calcular arma
-        // Asumimos que el arma da Stats Base (ATK) y quizás un Substat (%)
         if ($this->getArma()) {
             $statsArma = $this->getArma()->getStatsCalculados() ?? [];
             

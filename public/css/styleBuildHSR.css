@@ -42,7 +42,7 @@
     content: "";
     position: absolute;
     left: 0;
-    top: 20px;        /* empieza después del padding-top */
+    top: 20px;
     bottom: 0;
     width: 4px;
     background: #fff;
@@ -108,7 +108,7 @@ hr {
     margin: 20px 0;
 }
 
-/* Grid Layout manual (sin depender solo de Bootstrap) */
+/* Grid Layout manual */
 .build-grid {
     display: flex;
     gap: 25px;
@@ -129,7 +129,7 @@ hr {
     height: 90px;
     border-radius: 50%;
     background-color: #2e3440; /* Fondo oscuro */
-    border: 2px dashed #4c566a; /* Borde punteado si está vacío */
+    border: 2px dashed #4c566a;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -137,19 +137,19 @@ hr {
     position: relative;
     transition: all 0.3s ease;
     box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    color: #81a1c1; /* Color del texto */
+    color: #81a1c1;
     overflow: hidden;
 }
 
 .img-artefacto {
   width: 100%;
   height: 100%;
-  object-fit: contain;     /* rellena sin deformarse */
+  object-fit: contain;
 }
 
 .btn-modal-artefactos:hover {
-    background-color: #3b4252; /* Cambio de fondo al hover */
-    border-color: #81a1c1; /* Cambio de borde al hover */
+    background-color: #3b4252;
+    border-color: #81a1c1;
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0,0,0,0.4);
 }
@@ -186,7 +186,7 @@ hr {
     border-radius: 8px;
     padding: 25px;
     width: 95%;
-    max-width: 900px; /* MÁS ANCHO para diseño horizontal */
+    max-width: 900px;
     max-height: 95vh;
     overflow-y: auto;
     position: relative;
@@ -197,7 +197,7 @@ hr {
 /* Título del Modal */
 .modal-artefacto-content h3 {
     text-align: center;
-    color: #d4b16a; /* Dorado */
+    color: #d4b16a;
     font-family: 'titulos-encabezados', sans-serif;
     border-bottom: 1px solid #4a422e;
     padding-bottom: 15px;
@@ -205,7 +205,7 @@ hr {
     letter-spacing: 1px;
 }
 
-/* Botón cerrar (X) */
+/* Botón cerrar */
 .btn-cerrar-modal {
     position: absolute;
     top: 15px;
@@ -218,7 +218,7 @@ hr {
 }
 .btn-cerrar-modal:hover { color: #fff; }
 
-/* --- LAYOUT HORIZONTAL (NUEVO) --- */
+/* --- LAYOUT HORIZONTAL --- */
 .layout-horizontal {
     display: flex;
     gap: 30px;
@@ -227,7 +227,7 @@ hr {
 
 /* Columna Izquierda (Info Principal) */
 .col-main-info {
-    flex: 1; /* Ocupa el 33% aprox */
+    flex: 1;
     background: rgba(0, 0, 0, 0.2);
     padding: 20px;
     border-radius: 6px;
@@ -237,9 +237,9 @@ hr {
     gap: 15px;
 }
 
-/* Columna Derecha (Substats en Grid 2x2) */
+/* Columna Derecha */
 .col-substats {
-    flex: 2; /* Ocupa el 66% aprox */
+    flex: 2;
     display: grid;
     grid-template-columns: 1fr 1fr; /* 2 columnas iguales */
     gap: 20px;
@@ -274,7 +274,6 @@ hr {
     font-weight: 600;
 }
 
-/* Ajuste fino de los inputs dentro del modal */
 .modal-artefacto-content select, 
 .modal-artefacto-content input {
     background-color: #1a1e25 !important;
@@ -282,7 +281,7 @@ hr {
     color: #e6e6e6 !important;
     font-size: 0.9rem !important;
     padding: 8px !important;
-    margin-bottom: 0 !important; /* Quitamos margen default */
+    margin-bottom: 0 !important;
     border-radius: 4px !important;
 }
 
@@ -449,7 +448,7 @@ hr {
     word-wrap: break-word;
 }
 
-/* RESPONSIVE: En móviles aumentar tamaño del grid */
+/* RESPONSIVE: En móviles */
 @media (max-width: 768px) {
     .layout-horizontal {
         flex-direction: column;

@@ -17,10 +17,10 @@ body {
 h1, h2, h3, h4, h5, h6 { font-family: 'titulos-encabezados', sans-serif; }
 a { text-decoration: none; color: inherit; }
 
-/* ---------- HEADER (Actualizado a 200px) ---------- */
+/* ---------- HEADER ---------- */
 header {
     background-color: #1f1b2e;
-    height: 200px; /* Unificado con el resto de la web */
+    height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,7 +29,7 @@ header {
 }
 
 .logoIcon {
-    height: 180px; /* Logo grande para máxima calidad */
+    height: 180px;
     max-height: 200px;
     width: auto;
     object-fit: contain;
@@ -80,7 +80,7 @@ main {
     position: relative;
 }
 
-/* ---------- ICONO DE AJUSTES (TAMAÑO AUMENTADO) ---------- */
+/* ---------- ICONO DE AJUSTES ---------- */
 .settings-icon {
     position: absolute;
     top: 20px;

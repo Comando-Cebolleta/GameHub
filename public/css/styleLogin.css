@@ -48,7 +48,7 @@ header {
 }
 
 .logoIcon {
-    height: 180px; /* Logo grande para lucir los 500px */
+    height: 180px;
     max-height: 200px;
     width: auto;
     object-fit: contain;

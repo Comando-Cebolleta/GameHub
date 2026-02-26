@@ -56,7 +56,6 @@
 
 {% block body %}
     {% set is_edit = is_edit|default(false) %}
-    {# INCLUSIÓN DEL HEADER MODULAR - Forzamos el icono SILVER #}
     {% include 'partials/header.html.twig' with {'iconColor': 'SILVER'} %}
 
     <main>
@@ -69,7 +68,6 @@
                 {% endif %}
             </h2>
 
-            {# Añadimos ID al formulario para consistencia #}
             {{ form_start(form, {'attr': {'id': 'form-build-hsr'}}) }}
             <div class="build-grid">
 
@@ -79,7 +77,6 @@
                         <h4 class="section-subtitle">Personaje y Arma</h4>
                         {{ form_row(form.nombre) }}
                         
-                        {# SELECT OCULTO - Mantiene la funcionalidad del formulario #}
                         <div style="display: none;">
                             {{ form_row(form.personajePlantilla, {'attr': {'class': 'form-select personaje-selector'}}) }}
                         </div>
@@ -149,9 +146,7 @@
                         <hr>
                         <h4 class="section-subtitle">Habilidades (Rastros)</h4>
                         
-                        {# Estructura Híbrida para Habilidades (Igual que en Genshin) #}
                         <div id="habilidades-container" data-prototype="{{ form_widget(form.personajeHabilidades.vars.prototype)|e('html_attr') }}">
-                             {# Recorremos las habilidades existentes (Modo Edición) #}
                             {% for field in form.personajeHabilidades %}
                                 <div class="grupo-habilidad" style="margin-bottom: 10px;">
                                     {% set habilidadEntidad = field.vars.value.habilidad %}
